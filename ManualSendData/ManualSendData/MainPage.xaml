@@ -1,0 +1,31 @@
+﻿<Page
+    x:Class="AnotherTry.MainPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:AnotherTry"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d">
+
+    <Grid Background="#FFFFF8B5">
+        <FlyoutBase.AttachedFlyout>
+            <MenuFlyout/>
+        </FlyoutBase.AttachedFlyout>
+        <TextBox x:Name="txt_username" HorizontalAlignment="Left" Height="26" Margin="90,72,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="179"/>
+        <Button x:Name="btn_upload" Content="upload" HorizontalAlignment="Left" Height="31" Margin="274,218,0,0" VerticalAlignment="Top" Width="112" Background="#FFF7FF59" Click="btn_upload_Click" />
+        <TextBox x:Name="txt_received" HorizontalAlignment="Left" Height="19" Margin="10,318,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="620" SelectionHighlightColor="#FF00060C" Background="White"/>
+        <Button Content="Get Messages" HorizontalAlignment="Left" Height="34" Margin="10,279,0,0" VerticalAlignment="Top" Width="121" Background="#FFFBFF9C" Click="Button_Click_1"/>
+        <TextBlock HorizontalAlignment="Left" Height="26" Margin="10,10,0,0" TextWrapping="Wrap" Text="Here you can manually upload data into the cloud" VerticalAlignment="Top" Width="337"/>
+        <TextBlock x:Name="lbl_loginMsg" HorizontalAlignment="Left" Height="26" Margin="10,41,0,0" TextWrapping="Wrap" Text="You must be logged in:" VerticalAlignment="Top" Width="337"/>
+        <TextBlock HorizontalAlignment="Left" Height="26" Margin="10,72,0,0" TextWrapping="Wrap" Text="Username:" VerticalAlignment="Top" Width="75"/>
+        <TextBlock HorizontalAlignment="Left" Height="26" Margin="274,72,0,0" TextWrapping="Wrap" Text="Password:" VerticalAlignment="Top" Width="73"/>
+        <TextBox x:Name="txt_password" HorizontalAlignment="Left" Height="26" Margin="352,72,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="139"/>
+        <Button x:Name="btn_login" Content="Login" HorizontalAlignment="Left" Height="32" Margin="496,72,0,0" VerticalAlignment="Top" Width="107" Background="#FFF8FF6C" Click="btn_login_Click"/>
+        <TextBox x:Name="txt_enterWeight" HorizontalAlignment="Left" Height="26" Margin="85,140,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="179"/>
+        <TextBlock HorizontalAlignment="Left" Height="26" Margin="10,140,0,0" TextWrapping="Wrap" Text="weight:" VerticalAlignment="Top" Width="75"/>
+        <TextBox x:Name="txt_enterFat" HorizontalAlignment="Left" Height="26" Margin="85,177,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="179"/>
+        <TextBlock HorizontalAlignment="Left" Height="26" Margin="10,177,0,0" TextWrapping="Wrap" Text="Fat:" VerticalAlignment="Top" Width="75"/>
+        <TextBox x:Name="txt_enterData3" HorizontalAlignment="Left" Height="26" Margin="85,214,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="179"/>
+        <TextBlock HorizontalAlignment="Left" Height="26" Margin="10,214,0,0" TextWrapping="Wrap" Text="extra:" VerticalAlignment="Top" Width="75"/>
+    </Grid>
+</Page>
