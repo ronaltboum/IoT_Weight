@@ -1,6 +1,0 @@
-C:\Temp\IoT_manual_input\IoT_manual_input\bin\Debug\IoT_manual_input.exe.config
-C:\Temp\IoT_manual_input\IoT_manual_input\bin\Debug\IoT_manual_input.exe
-C:\Temp\IoT_manual_input\IoT_manual_input\bin\Debug\IoT_manual_input.pdb
-C:\Temp\IoT_manual_input\IoT_manual_input\obj\Debug\IoT_manual_input.csprojResolveAssemblyReference.cache
-C:\Temp\IoT_manual_input\IoT_manual_input\obj\Debug\IoT_manual_input.exe
-C:\Temp\IoT_manual_input\IoT_manual_input\obj\Debug\IoT_manual_input.pdb
