@@ -96,5 +96,17 @@ namespace ManualDataSend2
             await AzureIoTHub.SendDeviceToCloudMessageAsync(data);
             txt_received.Text = data;
         }
+
+        private async void btn_example_Click(object sender, RoutedEventArgs e)
+        {
+            Dictionary<string, string> userData = new Dictionary<string, string>();
+            userData.Add("username", txt_username.Text);
+            userData.Add("weigh", txt_enterWeight.Text);
+            userData.Add("createdAt",DateTime.Now.ToString());
+
+            string data = JsonConvert.SerializeObject(userData);
+            await AzureIoTHub.SendDeviceToCloudMessageAsync(data);
+            txt_received.Text = data;
+        }
     }
 }

@@ -27,5 +27,6 @@
         <TextBlock HorizontalAlignment="Left" Height="26" Margin="10,177,0,0" TextWrapping="Wrap" Text="Fat:" VerticalAlignment="Top" Width="75"/>
         <TextBox x:Name="txt_enterData3" HorizontalAlignment="Left" Height="26" Margin="85,214,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="179"/>
         <TextBlock HorizontalAlignment="Left" Height="26" Margin="10,214,0,0" TextWrapping="Wrap" Text="extra:" VerticalAlignment="Top" Width="75"/>
+        <Button x:Name="btn_example" Content="Send Example" HorizontalAlignment="Left" Height="32" Margin="452,279,0,0" VerticalAlignment="Top" Width="151" Background="#FFF8FF6C" Click="btn_example_Click"/>
     </Grid>
 </Page>
