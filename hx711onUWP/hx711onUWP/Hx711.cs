@@ -94,19 +94,18 @@ namespace hx711onUWP
 
         /* adaptation of Arduino's bitWrite() methon to RBPi.
          * taken from: https://stackoverflow.com/questions/23339587/similar-function-arduino-bitwrite
-         * TODO: check conversion to C#
          */
-        private void bitWrite(int x, int n, bool b)
+        private void bitWrite(ulong x, int n, bool b)
         {
             if (n <= 7 && n >= 0)
             {
                 if (b)
                 {
-                    x |= (1 << n);
+                    x |= (1ul << n);
                 }
                 else
                 {
-                    x &= ~(1 << n);
+                    x &= ~(1ul << n);
                 }
             }
         }
