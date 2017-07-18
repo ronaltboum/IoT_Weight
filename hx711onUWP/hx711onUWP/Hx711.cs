@@ -7,7 +7,7 @@ using Windows.Devices.Gpio;
 
 namespace hx711onUWP
 {
-    class Hx711 : IHx711
+    class Hx711
     {
         private GpioController gpio;
         private long offset;
@@ -15,7 +15,7 @@ namespace hx711onUWP
         private GpioPin dout;
         private GpioPin slk;
         private const byte AVERAGE_DEF = 25;
-        private const float SCALE_DEF = 1992f;
+        private const float SCALE_DEF = 1992.0f;
 
         public Hx711(byte pin_dout, byte pin_slk)
         {
@@ -65,6 +65,7 @@ namespace hx711onUWP
                 {
                     slk.Write(GpioPinValue.High);
                     pinValue = dout.Read();
+                    System.Diagnostics.Debug.WriteLine(pinValue);
                     boolPinValue = (pinValue == GpioPinValue.High) ? true : false;
                     bitWrite(data[2 - j], 7 - i, boolPinValue);
                     slk.Write(GpioPinValue.Low);
@@ -97,6 +98,7 @@ namespace hx711onUWP
          */
         private void bitWrite(ulong x, int n, bool b)
         {
+            //System.Diagnostics.Debug.WriteLine(x + ", " + n + ", " + b);
             if (n <= 7 && n >= 0)
             {
                 if (b)

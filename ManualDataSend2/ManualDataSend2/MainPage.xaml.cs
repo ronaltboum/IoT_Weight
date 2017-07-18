@@ -12,8 +12,9 @@ using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
+using Windows.UI.Popups;
 using Newtonsoft.Json;
-
+using Windows.Devices.Gpio;
 // The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=402352&clcid=0x409
 
 namespace ManualDataSend2
@@ -23,8 +24,20 @@ namespace ManualDataSend2
     /// </summary>
     public sealed partial class MainPage : Page
     {
+        HX711 hx711;
+
+        const byte DOUT_PIN = 24;
+        const byte SLK_PIN = 23;
+
+        private GpioPin dout;
+        private GpioPin slk;
+        private GpioController gpio;
         public MainPage()
         {
+            gpio = GpioController.GetDefault();
+            dout = gpio.OpenPin(DOUT_PIN);
+            slk = gpio.OpenPin(SLK_PIN);
+            hx711 = new HX711(slk, dout);
             this.InitializeComponent();
         }
         private async void Button_Click_1(object sender, RoutedEventArgs e)
@@ -34,61 +47,24 @@ namespace ManualDataSend2
             this.txt_received.Text = message;
         }
 
-
-        bool logged = false;
-        private async void btn_login_Click(object sender, RoutedEventArgs e)
+        
+        private uint addrToInt(string addr)
         {
-            if (!logged)
+            string[] bytes = addr.Split(':');
+            uint result = 0;
+            uint mult = 1;
+            for (int i = bytes.Length - 1; i >= 0; i--)
             {
-                //currently sends the data to cloud, but accepts any user anyway
-                Dictionary<string, string> userData = new Dictionary<string, string>();
-                userData.Add("usernname", txt_username.Text);
-                userData.Add("password", txt_password.Text);
-                string data = JsonConvert.SerializeObject(userData);
-
-                await AzureIoTHub.SendDeviceToCloudMessageAsync(data);
-                txt_received.Text = data;
-
-                /* the server should check if the username and password are valid */
-                this.txt_received.Text = "Receiving...";
-                string message = await AzureIoTHub.ReceiveCloudToDeviceMessageAsync();
-
-                if (message.Equals("RST"))
-                {
-                    txt_received.Text = "Authentication failed.";
-                    return;
-                }
-                else if (!message.Equals("ACK"))
-                {
-                    txt_received.Text = "Error: Cloud sent unrecognized answer \"" + message + "\"";
-                    return;
-                }
-                /* ============================================================= */
-                lbl_loginMsg.Text = "You are now logged in, " + txt_username.Text + "!";
-                txt_username.IsReadOnly = true;
-                txt_password.IsReadOnly = true;
-                btn_login.Content = "Log out";
-                logged = true;
+                result += uint.Parse(bytes[i], System.Globalization.NumberStyles.HexNumber) * mult;
+                mult *= 256;
             }
-            else
-            {
-                txt_username.IsReadOnly = false;
-                txt_password.IsReadOnly = false;
-                btn_login.Content = "Login";
-                logged = false;
-            }
-
+            return result;
         }
-
         private async void btn_upload_Click(object sender, RoutedEventArgs e)
         {
-            if (!logged)
-            {
-                txt_received.Text = "You must be logged on.";
-                return;
-            }
             Dictionary<string, string> userData = new Dictionary<string, string>();
             userData.Add("username", txt_username.Text);
+            userData.Add("mac", addrToInt(txt_mac_addr.Text).ToString());
             userData.Add("weight", txt_enterWeight.Text);
             userData.Add("fat", txt_enterFat.Text);
 
@@ -96,17 +72,54 @@ namespace ManualDataSend2
             await AzureIoTHub.SendDeviceToCloudMessageAsync(data);
             txt_received.Text = data;
         }
-
         private async void btn_example_Click(object sender, RoutedEventArgs e)
         {
             Dictionary<string, string> userData = new Dictionary<string, string>();
             userData.Add("username", txt_username.Text);
             userData.Add("weigh", txt_enterWeight.Text);
-            userData.Add("createdAt",DateTime.Now.ToString());
+            userData.Add("createdAt", DateTime.Now.ToString());
 
             string data = JsonConvert.SerializeObject(userData);
             await AzureIoTHub.SendDeviceToCloudMessageAsync(data);
             txt_received.Text = data;
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            txt_enterFat.Text = hx711.GetGram().ToString();
+        }
+
+        private async void Button_Click_2(object sender, RoutedEventArgs e)
+        {
+            hx711.callibrate();
+
+            MessageDialog dialog = new MessageDialog("Callibrated.");
+            await dialog.ShowAsync();
+        }
+
+        private string mac_format(uint mac)
+        {
+            uint reminder = mac;
+            uint dig;
+            string result = "";
+            for(int i = 0; i < 8; i++)
+            {
+                dig = reminder % 16;
+                if (dig < 10)
+                    result += '0' + dig;
+                else
+                    result += 'A' + dig - 10;
+                reminder /= 16;
+
+                if (i % 2 == 0 && i < 7)
+                    result += ':';
+            }
+            return result;
+        }
+
+        private void Button_getMac_Click(object sender, RoutedEventArgs e)
+        {
+            txt_mac_addr.Text = mac_format(0xf0f0f0f0);
         }
     }
 }

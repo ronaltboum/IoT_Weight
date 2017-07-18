@@ -18,9 +18,6 @@
         <TextBlock HorizontalAlignment="Left" Height="26" Margin="10,10,0,0" TextWrapping="Wrap" Text="Here you can manually upload data into the cloud" VerticalAlignment="Top" Width="337"/>
         <TextBlock x:Name="lbl_loginMsg" HorizontalAlignment="Left" Height="26" Margin="10,41,0,0" TextWrapping="Wrap" Text="You must be logged in:" VerticalAlignment="Top" Width="337"/>
         <TextBlock HorizontalAlignment="Left" Height="26" Margin="10,72,0,0" TextWrapping="Wrap" Text="Username:" VerticalAlignment="Top" Width="75"/>
-        <TextBlock HorizontalAlignment="Left" Height="26" Margin="274,72,0,0" TextWrapping="Wrap" Text="Password:" VerticalAlignment="Top" Width="73"/>
-        <TextBox x:Name="txt_password" HorizontalAlignment="Left" Height="26" Margin="352,72,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="139"/>
-        <Button x:Name="btn_login" Content="Login" HorizontalAlignment="Left" Height="32" Margin="496,72,0,0" VerticalAlignment="Top" Width="107" Background="#FFF8FF6C" Click="btn_login_Click"/>
         <TextBox x:Name="txt_enterWeight" HorizontalAlignment="Left" Height="26" Margin="85,140,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="179"/>
         <TextBlock HorizontalAlignment="Left" Height="26" Margin="10,140,0,0" TextWrapping="Wrap" Text="weight:" VerticalAlignment="Top" Width="75"/>
         <TextBox x:Name="txt_enterFat" HorizontalAlignment="Left" Height="26" Margin="85,177,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="179"/>
@@ -28,5 +25,10 @@
         <TextBox x:Name="txt_enterData3" HorizontalAlignment="Left" Height="26" Margin="85,214,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="179"/>
         <TextBlock HorizontalAlignment="Left" Height="26" Margin="10,214,0,0" TextWrapping="Wrap" Text="extra:" VerticalAlignment="Top" Width="75"/>
         <Button x:Name="btn_example" Content="Send Example" HorizontalAlignment="Left" Height="32" Margin="452,279,0,0" VerticalAlignment="Top" Width="151" Background="#FFF8FF6C" Click="btn_example_Click"/>
+        <TextBox x:Name="txt_mac_addr" HorizontalAlignment="Left" Height="19" Margin="352,134,0,0" TextWrapping="Wrap" Text="00:00:00:00" VerticalAlignment="Top" Width="192"/>
+        <TextBlock HorizontalAlignment="Left" Height="26" Margin="274,140,0,0" TextWrapping="Wrap" Text="MAC Addr:" VerticalAlignment="Top" Width="73"/>
+        <Button Content="Get Real World Data" HorizontalAlignment="Left" Height="31" Margin="439,178,0,0" VerticalAlignment="Top" Width="191" Click="Button_Click"/>
+        <Button Content="Callibrate" HorizontalAlignment="Left" Height="31" Margin="480,218,0,0" VerticalAlignment="Top" Width="110" Click="Button_Click_2"/>
+        <Button Content="Get MAC" HorizontalAlignment="Left" Height="31" Margin="549,134,0,0" VerticalAlignment="Top" Width="81" Click="Button_getMac_Click"/>
     </Grid>
 </Page>

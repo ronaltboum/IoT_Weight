@@ -10,6 +10,8 @@
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
         <Button x:Name="btn_showWeight" Content="How much do I weigh?" HorizontalAlignment="Left" Height="33" Margin="72,312,0,0" VerticalAlignment="Top" Width="195" Click="Button_Click"/>
         <TextBox x:Name="txt_weight" HorizontalAlignment="Left" Height="0" Margin="107,350,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="111"/>
+        <Button x:Name="btn_showWeight_Copy" Content="How much do I weigh?" HorizontalAlignment="Left" Height="33" Margin="72,312,0,0" VerticalAlignment="Top" Width="195" Click="Button_Click"/>
+        <Button x:Name="btn_calibrate" Content="Calibrate" HorizontalAlignment="Left" Height="28" Margin="121,387,0,0" VerticalAlignment="Top" Width="97" Click="Button_Calibrate_Click"/>
 
     </Grid>
 </Page>
