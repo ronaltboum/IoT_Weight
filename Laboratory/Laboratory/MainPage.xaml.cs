@@ -28,17 +28,7 @@ namespace Laboratory
             //this.InitializeComponent();
             Debug.WriteLine("==Laboratory==");
 
-            GpioController gpio = GpioController.GetDefault();
-            GpioPin clock = gpio.OpenPin(4);
             
-            clock.SetDriveMode(GpioPinDriveMode.Output);
-
-            while (true)
-            {
-                clock.Write(GpioPinValue.High);
-                clock.Write(GpioPinValue.Low);
-                System.Threading.Tasks.Task.Delay(100);
-            }
 
         }
     }

@@ -32,6 +32,8 @@ namespace ManualDataSend2
         private GpioPin dout;
         private GpioPin slk;
         private GpioController gpio;
+
+        private Profile profile = null;
         public MainPage()
         {
             gpio = GpioController.GetDefault();
@@ -48,27 +50,28 @@ namespace ManualDataSend2
         }
 
         
-        private uint addrToInt(string addr)
+        private long addrToLong(string addr)
         {
             string[] bytes = addr.Split(':');
-            uint result = 0;
-            uint mult = 1;
+            long result = 0;
+            long mult = 1;
             for (int i = bytes.Length - 1; i >= 0; i--)
             {
-                result += uint.Parse(bytes[i], System.Globalization.NumberStyles.HexNumber) * mult;
+                result += long.Parse(bytes[i], System.Globalization.NumberStyles.HexNumber) * mult;
                 mult *= 256;
             }
             return result;
         }
         private async void btn_upload_Click(object sender, RoutedEventArgs e)
         {
-            Dictionary<string, string> userData = new Dictionary<string, string>();
-            userData.Add("username", txt_username.Text);
-            userData.Add("mac", addrToInt(txt_mac_addr.Text).ToString());
-            userData.Add("weight", txt_enterWeight.Text);
-            userData.Add("fat", txt_enterFat.Text);
+            if(profile == null)
+            {
+                MessageDialog dialog = new MessageDialog("Profile not Set","Error");
+                await dialog.ShowAsync();
+                return;
+            }
 
-            string data = JsonConvert.SerializeObject(userData);
+            string data = JsonConvert.SerializeObject(profile.ToString());
             await AzureIoTHub.SendDeviceToCloudMessageAsync(data);
             txt_received.Text = data;
         }
@@ -86,7 +89,11 @@ namespace ManualDataSend2
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            txt_enterFat.Text = hx711.GetGram().ToString();
+            if (profile == null)
+            {
+                return;
+            }
+            profile.Weight = hx711.GetGram();
         }
 
         private async void Button_Click_2(object sender, RoutedEventArgs e)
@@ -97,18 +104,18 @@ namespace ManualDataSend2
             await dialog.ShowAsync();
         }
 
-        private string mac_format(uint mac)
+        private string mac_format(long mac)
         {
-            uint reminder = mac;
-            uint dig;
+            long reminder = mac;
+            long dig;
             string result = "";
-            for(int i = 0; i < 8; i++)
+            for(int i = 0; i < 6; i++)
             {
                 dig = reminder % 16;
                 if (dig < 10)
-                    result += '0' + dig;
+                    result += (char)('0' + dig);
                 else
-                    result += 'A' + dig - 10;
+                    result += (char)('A' + dig - 10);
                 reminder /= 16;
 
                 if (i % 2 == 0 && i < 7)
@@ -119,7 +126,32 @@ namespace ManualDataSend2
 
         private void Button_getMac_Click(object sender, RoutedEventArgs e)
         {
-            txt_mac_addr.Text = mac_format(0xf0f0f0f0);
+            //TODO: get Real Data!
+            profile.addMAC(0xf0f0f0f0);
+            profile.addMAC(0xf1f1f1f1);
+            profile.addMAC(0xE1E1E1E1);
+        }
+
+        private void btn_register_Click(object sender, RoutedEventArgs e)
+        {
+            if (profile == null)
+                profile = new Profile("", 0, 0, new List<uint>());
+            profile.Username = txt_username.Text;
+            profile.Weight = float.Parse(txt_enterWeight.Text);
+            profile.Fat = float.Parse(txt_enterFat.Text);
+        }
+
+        private void btn_show_Click(object sender, RoutedEventArgs e)
+        {
+            if (profile == null)
+                return;
+            txt_username.Text = profile.Username;
+            txt_enterWeight.Text = profile.Weight.ToString();
+            txt_enterFat.Text = profile.Fat.ToString();
+            lst_MACs.Items.Clear();
+            foreach (uint mac in profile.MacsNearby)
+                lst_MACs.Items.Add(mac_format(mac));
+            txt_received.Text = profile.ToString();
         }
     }
 }
