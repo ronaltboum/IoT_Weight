@@ -1,0 +1,16 @@
+octdigits
+punctuation
+ascii_lowercase
+whitespace
+ChainMap
+capwords
+Formatter
+_re
+hexdigits
+Template
+digits
+_string
+ascii_uppercase
+_TemplateMetaclass
+printable
+ascii_letters

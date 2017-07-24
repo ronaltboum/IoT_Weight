@@ -1,0 +1,17 @@
+time
+Binary
+collections
+dbapi2
+dump
+version_info
+datetime
+register_adapters_and_converters
+apilevel
+threadsafety
+TimeFromTicks
+TimestampFromTicks
+DateFromTicks
+Time
+paramstyle
+Timestamp
+Date

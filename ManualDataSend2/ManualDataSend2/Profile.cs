@@ -11,14 +11,14 @@ namespace ManualDataSend2
         private float weight;
         private float fat;
         private string username;
-        private List<uint> macsNearby;
+        private List<long> macsNearby;
 
-        public Profile(string username, float weight, float fat, List<uint> macsNearby)
+        public Profile(string username, float weight, float fat, List<long> macsNearby)
         {
             this.username = username;
             this.weight = weight;
             this.fat = fat;
-            this.macsNearby = new List<uint>(macsNearby);
+            this.macsNearby = new List<long>(macsNearby);
         }
 
         public float Weight
@@ -38,9 +38,9 @@ namespace ManualDataSend2
             set { username = value; }
         }
 
-        public List<uint> MacsNearby
+        public List<long> MacsNearby
         {
-            get { return new List<uint>(macsNearby); }
+            get { return new List<long>(macsNearby); }
         }
 
         public void addMAC(uint mac)

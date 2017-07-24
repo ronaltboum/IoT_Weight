@@ -1,0 +1,16 @@
+sys
+as_completed
+thread
+_base
+FIRST_EXCEPTION
+__author__
+wait
+CancelledError
+ThreadPoolExecutor
+TimeoutError
+Executor
+ProcessPoolExecutor
+Future
+process
+ALL_COMPLETED
+FIRST_COMPLETED

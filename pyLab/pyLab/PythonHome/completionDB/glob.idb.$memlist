@@ -1,0 +1,16 @@
+escape
+fnmatch
+magic_check_bytes
+iglob
+_rlistdir
+_isrecursive
+_ishidden
+has_magic
+__all__
+magic_check
+glob2
+glob
+glob0
+glob1
+re
+os

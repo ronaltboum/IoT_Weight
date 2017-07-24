@@ -93,12 +93,12 @@ namespace ManualDataSend2
             {
                 return;
             }
-            profile.Weight = hx711.GetGram();
+            profile.Weight = hx711.PoweOnAndGetGram();
         }
 
         private async void Button_Click_2(object sender, RoutedEventArgs e)
         {
-            hx711.callibrate();
+            hx711.calibrate(int.Parse(txt_enterWeight.Text));
 
             MessageDialog dialog = new MessageDialog("Callibrated.");
             await dialog.ShowAsync();
@@ -135,7 +135,7 @@ namespace ManualDataSend2
         private void btn_register_Click(object sender, RoutedEventArgs e)
         {
             if (profile == null)
-                profile = new Profile("", 0, 0, new List<uint>());
+                profile = new Profile("", 0, 0, new List<long>());
             profile.Username = txt_username.Text;
             profile.Weight = float.Parse(txt_enterWeight.Text);
             profile.Fat = float.Parse(txt_enterFat.Text);
