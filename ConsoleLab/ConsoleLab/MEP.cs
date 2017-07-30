@@ -15,13 +15,12 @@ namespace ConsoleLab
         private MEPCallbackAction callbackAction;
         private DateTime date;
 
+        /* Setters & Getters */
         public MEPDevType DevType { get => devType; set => devType = value; }
         public uint IpAddr { get => ipAddr; set => ipAddr = value; }
         public long MacAddr { get => macAddr; set => macAddr = value; }
         public MEPCallbackAction CallbackAction { get => callbackAction; set => callbackAction = value; }
         public DateTime Date { get => date; set => date = value; }
-
-        /* Setters & Getters */
 
         /**
          * Deserializing MEP message
@@ -69,10 +68,24 @@ namespace ConsoleLab
             this.Date = DateTime.Now;
         }
 
+        public override string ToString()
+        {
+            Dictionary<string, Dictionary<string, string>> wrapper = new Dictionary<string, Dictionary<string, string>>();
+            Dictionary<string, string> data = new Dictionary<string, string>();
+
+            wrapper.Add("$MEP", data);
+            data.Add("DevType", stringer(DevType));
+            data.Add("MACAddr", MacAddr.ToString("X12"));
+            data.Add("IPAddr", IpAddr.ToString("X8"));
+            data.Add("Callback", stringer(CallbackAction));
+            data.Add("Date", Date.ToString());
+
+            return JsonConvert.SerializeObject(wrapper);
+        }
 
         /**
-         * convert enum type to string 
-         */
+        * convert enum type to string 
+        */
         private static string stringer(MEPDevType type)
         {
             switch (type)
@@ -133,21 +146,6 @@ namespace ConsoleLab
                 default:
                     return MEPCallbackAction.NoOperation;
             }
-        }
-
-        public override string ToString()
-        {
-            Dictionary<string, Dictionary<string, string>> wrapper = new Dictionary<string, Dictionary<string, string>>();
-            Dictionary<string, string> data = new Dictionary<string, string>();
-
-            wrapper.Add("$MEP", data);
-            data.Add("DevType", stringer(DevType));
-            data.Add("MACAddr", MacAddr.ToString("X12"));
-            data.Add("IPAddr", IpAddr.ToString("X8"));
-            data.Add("Callback", stringer(CallbackAction));
-            data.Add("Date", Date.ToString());
-
-            return JsonConvert.SerializeObject(wrapper);
         }
     }
     enum MEPDevType { RBPI, APP }
