@@ -16,16 +16,19 @@ namespace ManualDataSend2
         private MEPDevType devType;
         private uint ipAddr;
         private long macAddr;
+        private long addressee;
         private MEPCallbackAction callbackAction;
         private DateTime date;
 
+        /* Setters & Getters */
         public MEPDevType DevType { get => devType; set => devType = value; }
         public uint IpAddr { get => ipAddr; set => ipAddr = value; }
         public long MacAddr { get => macAddr; set => macAddr = value; }
         public MEPCallbackAction CallbackAction { get => callbackAction; set => callbackAction = value; }
         public DateTime Date { get => date; set => date = value; }
+        public long Addressee { get => addressee; set => addressee = value; }
 
-        /* Setters & Getters */
+        
 
         /**
          * Deserializing MEP message
@@ -35,7 +38,12 @@ namespace ManualDataSend2
         {
             Dictionary<string, Dictionary<string, string>> mepMes = JsonConvert.DeserializeObject<Dictionary<string, Dictionary<string, string>>>(mepMessage);
             Dictionary<string, string> data = mepMes["$MEP"];
-            MEP mep = new MEP(parseDevType(data["DevType"]), long.Parse(data["MACAddr"], NumberStyles.HexNumber), uint.Parse(data["IPAddr"], NumberStyles.HexNumber), parseCallbackAction(data["Callback"]), DateTime.Parse(data["Date"]));
+            MEP mep = new MEP(parseDevType(data["DevType"]),
+                long.Parse(data["MACAddr"], NumberStyles.HexNumber), 
+                uint.Parse(data["IPAddr"], NumberStyles.HexNumber),
+                long.Parse(data["Addressee"], NumberStyles.HexNumber),
+                parseCallbackAction(data["Callback"]),
+                DateTime.Parse(data["Date"]));
             return mep;
         }
 
@@ -48,19 +56,21 @@ namespace ManualDataSend2
         }
 
         /** constructors **/
-        public MEP(MEPDevType devType, long macAddr, uint ipAddr, MEPCallbackAction callbackAction)
+        public MEP(MEPDevType devType, long macAddr, uint ipAddr, long addressee, MEPCallbackAction callbackAction)
         {
             this.DevType = devType;
             this.IpAddr = ipAddr;
             this.MacAddr = macAddr;
+            this.addressee = addressee;
             this.CallbackAction = callbackAction;
             this.Date = DateTime.Now;
         }
-        private MEP(MEPDevType devType, long macAddr, uint ipAddr, MEPCallbackAction callbackAction, DateTime date)
+        private MEP(MEPDevType devType, long macAddr, uint ipAddr, long addressee, MEPCallbackAction callbackAction, DateTime date)
         {
             this.DevType = devType;
             this.IpAddr = ipAddr;
             this.MacAddr = macAddr;
+            this.addressee = addressee;
             this.CallbackAction = callbackAction;
             this.Date = date;
         }
@@ -69,6 +79,7 @@ namespace ManualDataSend2
             this.DevType = devType;
             this.IpAddr = 0;
             this.MacAddr = 0;
+            this.addressee = 0;
             this.CallbackAction = callbackAction;
             this.Date = DateTime.Now;
         }
@@ -147,6 +158,7 @@ namespace ManualDataSend2
             wrapper.Add("$MEP", data);
             data.Add("DevType", stringer(DevType));
             data.Add("MACAddr", MacAddr.ToString("X12"));
+            data.Add("Addressee", addressee.ToString("X12"));
             data.Add("IPAddr", IpAddr.ToString("X8"));
             data.Add("Callback", stringer(CallbackAction));
             data.Add("Date", Date.ToString());
