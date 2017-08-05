@@ -43,11 +43,11 @@ namespace ManualDataSend2
             get { return new List<long>(macsNearby); }
         }
 
-        public void addMAC(uint mac)
+        public void addMAC(long mac)
         {
             macsNearby.Add(mac);
         }
-        public void removeMAC(uint mac)
+        public void removeMAC(long mac)
         {
             macsNearby.Remove(mac);
         }

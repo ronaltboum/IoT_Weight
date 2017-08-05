@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
+using System.Threading.Tasks;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
 using Windows.UI.Xaml;
@@ -34,12 +35,15 @@ namespace ManualDataSend2
         private GpioController gpio;
 
         private Profile profile = null;
+
+        private CloudMessagesListener cml;
         public MainPage()
         {
             gpio = GpioController.GetDefault();
             dout = gpio.OpenPin(DOUT_PIN);
             slk = gpio.OpenPin(SLK_PIN);
             hx711 = new HX711(slk, dout);
+            cml = new CloudMessagesListener(0, 0);
             this.InitializeComponent();
         }
         private async void Button_Click_1(object sender, RoutedEventArgs e)
@@ -104,32 +108,12 @@ namespace ManualDataSend2
             await dialog.ShowAsync();
         }
 
-        private string mac_format(long mac)
-        {
-            long reminder = mac;
-            long dig;
-            string result = "";
-            for(int i = 0; i < 6; i++)
-            {
-                dig = reminder % 16;
-                if (dig < 10)
-                    result += (char)('0' + dig);
-                else
-                    result += (char)('A' + dig - 10);
-                reminder /= 16;
-
-                if (i % 2 == 0 && i < 7)
-                    result += ':';
-            }
-            return result;
-        }
 
         private void Button_getMac_Click(object sender, RoutedEventArgs e)
         {
             //TODO: get Real Data!
-            profile.addMAC(0xf0f0f0f0);
-            profile.addMAC(0xf1f1f1f1);
-            profile.addMAC(0xE1E1E1E1);
+            foreach(long mac in cml.MepServer.UsersNearby.Keys)
+                profile.addMAC(mac);
         }
 
         private void btn_register_Click(object sender, RoutedEventArgs e)
@@ -150,8 +134,13 @@ namespace ManualDataSend2
             txt_enterFat.Text = profile.Fat.ToString();
             lst_MACs.Items.Clear();
             foreach (uint mac in profile.MacsNearby)
-                lst_MACs.Items.Add(mac_format(mac));
+                lst_MACs.Items.Add(AddressConvert.MACtoRepresentalString(mac));
             txt_received.Text = profile.ToString();
+        }
+
+        private void btn_listen_Click(object sender, RoutedEventArgs e)
+        {
+            Task task = Task.Run((Action)cml.start);
         }
     }
 }

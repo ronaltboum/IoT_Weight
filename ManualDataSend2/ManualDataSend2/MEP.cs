@@ -28,14 +28,17 @@ namespace ManualDataSend2
         public DateTime Date { get => date; set => date = value; }
         public long Addressee { get => addressee; set => addressee = value; }
 
-        
+
 
         /**
          * Deserializing MEP message
          * @param mepMessage the string to deserialize
+         * EXAMPLE:
+         * {"$MEP":{"DevType":"RBPI","MACAddr":"123456789ABC","IPAddr":"C0A80101","Callback":"RES","Addressee":"123456789ABC","Date": "28/07/2017 19:02"}}
          **/
         public static MEP deserializeMEP(string mepMessage)
         {
+            mepMessage = mepMessage.Replace('?', '\"');
             Dictionary<string, Dictionary<string, string>> mepMes = JsonConvert.DeserializeObject<Dictionary<string, Dictionary<string, string>>>(mepMessage);
             Dictionary<string, string> data = mepMes["$MEP"];
             MEP mep = new MEP(parseDevType(data["DevType"]),

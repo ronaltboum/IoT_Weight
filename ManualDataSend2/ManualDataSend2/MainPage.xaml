@@ -17,6 +17,7 @@
         </FlyoutBase.AttachedFlyout>
         <TextBox x:Name="txt_username" HorizontalAlignment="Left" Height="26" Margin="90,41,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="179"/>
         <Button x:Name="btn_upload" Content="upload" HorizontalAlignment="Left" Height="31" Margin="17,391,0,0" VerticalAlignment="Top" Width="73" Background="#FFF7FF59" Click="btn_upload_Click" />
+        <Button x:Name="btn_listen" Content="Start Listening" HorizontalAlignment="Left" Height="44" Margin="293,277,0,0" VerticalAlignment="Top" Width="158" Background="#FFF7FF59" Click="btn_listen_Click" Grid.ColumnSpan="2" />
         <TextBox x:Name="txt_received" HorizontalAlignment="Left" Height="19" Margin="13,479,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="419" SelectionHighlightColor="#FF00060C" Background="White" Grid.ColumnSpan="2"/>
         <Button Content="Get Messages" HorizontalAlignment="Left" Height="34" Margin="13,440,0,0" VerticalAlignment="Top" Width="121" Background="#FFFBFF9C" Click="Button_Click_1"/>
         <TextBlock HorizontalAlignment="Left" Height="26" Margin="10,10,0,0" TextWrapping="Wrap" Text="Here you can manually upload data into the cloud" VerticalAlignment="Top" Width="337"/>
