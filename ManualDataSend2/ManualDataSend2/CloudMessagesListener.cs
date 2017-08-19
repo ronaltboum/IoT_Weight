@@ -11,7 +11,6 @@ namespace ManualDataSend2
         private Queue<string> unhandledMessages;
         private bool isRunning;
         private MEPServer mepServer;
-
         public const int RESPONSE_TIMEOUT = 5000; //If the addressee does not answer within 5 second, then it assumed to be dead.
 
         public Queue<string> UnhandledMessages { get => new Queue<string>(unhandledMessages); }
@@ -46,8 +45,7 @@ namespace ManualDataSend2
                 }
                 else
                 {
-                    Debug.WriteLine("Unknown message received:" +
-                        "");
+                    Debug.WriteLine("Unknown message received: ");
                     Debug.WriteLine(msg);
                     unhandledMessages.Enqueue(msg);
                 }

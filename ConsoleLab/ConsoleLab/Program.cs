@@ -10,10 +10,11 @@ namespace ConsoleLab
     {
         static void Main(string[] args)
         {
-            uint ip = 0x11111111;
-            long mac = 0x123456789ABC;
+            uint ip = 0xaabbccdd;
+            long mac = 0x112233445566;
+            long addressee = 0x66556655;
 
-            MEP mep = new MEP(MEPDevType.RBPI, mac, ip, MEPCallbackAction.Response);
+            MEP mep = new MEP(MEPDevType.RBPI, mac, ip, addressee, MEPCallbackAction.Response);
             Console.WriteLine(mep.DevType);
             Console.WriteLine(mep.MacAddr);
             Console.WriteLine(mep.IpAddr);

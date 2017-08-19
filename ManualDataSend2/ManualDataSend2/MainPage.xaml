@@ -9,34 +9,33 @@
 
     <Grid Background="#FFFFF8B5">
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="183*"/>
-            <ColumnDefinition Width="329*"/>
+            <ColumnDefinition Width="409*"/>
+            <ColumnDefinition Width="615*"/>
         </Grid.ColumnDefinitions>
         <FlyoutBase.AttachedFlyout>
             <MenuFlyout/>
         </FlyoutBase.AttachedFlyout>
-        <TextBox x:Name="txt_username" HorizontalAlignment="Left" Height="26" Margin="90,41,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="179"/>
-        <Button x:Name="btn_upload" Content="upload" HorizontalAlignment="Left" Height="31" Margin="17,391,0,0" VerticalAlignment="Top" Width="73" Background="#FFF7FF59" Click="btn_upload_Click" />
-        <Button x:Name="btn_listen" Content="Start Listening" HorizontalAlignment="Left" Height="44" Margin="293,277,0,0" VerticalAlignment="Top" Width="158" Background="#FFF7FF59" Click="btn_listen_Click" Grid.ColumnSpan="2" />
-        <TextBox x:Name="txt_received" HorizontalAlignment="Left" Height="19" Margin="13,479,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="419" SelectionHighlightColor="#FF00060C" Background="White" Grid.ColumnSpan="2"/>
-        <Button Content="Get Messages" HorizontalAlignment="Left" Height="34" Margin="13,440,0,0" VerticalAlignment="Top" Width="121" Background="#FFFBFF9C" Click="Button_Click_1"/>
+        <TextBox x:Name="txt_username" HorizontalAlignment="Left" Height="32" Margin="90,41,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="179"/>
+        <Button x:Name="btn_upload" Content="upload data to the cloud" HorizontalAlignment="Left" Height="31" Margin="20,434,0,0" VerticalAlignment="Top" Width="249" Background="#FFF7FF59" Click="btn_upload_Click" />
+        <Button x:Name="btn_listen" Content="Start Listening for messages" HorizontalAlignment="Left" Height="33" Margin="20,360,0,0" VerticalAlignment="Top" Width="249" Background="#FFF7FF59" Click="btn_listen_Click" />
+        <TextBox x:Name="txt_around" HorizontalAlignment="Left" Height="203" Margin="17,143,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="252" SelectionHighlightColor="#FF00060C" Background="White"/>
+        <Button Content="Get Messages" HorizontalAlignment="Left" Height="34" Margin="154,3,0,0" VerticalAlignment="Top" Width="121" Background="#FFFBFF9C" Click="Button_Click_1" Grid.Column="1"/>
         <TextBlock HorizontalAlignment="Left" Height="26" Margin="10,10,0,0" TextWrapping="Wrap" Text="Here you can manually upload data into the cloud" VerticalAlignment="Top" Width="337"/>
         <TextBlock HorizontalAlignment="Left" Height="26" Margin="10,41,0,0" TextWrapping="Wrap" Text="Username:" VerticalAlignment="Top" Width="75"/>
-        <TextBox x:Name="txt_enterWeight" HorizontalAlignment="Left" Height="26" Margin="90,80,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="179"/>
+        <TextBox x:Name="txt_enterWeight" HorizontalAlignment="Left" Height="32" Margin="90,80,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="79"/>
         <TextBlock HorizontalAlignment="Left" Height="26" Margin="10,80,0,0" TextWrapping="Wrap" Text="weight:" VerticalAlignment="Top" Width="75"/>
-        <TextBox x:Name="txt_enterFat" HorizontalAlignment="Left" Height="26" Margin="90,117,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="179"/>
-        <TextBlock HorizontalAlignment="Left" Height="26" Margin="10,118,0,0" TextWrapping="Wrap" Text="Fat:" VerticalAlignment="Top" Width="75"/>
-        <Button x:Name="btn_example" Content="Send Example" HorizontalAlignment="Left" Height="32" Margin="134,441,0,0" VerticalAlignment="Top" Width="151" Background="#FFF8FF6C" Click="btn_example_Click"/>
-        <TextBlock HorizontalAlignment="Left" Height="26" Margin="17,154,0,0" TextWrapping="Wrap" Text="MAC Addr:" VerticalAlignment="Top" Width="73"/>
-        <Button Content="Get Real World Data" HorizontalAlignment="Left" Height="31" Margin="293,82,0,0" VerticalAlignment="Top" Width="158" Click="Button_Click" Grid.ColumnSpan="2"/>
-        <Button Content="Callibrate" HorizontalAlignment="Left" Height="31" Margin="293,118,0,0" VerticalAlignment="Top" Width="158" Click="Button_Click_2" Grid.ColumnSpan="2"/>
-        <Button Content="Get MAC" HorizontalAlignment="Left" Height="31" Margin="293,154,0,0" VerticalAlignment="Top" Width="158" Click="Button_getMac_Click" Grid.ColumnSpan="2"/>
-        <ListView x:Name="lst_MACs" HorizontalAlignment="Left" Height="204" Margin="13,182,0,0" VerticalAlignment="Top" Width="256">
-            <CheckBox Content="ADDR" Height="22"/>
-        </ListView>
-        <Button x:Name="btn_upload_Copy" Content="Register" HorizontalAlignment="Left" Height="31" Margin="90,391,0,0" VerticalAlignment="Top" Width="79" Background="#FFF7FF59" Click="btn_register_Click" />
-        <Button x:Name="btn_upload_Copy1" Content="Show" HorizontalAlignment="Left" Height="31" Margin="174,391,0,0" VerticalAlignment="Top" Width="95" Background="#FFF7FF59" Click="btn_show_Click" />
-        <Button Content="Set Timer" HorizontalAlignment="Left" Height="31" Margin="293,190,0,0" VerticalAlignment="Top" Width="158" Click="Button_Click" Grid.ColumnSpan="2"/>
-        <Button Content="Stop Timer" HorizontalAlignment="Left" Height="31" Margin="293,226,0,0" VerticalAlignment="Top" Width="158" Click="Button_Click" Grid.ColumnSpan="2"/>
+        <TextBox x:Name="txt_enterFat" HorizontalAlignment="Left" Height="32" Margin="177,80,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="92"/>
+        <TextBlock HorizontalAlignment="Left" Height="26" Margin="281,80,0,0" TextWrapping="Wrap" Text="&lt;-Fat" VerticalAlignment="Top" Width="75"/>
+        <Button x:Name="btn_example" Content="Send Example message" HorizontalAlignment="Left" Height="32" Margin="20,506,0,0" VerticalAlignment="Top" Width="249" Background="#FFF8FF6C" Click="btn_example_Click"/>
+        <Button Content="Get Real World Data" HorizontalAlignment="Left" Height="31" Margin="10,545,0,0" VerticalAlignment="Top" Width="158" Click="Button_Click" Grid.Column="1"/>
+        <Button Content="Callibrate" HorizontalAlignment="Left" Height="31" Margin="10,470,0,0" VerticalAlignment="Top" Width="158" Click="Button_Click_2" Grid.Column="1"/>
+        <Button Content="Get MAC" HorizontalAlignment="Left" Height="31" Margin="10,583,0,0" VerticalAlignment="Top" Width="158" Click="Button_getMac_Click" Grid.Column="1"/>
+        <Button x:Name="btn_upload_Copy" Content="Register Data locally" HorizontalAlignment="Left" Height="31" Margin="20,470,0,0" VerticalAlignment="Top" Width="249" Background="#FFF7FF59" Click="btn_register_Click" />
+        <Button x:Name="btn_upload_Copy1" Content="Refresh" HorizontalAlignment="Left" Height="31" Margin="20,398,0,0" VerticalAlignment="Top" Width="249" Background="#FFF7FF59" Click="btn_show_Click" />
+        <Button Content="Set Timer" HorizontalAlignment="Left" Height="31" Margin="10,619,0,0" VerticalAlignment="Top" Width="158" Click="Button_Click" Grid.Column="1"/>
+        <Button Content="Stop Timer" HorizontalAlignment="Left" Height="31" Margin="10,655,0,0" VerticalAlignment="Top" Width="158" Click="Button_Click" Grid.Column="1"/>
+        <TextBlock HorizontalAlignment="Left" Height="26" Margin="17,117,0,0" TextWrapping="Wrap" Text="MAC Addresses around:" VerticalAlignment="Top" Width="176"/>
+        <TextBox x:Name="txt_msglog" HorizontalAlignment="Left" Height="416" Margin="10,41,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="265" SelectionHighlightColor="#FF00060C" Background="White" Grid.Column="1"/>
+        <TextBlock HorizontalAlignment="Left" Height="26" Margin="10,10,0,0" TextWrapping="Wrap" Text="Message Log:" VerticalAlignment="Top" Width="176" Grid.Column="1"/>
     </Grid>
 </Page>

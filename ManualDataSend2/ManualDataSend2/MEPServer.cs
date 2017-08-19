@@ -127,7 +127,10 @@ namespace ManualDataSend2
             callback = mepMsg.CallbackAction;
 
             //register the MAC and IP that has received
-            usersNearby.Add(mepMsg.MacAddr, mepMsg.IpAddr);
+            if (!usersNearby.ContainsKey(mepMsg.MacAddr))
+                usersNearby.Add(mepMsg.MacAddr, mepMsg.IpAddr);
+            else
+                usersNearby[mepMsg.MacAddr] = mepMsg.IpAddr;
             history.Enqueue(mepMsg);
 
             //answering the messages (if needed)

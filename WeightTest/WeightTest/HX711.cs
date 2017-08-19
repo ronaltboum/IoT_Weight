@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Windows.Devices.Gpio;
 
-namespace ManualDataSend2
+namespace WeightTest
 {
     class HX711
     {
@@ -21,8 +21,6 @@ namespace ManualDataSend2
         private const byte AVERAGE_DEF = 25;
         private const float SCALE_DEF = 1992.0f;
 
-        private bool isOn;
-
         public HX711(GpioPin powerDownAndSerialClockInput, GpioPin serialDataOutput)
         {
             PowerDownAndSerialClockInput = powerDownAndSerialClockInput;
@@ -30,8 +28,6 @@ namespace ManualDataSend2
 
             SerialDataOutput = serialDataOutput;
             SerialDataOutput.SetDriveMode(GpioPinDriveMode.Input);
-
-            isOn = false;
         }
 
         public void calibrate(float knownWeight)
@@ -46,9 +42,9 @@ namespace ManualDataSend2
              */
             this.PowerOn();
             this.SetOffset(ReadAverage(AVERAGE_DEF));
-            float g;
-            for(int i = 0; i < 10; i++) {
-                g = GetGram();
+            for (int i = 0; i < 1; i++)
+            {
+                float g = GetGram();
                 this.SetScale(knownWeight / g);
                 System.Diagnostics.Debug.WriteLine(g);
             }
@@ -115,7 +111,7 @@ namespace ManualDataSend2
         {
             PowerDownAndSerialClockInput.Write(GpioPinValue.Low);
             PowerDownAndSerialClockInput.Write(GpioPinValue.High);
-            isOn = false;
+            //wait 60 microseconds
         }
 
         //When PD_SCK returns to low,
@@ -124,7 +120,6 @@ namespace ManualDataSend2
         {
             PowerDownAndSerialClockInput.Write(GpioPinValue.Low);
             _InputAndGainSelection = InputAndGainOption.A128;
-            isOn = true;
         }
         //After a reset or power-down event, input
         //selection is default to Channel A with a gain of 128. 
@@ -153,13 +148,8 @@ namespace ManualDataSend2
             this.scale = scale;
         }
 
-        /**
-         * returns a negative value in case of error (e.g. power is not on)
-         */
         public float GetGram()
         {
-            if (!isOn)
-                return -1;
             long val = (ReadAverage() - this.offset);
             return (float)val / this.scale;
         }
@@ -169,3 +159,6 @@ namespace ManualDataSend2
         A128 = 1, B32 = 2, A64 = 3
     }
 }
+
+
+

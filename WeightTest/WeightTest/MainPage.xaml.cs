@@ -14,7 +14,6 @@ using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 using Windows.Devices.Gpio;
 using System.Diagnostics;
-using ManualDataSend2;
 // The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=402352&clcid=0x409
 
 namespace WeightTest
@@ -24,8 +23,8 @@ namespace WeightTest
     /// </summary>
     public sealed partial class MainPage : Page
     {
-        const byte DOUT_PIN = 24;
-        const byte SLK_PIN = 23;
+        const byte DOUT_PIN = 26;
+        const byte SLK_PIN = 19;
 
         private GpioPin dout;
         private GpioPin slk;
@@ -36,6 +35,14 @@ namespace WeightTest
             gpio = GpioController.GetDefault();
             dout = gpio.OpenPin(DOUT_PIN);
             slk = gpio.OpenPin(SLK_PIN);
+
+            //dout.Write(GpioPinValue.High);
+            //dout.Write(GpioPinValue.High);
+            //while (true)
+            //{
+
+            //}
+
             hx711 = new HX711(slk, dout);
             this.InitializeComponent();
         }
@@ -53,14 +60,14 @@ namespace WeightTest
         private void Button_Click_1(object sender, RoutedEventArgs e)
         {
             float g;
-            //hx711.PowerOn();
-            for (int i = 0; i < 25; i++)
+            hx711.PowerOn();
+            for (int i = 0; i < 250; i++)
             {
-                g = hx711.PoweOnAndGetGram();
+                g = hx711.GetGram(); // - 16842.14f;
                 Debug.WriteLine(g);
                 System.Threading.Tasks.Task.Delay(100);
             }
-            //hx711.PowerDown();
+            hx711.PowerDown();
             Debug.WriteLine("===");
         }
     }

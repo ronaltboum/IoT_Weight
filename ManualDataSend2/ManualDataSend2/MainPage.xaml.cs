@@ -45,12 +45,23 @@ namespace ManualDataSend2
             hx711 = new HX711(slk, dout);
             cml = new CloudMessagesListener(0, 0);
             this.InitializeComponent();
+
+
+           // MEP msg = new MEP(MEPDevType.RBPI, 0x112233445566l, 0xffeeddcc, 0x66776677, MEPCallbackAction.Acknowledge);
+
         }
         private async void Button_Click_1(object sender, RoutedEventArgs e)
         {
-            this.txt_received.Text = "Receiving...";
-            string message = await AzureIoTHub.ReceiveCloudToDeviceMessageAsync();
-            this.txt_received.Text = message;
+            //this.txt_received.Text = "Receiving...";
+            //string message = await AzureIoTHub.ReceiveCloudToDeviceMessageAsync();
+            //this.txt_received.Text = message;
+            Queue<MEP> messages = cml.MepServer.History;
+            txt_msglog.Text = "==\n";
+            foreach(MEP message in messages)
+            {
+                txt_msglog.Text += message.ToString() + "\n";
+            }
+
         }
 
         
@@ -77,7 +88,6 @@ namespace ManualDataSend2
 
             string data = JsonConvert.SerializeObject(profile.ToString());
             await AzureIoTHub.SendDeviceToCloudMessageAsync(data);
-            txt_received.Text = data;
         }
         private async void btn_example_Click(object sender, RoutedEventArgs e)
         {
@@ -88,7 +98,9 @@ namespace ManualDataSend2
 
             string data = JsonConvert.SerializeObject(userData);
             await AzureIoTHub.SendDeviceToCloudMessageAsync(data);
-            txt_received.Text = data;
+
+            MessageDialog dialog = new MessageDialog(data);
+            await dialog.ShowAsync();
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
@@ -127,20 +139,26 @@ namespace ManualDataSend2
 
         private void btn_show_Click(object sender, RoutedEventArgs e)
         {
-            if (profile == null)
-                return;
-            txt_username.Text = profile.Username;
-            txt_enterWeight.Text = profile.Weight.ToString();
-            txt_enterFat.Text = profile.Fat.ToString();
-            lst_MACs.Items.Clear();
-            foreach (uint mac in profile.MacsNearby)
-                lst_MACs.Items.Add(AddressConvert.MACtoRepresentalString(mac));
-            txt_received.Text = profile.ToString();
+            //if (profile == null)
+            //    return;
+            //txt_username.Text = profile.Username;
+            //txt_enterWeight.Text = profile.Weight.ToString();
+            //txt_enterFat.Text = profile.Fat.ToString();
+
+            txt_around.Text = "==\n";
+            string ip, mac;
+            foreach (KeyValuePair<long,uint> user in cml.MepServer.UsersNearby)
+            {
+                mac = AddressConvert.MACtoRepresentalString(user.Key);
+                ip = AddressConvert.IPtoRepresentalString(user.Value);
+                txt_around.Text += mac + " - " + ip + "\n";
+            }
         }
 
         private void btn_listen_Click(object sender, RoutedEventArgs e)
         {
             Task task = Task.Run((Action)cml.start);
+            
         }
     }
 }
