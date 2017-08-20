@@ -79,8 +79,6 @@ namespace ManualDataSend2
         }
 
 
-
-
         /**
          * Deserializing MEP message
          * @param mepMessage the string to deserialize
