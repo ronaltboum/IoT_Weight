@@ -7,10 +7,16 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d">
 
-    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-        <TextBox x:Name="txt_knownWeight" HorizontalAlignment="Left" Height="40" Margin="10,10,0,0" TextWrapping="Wrap" Text="7.0" VerticalAlignment="Top" Width="59"/>
-        <Button Content="Calibrate" HorizontalAlignment="Left" Height="25" Margin="10,55,0,0" VerticalAlignment="Top" Width="67" Click="Button_Click"/>
-        <Button Content="Weigh" HorizontalAlignment="Left" Height="33" Margin="10,85,0,0" VerticalAlignment="Top" Width="67" Click="Button_Click_1"/>
+    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}" Margin="0,0,-224,0">
+        <TextBox x:Name="txt_knownWeight" HorizontalAlignment="Left" Height="22" Margin="405,136,0,0" TextWrapping="Wrap" Text="7.0" VerticalAlignment="Top" Width="59"/>
+        <Button Content="Calibrate" HorizontalAlignment="Left" Height="30" Margin="281,168,0,0" VerticalAlignment="Top" Width="88" Click="Button_Click"/>
+        <TextBlock HorizontalAlignment="Left" Height="62" Margin="276,74,0,0" TextWrapping="Wrap" Text="If you don't know the SCALE, weigh somthing with a known weight and click on 'calibrate'." VerticalAlignment="Top" Width="261"/>
+        <TextBox x:Name="txt_results" HorizontalAlignment="Left" Height="583" Margin="10,47,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="261"/>
+        <Button Content="Weigh" HorizontalAlignment="Left" Height="33" Margin="10,9,0,0" VerticalAlignment="Top" Width="261" Click="Button_weigh2_Click"/>
+        <TextBox x:Name="txt_scale" HorizontalAlignment="Left" Height="17" Margin="336,37,0,0" TextWrapping="Wrap" Text="1.0" VerticalAlignment="Top" Width="44"/>
+        <TextBlock HorizontalAlignment="Left" Height="22" Margin="281,10,0,0" TextWrapping="Wrap" Text="Calibrate the scale:" VerticalAlignment="Top" Width="168"/>
+        <TextBlock HorizontalAlignment="Left" Height="22" Margin="276,37,0,0" TextWrapping="Wrap" Text="SCALE:" VerticalAlignment="Top" Width="55"/>
+        <TextBlock HorizontalAlignment="Left" Height="22" Margin="281,141,0,0" TextWrapping="Wrap" Text="Known Weight:" VerticalAlignment="Top" Width="119"/>
 
     </Grid>
 </Page>
