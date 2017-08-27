@@ -470,10 +470,8 @@ namespace QRCODE_tutorial
 			global::Intersoft.Crosslight.Services.Barcode.Android.Resource.Attribute.step = global::QRCODE_tutorial.Resource.Attribute.step;
 			global::Intersoft.Crosslight.Services.Barcode.Android.Resource.Attribute.strokeColor = global::QRCODE_tutorial.Resource.Attribute.strokeColor;
 			global::Intersoft.Crosslight.Services.Barcode.Android.Resource.Attribute.strokeWidth = global::QRCODE_tutorial.Resource.Attribute.strokeWidth;
-			global::Intersoft.Crosslight.Services.Barcode.Android.Resource.Attribute.subtitle = global::QRCODE_tutorial.Resource.Attribute.subtitle;
 			global::Intersoft.Crosslight.Services.Barcode.Android.Resource.Attribute.subtitleColor = global::QRCODE_tutorial.Resource.Attribute.subtitleColor;
 			global::Intersoft.Crosslight.Services.Barcode.Android.Resource.Attribute.subtitleTextSize = global::QRCODE_tutorial.Resource.Attribute.subtitleTextSize;
-			global::Intersoft.Crosslight.Services.Barcode.Android.Resource.Attribute.title = global::QRCODE_tutorial.Resource.Attribute.title;
 			global::Intersoft.Crosslight.Services.Barcode.Android.Resource.Attribute.titleColor = global::QRCODE_tutorial.Resource.Attribute.titleColor;
 			global::Intersoft.Crosslight.Services.Barcode.Android.Resource.Attribute.titleTextSize = global::QRCODE_tutorial.Resource.Attribute.titleTextSize;
 			global::Intersoft.Crosslight.Services.Barcode.Android.Resource.Attribute.vpiBulletPageIndicatorStyle = global::QRCODE_tutorial.Resource.Attribute.vpiBulletPageIndicatorStyle;
@@ -784,10 +782,8 @@ namespace QRCODE_tutorial
 			global::Intersoft.Crosslight.Services.Barcode.Android.Resource.Styleable.RoundedButton_imageBackground = global::QRCODE_tutorial.Resource.Styleable.RoundedButton_imageBackground;
 			global::Intersoft.Crosslight.Services.Barcode.Android.Resource.Styleable.RoundedButton_imageSrc = global::QRCODE_tutorial.Resource.Styleable.RoundedButton_imageSrc;
 			global::Intersoft.Crosslight.Services.Barcode.Android.Resource.Styleable.RoundedButton_isToggle = global::QRCODE_tutorial.Resource.Styleable.RoundedButton_isToggle;
-			global::Intersoft.Crosslight.Services.Barcode.Android.Resource.Styleable.RoundedButton_subtitle = global::QRCODE_tutorial.Resource.Styleable.RoundedButton_subtitle;
 			global::Intersoft.Crosslight.Services.Barcode.Android.Resource.Styleable.RoundedButton_subtitleColor = global::QRCODE_tutorial.Resource.Styleable.RoundedButton_subtitleColor;
 			global::Intersoft.Crosslight.Services.Barcode.Android.Resource.Styleable.RoundedButton_subtitleTextSize = global::QRCODE_tutorial.Resource.Styleable.RoundedButton_subtitleTextSize;
-			global::Intersoft.Crosslight.Services.Barcode.Android.Resource.Styleable.RoundedButton_title = global::QRCODE_tutorial.Resource.Styleable.RoundedButton_title;
 			global::Intersoft.Crosslight.Services.Barcode.Android.Resource.Styleable.RoundedButton_titleColor = global::QRCODE_tutorial.Resource.Styleable.RoundedButton_titleColor;
 			global::Intersoft.Crosslight.Services.Barcode.Android.Resource.Styleable.RoundedButton_titleTextSize = global::QRCODE_tutorial.Resource.Styleable.RoundedButton_titleTextSize;
 			global::Intersoft.Crosslight.Services.Barcode.Android.Resource.Styleable.SmoothProgressBar = global::QRCODE_tutorial.Resource.Styleable.SmoothProgressBar;
