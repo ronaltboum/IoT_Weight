@@ -17,19 +17,19 @@ namespace ManualDataSend2
         private string protocol;
 		private DRPDevType devType;
         private string userName;
-        private long RBID;
+        private long raspID;
         private DRPData data;
 		private int token;
-        private DRPMessageType drpMessageType;
+        private DRPMessageType messageType;
         private DateTime date;
 
         /* Setters & Getters */
         public string Protocol {get => protocol; set=> protocol = value; }
 		public DRPDevType devType { get => devType; set => devType = value; }
-        public long MacAddr { get => macAddr; set => macAddr = value; }
-        public uint IpAddr { get => ipAddr; set => ipAddr = value; }
-        public long Addressee { get => addressee; set => addressee = value; }
-        public MEPCallbackAction CallbackAction { get => callbackAction; set => callbackAction = value; }
+		public string UserName {get => userName; set=> userName = value; }
+        public long RaspID { get => raspID; set => raspID = value; }
+        public int Token { get => token; set => token = value; }
+        public DRPMessageType MessageType { get => messageType; set => messageType = value; }
         public DateTime Date { get => date; set => date = value; }
 
         /* Setters & Getters for JSON */
