@@ -3,6 +3,7 @@ using Android.Widget;
 using Android.OS;
 using Intersoft.Crosslight.Services.Barcode;
 using Intersoft.Crosslight;
+using System.Threading.Tasks;
 
 namespace QRcode_scanner
 {
@@ -11,6 +12,7 @@ namespace QRcode_scanner
     {
         Button btn;
         TextView tv;
+        BarcodeScanner scanner;
         protected override void OnCreate(Bundle savedInstanceState)
         {
             base.OnCreate(savedInstanceState);
@@ -24,16 +26,16 @@ namespace QRcode_scanner
 
             btn.Click += Btn_Click;
 
-           
+            
         }
-
-        private async void Btn_Click(object sender, System.EventArgs e)
+        
+        public void Btn_Click(object sender, System.EventArgs e)
         {
-            IBarcodeReaderService service = ServiceProvider.GetService<IBarcodeReaderService>();
-            service.SetOwner(this);
-
-            string Result = await service.Scan();
-            tv.Text = Result;
+            scanner = new BarcodeScanner();
+            string res;
+            scanner.scan();
+            res = scanner.Result;
+            tv.Text = res;
         }
     }
 }
