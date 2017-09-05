@@ -44,6 +44,10 @@ namespace ManualDataSend2
             slk = gpio.OpenPin(SLK_PIN);
             hx711 = new HX711(slk, dout);
             cml = new CloudMessagesListener(0, 0);
+
+           // HTTPServer httpserver = new HTTPServer("y");
+           // httpserver.start();
+
             this.InitializeComponent();
 
 

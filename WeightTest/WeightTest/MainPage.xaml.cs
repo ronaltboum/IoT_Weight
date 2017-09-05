@@ -41,7 +41,8 @@ namespace WeightTest
 
             this.InitializeComponent();
         }
-        
+
+        bool inMidCalibration = false;
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             /*
@@ -52,20 +53,32 @@ namespace WeightTest
              * 4. Divide the result in step 3 to your known weight. You should get about the parameter you need to pass to set_scale.
              * 5. Adjust the parameter in step 4 until you get an accurate reading.
             */
-            txt_results.Text = "";
+           
 
             float knownWeight = float.Parse(txt_knownWeight.Text);
 
-            appendLine("==Calibration==", txt_results);
-
-            hx711b.set_scale();
-            hx711b.tare();
-            float g = hx711b.get_units(10);
-            g = g / knownWeight;
-            appendLine("", txt_results);
-            appendLine("Your weight scale is", txt_results);
-            appendLine(g.ToString(), txt_results);
-            txt_scale.Text = g.ToString();
+            
+            if (!inMidCalibration)
+            {
+                txt_results.Text = "";
+                appendLine("==Calibration==", txt_results);
+                appendLine("please make sure there is nothing on the weight", txt_results);
+                hx711b.set_scale();
+                hx711b.tare();
+                inMidCalibration = true;
+                appendLine("Now set an object with " + knownWeight + " weight units, and press 'calibrate' again.", txt_results);
+            }
+            else
+            {
+                float g = hx711b.get_units(10);
+                g = g / knownWeight;
+                appendLine("", txt_results);
+                appendLine("Your weight scale is", txt_results);
+                appendLine(g.ToString(), txt_results);
+                txt_scale.Text = g.ToString();
+                inMidCalibration = false;
+                appendLine("==Done Calibrating==", txt_results);
+            }
         }
 
         private void writeText(string text, TextBox textbox)
@@ -74,42 +87,7 @@ namespace WeightTest
         }
 
 
-        /*
-        private void Button_Click_1Async(object sender, RoutedEventArgs e)
-        {
-
-            Button_Click_1(sender, e);
-        }
-
-        private void Button_Click_1(object sender, RoutedEventArgs e)
-        {
-            gpio = GpioController.GetDefault();
-            dout = gpio.OpenPin(DOUT_PIN);
-            slk = gpio.OpenPin(SLK_PIN);
-
-            //dout.Write(GpioPinValue.High);
-            //dout.Write(GpioPinValue.High);
-            //while (true)
-            //{
-
-            //}
-
-            hx711 = new HX711(slk, dout);
-
-            float g;
-            hx711.PowerOn();
-            txt_results.Text = "";
-            for (int i = 0; i < 25; i++)
-            {
-                g = hx711.GetGram() - 16842.14f;
-                Debug.WriteLine(g);
-                txt_results.Text += g.ToString() + "\n";
-            }
-            hx711.PowerDown();
-            Debug.WriteLine("===");
-        }
-        */
-            
+    
         private void appendLine(string text, TextBox tb)
         {
             tb.Text += text + "\n";
@@ -121,6 +99,9 @@ namespace WeightTest
             txt_results.Text = "";
 
             appendLine("==Weighting Results==", txt_results);
+
+            hx711b.set_scale();
+            //hx711b.tare();
 
             // print a raw reading from the ADC
             appendLine("Raw Data:", txt_results);
@@ -138,7 +119,7 @@ namespace WeightTest
             appendLine(" ", txt_results);
 
             hx711b.set_scale(float.Parse(txt_scale.Text));
-            hx711b.tare();
+            //hx711b.tare();
 
             appendLine("==Calibrated==", txt_results);
             appendLine("Calculating data again.", txt_results);
@@ -159,5 +140,46 @@ namespace WeightTest
             appendLine(" ", txt_results);
 
         }
+
+        private void btn_tare_Click(object sender, RoutedEventArgs e)
+        {
+            hx711b.tare();
+        }
     }
+    /*
+   private void Button_Click_1Async(object sender, RoutedEventArgs e)
+   {
+
+       Button_Click_1(sender, e);
+   }
+
+   private void Button_Click_1(object sender, RoutedEventArgs e)
+   {
+       gpio = GpioController.GetDefault();
+       dout = gpio.OpenPin(DOUT_PIN);
+       slk = gpio.OpenPin(SLK_PIN);
+
+       //dout.Write(GpioPinValue.High);
+       //dout.Write(GpioPinValue.High);
+       //while (true)
+       //{
+
+       //}
+
+       hx711 = new HX711(slk, dout);
+
+       float g;
+       hx711.PowerOn();
+       txt_results.Text = "";
+       for (int i = 0; i < 25; i++)
+       {
+           g = hx711.GetGram() - 16842.14f;
+           Debug.WriteLine(g);
+           txt_results.Text += g.ToString() + "\n";
+       }
+       hx711.PowerDown();
+       Debug.WriteLine("===");
+   }
+   */
+
 }

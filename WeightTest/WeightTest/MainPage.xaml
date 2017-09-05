@@ -17,6 +17,8 @@
         <TextBlock HorizontalAlignment="Left" Height="22" Margin="281,10,0,0" TextWrapping="Wrap" Text="Calibrate the scale:" VerticalAlignment="Top" Width="168"/>
         <TextBlock HorizontalAlignment="Left" Height="22" Margin="276,37,0,0" TextWrapping="Wrap" Text="SCALE:" VerticalAlignment="Top" Width="55"/>
         <TextBlock HorizontalAlignment="Left" Height="22" Margin="281,141,0,0" TextWrapping="Wrap" Text="Known Weight:" VerticalAlignment="Top" Width="119"/>
+        <Button Content="Tare" HorizontalAlignment="Left" Height="30" Margin="281,278,0,0" VerticalAlignment="Top" Width="88" Click="btn_tare_Click"/>
+        <TextBlock HorizontalAlignment="Left" Height="62" Margin="281,211,0,0" TextWrapping="Wrap" Text="Click on 'Tare' before each scale (when there is no object on the weight) to get more accurate result" VerticalAlignment="Top" Width="261"/>
 
     </Grid>
 </Page>
