@@ -85,10 +85,11 @@ namespace RPiSocket
 
         public async void Send(string message)
         {
+            string send = "All the fish will say \"" + message + "\" until the end of days.";
             if (writer != null)
             {
-                writer.WriteInt32(message.Length); //write message length
-                writer.WriteString(message); //write message
+                writer.WriteInt32(send.Length); //write message length
+                writer.WriteString(send); //write message
                 try
                 {
                     await writer.StoreAsync();
