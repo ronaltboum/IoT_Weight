@@ -26,23 +26,29 @@ namespace WeightTest
     {
         const byte DOUT_PIN = 26;
         const byte SLK_PIN = 19;
+        private const int AVG_NUM = 10;
 
         private GpioPin dout;
         private GpioPin slk;
         private GpioController gpio;
-        private HX711_bogde hx711b;
+        private LinearHX hx711b;
 
         public MainPage()
         {
+            this.InitializeComponent();
+
             gpio = GpioController.GetDefault();
             slk = gpio.OpenPin(SLK_PIN);
             dout = gpio.OpenPin(DOUT_PIN);
-            hx711b = new HX711_bogde(dout, slk);
+            hx711b = new LinearHX(dout, slk, 128);
 
-            this.InitializeComponent();
+           // Task task = Task.Run(() => Clock(10));
+            Debug.WriteLine("continue");
+           
         }
 
         bool inMidCalibration = false;
+        float rawNull;
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             /*
@@ -55,29 +61,39 @@ namespace WeightTest
             */
            
 
-            float knownWeight = float.Parse(txt_knownWeight.Text);
+           
 
             
             if (!inMidCalibration)
             {
                 txt_results.Text = "";
                 appendLine("==Calibration==", txt_results);
-                appendLine("please make sure there is nothing on the weight", txt_results);
-                hx711b.set_scale();
-                hx711b.tare();
+                rawNull = hx711b.getRawWeight(AVG_NUM);
                 inMidCalibration = true;
-                appendLine("Now set an object with " + knownWeight + " weight units, and press 'calibrate' again.", txt_results);
+                appendLine("Now set an object with a known weight, and press 'calibrate' again.", txt_results);
+                //txt_offset.Text = offset.ToString();
             }
             else
             {
-                float g = hx711b.get_units(10);
-                g = g / knownWeight;
+                float knownWeight = float.Parse(txt_knownWeight.Text);
+                float rawWeight = hx711b.getRawWeight(AVG_NUM);
+                hx711b.setParameters(rawNull, rawWeight, knownWeight);
+
                 appendLine("", txt_results);
                 appendLine("Your weight scale is", txt_results);
-                appendLine(g.ToString(), txt_results);
-                txt_scale.Text = g.ToString();
+                appendLine(hx711b.Scale.ToString(), txt_results);
+                appendLine("Your weight offset is", txt_results);
+                appendLine(hx711b.Offset.ToString(), txt_results);
+                txt_scale.Text = hx711b.Scale.ToString();
+                txt_offset.Text = hx711b.Offset.ToString();
                 inMidCalibration = false;
                 appendLine("==Done Calibrating==", txt_results);
+                appendLine("==Testing==", txt_results);
+                appendLine("You currenty weighing (should be " + knownWeight.ToString() + "):", txt_results);
+                float rw = hx711b.getWeight(AVG_NUM);
+                appendLine(hx711b.transform(rw).ToString(), txt_results);
+                appendLine("Raw data:", txt_results);
+                appendLine(rw.ToString(), txt_results);
             }
         }
 
@@ -91,60 +107,148 @@ namespace WeightTest
         private void appendLine(string text, TextBox tb)
         {
             tb.Text += text + "\n";
-            Debug.WriteLine(text);
+            //Debug.WriteLine(text);
         }
-
         private void Button_weigh2_Click(object sender, RoutedEventArgs e)
         {
             txt_results.Text = "";
 
             appendLine("==Weighting Results==", txt_results);
 
-            hx711b.set_scale();
+            //hx711b.set_scale(float.Parse(txt_scale.Text));
+            //hx711b.set_offset(long.Parse(txt_offset.Text));
             //hx711b.tare();
 
-            // print a raw reading from the ADC
-            appendLine("Raw Data:", txt_results);
-            appendLine(hx711b.read().ToString(), txt_results);
-            appendLine(" ", txt_results);
 
-            // print the average of 20 readings from the ADC
-            appendLine("Avg of 20 readings:", txt_results);
-            appendLine(hx711b.read().ToString(), txt_results);
-            appendLine(" ", txt_results);
-
-            // print the average of 5 readings from the ADC minus the tare weight (not set yet)
-            appendLine("Data after scaling:", txt_results);
-            appendLine(hx711b.get_units(5).ToString(), txt_results);
-            appendLine(" ", txt_results);
-
-            hx711b.set_scale(float.Parse(txt_scale.Text));
-            //hx711b.tare();
-
-            appendLine("==Calibrated==", txt_results);
-            appendLine("Calculating data again.", txt_results);
-
-            // print a raw reading from the ADC
-            appendLine("*Raw Data:", txt_results);
-            appendLine(hx711b.read().ToString(), txt_results);
-            appendLine(" ", txt_results);
-
-            // print the average of 20 readings from the ADC
-            appendLine("*Avg of 20 readings:", txt_results);
-            appendLine(hx711b.read().ToString(), txt_results);
-            appendLine(" ", txt_results);
-
-            // print the average of 5 readings from the ADC minus the tare weight (not set yet)
+            // print the average of AVG_NUM readings from the ADC minus the tare weight (not set yet)
             appendLine("*Data after scaling:", txt_results);
-            appendLine(hx711b.get_units(5).ToString(), txt_results);
+            float res = hx711b.getWeight(AVG_NUM) ;
+            appendLine(res.ToString(), txt_results);
             appendLine(" ", txt_results);
+
+            appendLine("SCALE:", txt_results);
+            
+            appendLine(hx711b.Scale.ToString(), txt_results);
+            appendLine("OFFSET:", txt_results);
+            appendLine(hx711b.Offset.ToString(), txt_results);
+            appendLine(" ", txt_results);
+
+            Debug.WriteLine("w: " + res + " s: " + hx711b.Scale + " o: " + hx711b.Offset);
 
         }
+        private async void Clock(int avgOn)
+        {
+            float raw;
+            Queue<float> lastMes = new Queue<float>();
+            float avg = 0;
+            int c;
+            Debug.WriteLine("tick");
+            float t = 0;
+            while (true)
+            {
+                raw = t; // hx711b.getRawWeight(1);
+                t++;
 
+                if (lastMes.Count == 0)
+                    avg = raw;
+                else if (lastMes.Count == avgOn)
+                {
+                    c = lastMes.Count;
+                    avg += (raw - lastMes.Dequeue()) / (float)c;
+                }
+                else
+                {
+                    c = lastMes.Count;
+                    avg += (avg * c + raw) / (float)(c + 1);
+                }
+                lastMes.Enqueue(raw);
+                // txt_clock_raw.Text = avg.ToString();
+                // txt_clock.Text = hx711b.transform(avg).ToString();
+                Debug.WriteLine("raw: " + avg + ", weight: " + hx711b.transform(avg));
+                await Task.Delay(1000);
+            }
+        }
         private void btn_tare_Click(object sender, RoutedEventArgs e)
         {
-            hx711b.tare();
+            float rawNull;
+            txt_results.Text = "";
+            appendLine("==Tare==", txt_results);
+            rawNull = hx711b.getRawWeight(AVG_NUM);
+            hx711b.Offset = rawNull;
+            txt_offset.Text = rawNull.ToString();
+            appendLine("Tared. New offset is:", txt_results);
+            appendLine(rawNull.ToString(), txt_results);
         }
+
+        private void btn_accuracy_Click(object sender, RoutedEventArgs e)
+        {
+            Task.Run(() => readrawAsync(hx711b, txt_results));
+        }
+
+        private void readrawAsync(LinearHX hx711b, TextBox tb)
+        {
+            uint r;
+            while (true)
+            {
+                r = hx711b.read();
+            }
+        }
+
+        private void Button_test_Click(object sender, RoutedEventArgs e)
+        {
+            //txt_offset.Text = txt_debug_null.Text;
+           // hx711b.set_offset(long.Parse(txt_debug_null.Text));
+           // float g = float.Parse(txt_debug_raw.Text);
+
+        }
+        /*private void Button_weigh2_Click(object sender, RoutedEventArgs e)
+{
+txt_results.Text = "";
+
+appendLine("==Weighting Results==", txt_results);
+
+hx711b.set_scale();
+//hx711b.tare();
+
+// print a raw reading from the ADC
+appendLine("Raw Data:", txt_results);
+appendLine(hx711b.read().ToString(), txt_results);
+appendLine(" ", txt_results);
+
+// print the average of 20 readings from the ADC
+appendLine("Avg of 20 readings:", txt_results);
+appendLine(hx711b.read_average(AVG_NUM).ToString(), txt_results);
+appendLine(" ", txt_results);
+
+// print the average of 5 readings from the ADC minus the tare weight (not set yet)
+appendLine("Data after scaling:", txt_results);
+appendLine(hx711b.get_units(AVG_NUM).ToString(), txt_results);
+appendLine(" ", txt_results);
+
+hx711b.set_scale(float.Parse(txt_scale.Text));
+//hx711b.tare();
+
+appendLine("==Calibrated==", txt_results);
+appendLine("Calculating data again.", txt_results);
+
+// print a raw reading from the ADC
+appendLine("*Raw Data:", txt_results);
+appendLine(hx711b.read().ToString(), txt_results);
+appendLine(" ", txt_results);
+
+// print the average of 20 readings from the ADC
+appendLine("*Avg of 100 readings:", txt_results);
+appendLine(hx711b.read_average(AVG_NUM).ToString(), txt_results);
+appendLine(" ", txt_results);
+
+// print the average of 20 readings from the ADC minus the tare weight (not set yet)
+appendLine("*Data after scaling:", txt_results);
+appendLine(hx711b.get_units(AVG_NUM).ToString(), txt_results);
+appendLine(" ", txt_results);
+
+}*/
+
+
     }
     /*
    private void Button_Click_1Async(object sender, RoutedEventArgs e)

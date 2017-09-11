@@ -167,10 +167,21 @@ namespace WeightTest
 
         // set the OFFSET value for tare weight; times = how many times to read the tare value
         //TODO casting
-        public void tare(byte times = 10)
+        public void tareAndSet(byte times = 10)
         {
+            set_offset();
             double sum = read_average(times);
             set_offset((long)sum);
+        }
+
+        // set the OFFSET value for tare weight; times = how many times to read the tare value
+        //TODO casting
+        public long tare(byte times = 10)
+        {
+            set_offset();
+            double sum = read_average(times);
+            set_offset((long)sum);
+            return (long)sum;
         }
 
         // set the SCALE value; this value is used to convert the raw data to "human readable" data (measure units)

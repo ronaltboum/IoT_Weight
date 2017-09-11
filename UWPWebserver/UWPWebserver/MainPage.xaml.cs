@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
+using System.Net;
 using Windows.ApplicationModel.Background;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
@@ -37,7 +38,25 @@ namespace UWPWebserver
         }
         public async void Socket_OnDataRecived(string data)
         {
-            string html = socket.getHTMLAsync();
+            string[] fields;
+            if (data.Split(' ').Length > 1)
+            {
+                string query = data.Split(' ')[1];
+                if (query.IndexOf("/?") == 0) {
+                    query = query.Substring(2);
+                    System.Diagnostics.Debug.WriteLine(query);
+                    fields = query.Split('&');
+                    foreach(string field in fields)
+                    {
+                        string prop, val;
+                        string[] sep = field.Split('=');
+                        prop = sep[0];
+                        val = sep[1];
+                        System.Diagnostics.Debug.WriteLine(sep[0] + " -> " + sep[1]);
+                    }
+                }
+            }
+            string html = await socket.getHTMLAsync();
             string response = wrapWithHTTPHeaders(html);
             socket.Send(response);
         }

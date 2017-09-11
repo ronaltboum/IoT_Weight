@@ -33,18 +33,11 @@ namespace UWPWebserver
             this.page = page;
         }
 
-        public string getHTMLAsync()
+        public async Task<string> getHTMLAsync()
         {
-           string text = "<!DOCTYPE html>"+
-                    "<html lang = \"en\" xmlns = \"http://www.w3.org/1999/xhtml\">"+
-                        "<head>"+
-                            "<meta charset = \"utf-8\">"+
-                            "<title> Weight Installation Page</title>"+
-                        "</head>"+
-                        "<body bgcolor = \"cyan\">"+
-                            "Please install that."+
-                        "</body>"+
-                    "</html> ";
+            StorageFolder storageFolder = Windows.ApplicationModel.Package.Current.InstalledLocation;
+            StorageFile sampleFile = await storageFolder.GetFileAsync(page);
+            string text = await FileIO.ReadTextAsync(sampleFile);
             return text;
         }
 
@@ -79,25 +72,40 @@ namespace UWPWebserver
         }
         private async void Listener_ConnectionReceived(StreamSocketListener sender, StreamSocketListenerConnectionReceivedEventArgs args)
         {
+            Debug.WriteLine("connected to " + args.Socket.Information.RemoteAddress + " my ip: " + args.Socket.Information.LocalAddress);
             var reader = new DataReader(args.Socket.InputStream);
             _writer = new DataWriter(args.Socket.OutputStream);
             string data = "";
+            bool error = false;
             while (true)
             {
-                uint sizeFieldCount = await reader.LoadAsync(1);
-                if (sizeFieldCount == 0)
+                Task<uint> load_task = reader.LoadAsync(1).AsTask();
+                bool finished = !load_task.Wait(4000);
+                if (!finished)
                 {
-                    Debug.WriteLine("disconnected :-(");
+                    if (load_task.Result == 0)
+                    {
+                        Debug.WriteLine("disconnected :-(");
+                        error = true;
+                        break;
+                    }
+                    data += reader.ReadString(load_task.Result);
+                    
+                   
                 }
-                data += reader.ReadString(sizeFieldCount);
-                Debug.WriteLine(data);
-                if (data.Contains("GET"))
+                else
                 {
-                    OnDataRecived(data);
-                    data = "";
-                    //return;
+                    break;
                 }
             }
+            if (!error)
+                OnDataRecived(data);
+            else
+                OnError("Disconnected during data transfer.");
+        }
+        public void configure(string data)
+        {
+            
         }
         public async void Send(string message)
         {
@@ -120,53 +128,5 @@ namespace UWPWebserver
                 }
             }
         }
-        /*private async void Listener_ConnectionReceived(StreamSocketListener sender, StreamSocketListenerConnectionReceivedEventArgs args)
-        {
-            var reader = new DataReader(args.Socket.InputStream);
-            string str = reader.ReadString(5);
-            _writer = new DataWriter(args.Socket.OutputStream);
-            Debug.WriteLine("Connected!");
-            try
-            {
-                while (true)
-                {
-                    uint sizeFieldCount = await reader.LoadAsync(sizeof(uint));
-                    // In case a disconnection occurs
-                    if (sizeFieldCount != sizeof(uint))
-                    {
-                        Debug.WriteLine("disconnected :-(");
-                        return;
-                    }
-
-                    //String size
-                    uint stringLenght = reader.ReadUInt32();
-                    //Read inputStream data
-                    uint actualStringLength = stringLenght;
-                    //If a disconnection occurs
-                    if (stringLenght != actualStringLength)
-                    {
-                        Debug.WriteLine("disconnected :-(");
-                        return;
-                    }
-                    // Fires data event received
-                    if (OnDataRecived != null)
-                    {
-                        //read the string with the last size
-                        string data = reader.ReadString(actualStringLength);
-                        //Fires data event received
-                        OnDataRecived(data);
-                    }
-                }
-
-            }
-            catch (Exception ex)
-            {
-                // Dispara evento em caso de erro, com a mensagem de erro
-                if (OnError != null)
-                    OnError(ex.Message);
-            }
-        }
-        */
-
     }
 }
