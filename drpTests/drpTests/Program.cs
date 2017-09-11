@@ -77,9 +77,9 @@ namespace drpTests
             devType = parseDevType ((string)jMessage["DevType"]);
             userName = (string)jMessage["UserName"];
             raspID = (long)jMessage["RaspID"];
-            data = DRPData.parseDRPData ((string)jMessage["Data"]);
+            data = JsonConvert.DeserializeObject<DRPData>((string)jMessage["Data"]);
             token = (int)jMessage["Token"];
-            messageType = parseMessageType ((string)jMessage["MessageType"]);
+            messageType = JsonConvert.DeserializeObject<DRPMessageType>((string)jMessage["MessageType"]);
             date = DateTime.Parse((string)jMessage["Date"]);
         }
 
