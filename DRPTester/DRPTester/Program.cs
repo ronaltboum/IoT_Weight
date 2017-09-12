@@ -31,6 +31,8 @@ namespace DRPTester
                 {
                     allgood = false;
                     Console.ForegroundColor = ConsoleColor.Red;
+                    Console.WriteLine("Test Failed :-(");
+                    Console.ForegroundColor = ConsoleColor.Gray;
                 }
             }
             if (allgood)
