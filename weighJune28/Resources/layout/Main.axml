@@ -9,4 +9,10 @@
         android:layout_height="wrap_content"
         android:onClick="LoginUser"
         android:text="@string/login_button_text" />
+    <RadioGroup
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/radioGroup1"
+        android:minWidth="25px"
+        android:minHeight="25px" />
 </LinearLayout>

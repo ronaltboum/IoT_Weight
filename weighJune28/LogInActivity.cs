@@ -38,7 +38,9 @@ namespace weighJune28
 
             getStatsButton.Click += (sender, e) =>
             {
-                var intent = new Intent(this, typeof(GetStatsActivity));
+                //var intent = new Intent(this, typeof(GetStatsActivity));
+                //var intent = new Intent(this, typeof(GetGraphs));
+                var intent = new Intent(this, typeof(GetStatsChooseDisplay));
                 //intent.PutExtra("client", client);
                 StartActivity(intent);
             };
