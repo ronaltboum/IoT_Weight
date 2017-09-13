@@ -98,9 +98,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="GetGraphs.cs" />
+    <Compile Include="GetIPAddress.cs" />
     <Compile Include="GetStatsActivity.cs" />
     <Compile Include="GetStatsChooseDisplay.cs" />
     <Compile Include="LogInActivity.cs" />
+    <Compile Include="RaspberryTable.cs" />
     <Compile Include="Resources\Resource.designer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ToDoActivity.cs" />
@@ -133,6 +135,9 @@
       <SubType>Designer</SubType>
     </AndroidResource>
     <AndroidResource Include="Resources\layout\ChooseDisplay.axml">
+      <SubType>Designer</SubType>
+    </AndroidResource>
+    <AndroidResource Include="Resources\layout\DisplayWeigh.axml">
       <SubType>Designer</SubType>
     </AndroidResource>
   </ItemGroup>

@@ -29,19 +29,18 @@ namespace weighJune28
             SetContentView(Resource.Layout.LogInWelcome);
 
             // Create your application here
-
             Button getStatsButton = FindViewById<Button>(Resource.Id.GetStats);
-            //CurrentPlatform.Init();
-            //// Create the client instance, using the mobile app backend URL.
-            //client = new MobileServiceClient(applicationURL);
-            //weighTableRef = client.GetTable<weighTable>();
+            Button startWeighButton = FindViewById<Button>(Resource.Id.StartWeigh);
 
             getStatsButton.Click += (sender, e) =>
             {
-                //var intent = new Intent(this, typeof(GetStatsActivity));
-                //var intent = new Intent(this, typeof(GetGraphs));
                 var intent = new Intent(this, typeof(GetStatsChooseDisplay));
-                //intent.PutExtra("client", client);
+                StartActivity(intent);
+            };
+
+            startWeighButton.Click += (sender, e) =>
+            {
+                var intent = new Intent(this, typeof(GetIPAddress));
                 StartActivity(intent);
             };
 
@@ -53,29 +52,7 @@ namespace weighJune28
 
 
 
-            //insert some usernames and weights:
-            //var newWeighItem1 = new weighTable
-            //{
-            //    username = "Reut",
-            //    weigh = 188F
-            //};
-            //var newWeighItem3 = new weighTable
-            //{
-            //    username = "Ron",
-            //    weigh = 243F
-            //};
 
-            //try
-            //{
-            //    // Insert the new item into the local store.
-            //    await weighTableRef.InsertAsync(newWeighItem1);
-            //    await weighTableRef.InsertAsync(newWeighItem3);
-
-            //}
-            //catch (Exception e)
-            //{
-            //    CreateAndShowDialog(e, "Error");
-            //}
 
         }
 
