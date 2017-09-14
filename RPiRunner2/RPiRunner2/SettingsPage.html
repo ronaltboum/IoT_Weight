@@ -65,16 +65,16 @@
         <h2>Give your Weight-Scale a Name</h2>
         <form method="get">
             The name will be presented before anyone how wants to weigh.<br />
-            <input type="text" name="name" /><input type="submit" value="Change Name" />
+            <input type="text" name="name" placeholder="name" /><input type="submit" value="Change Name" />
         </form>
     </div>
     <div>
         <h2>Change Your Password</h2>
         <form method="get">
             For protection we recommend to change the default password to access these settings.<br />
-            Current password: <input type="password" name="curr_pass" /><br />
-            New Password: <input type="password" name="password" /><br />
-            Confirm Password: <input type="password" name="confirm" /><br />
+            Current password: <input type="password" name="curr_pass" placeholder="curr_pass" /><br />
+            New Password: <input type="password" name="password" placeholder="password" /><br />
+            Confirm Password: <input type="password" name="confirm"  placeholder="confirm"/><br />
             <input type="submit" value="Change Password" />
         </form>
     </div>
@@ -82,7 +82,7 @@
         <h2>Register Your Device to the Cloud</h2>
         <form method="get">
             insert the weight serial no. that you received with your scale<br />
-            serial: <input type="text" name="serial" /><input type="submit" value="Register" />
+            serial: <input type="text" name="serial" placeholder="serial" /><input type="submit" value="Register" />
         </form>
     </div>
     <div>
@@ -104,7 +104,7 @@
             <li>Click on 'Calibrate' again</li>
             <li>The server will calculate the values of SCALE and OFFSET that are suitable for your device.</li>
         </ol>
-        Known weight: <input type="text" name="known" placeholder="type here the weight in Kilograms" /><br />
+        Known weight: <input type="text" name="known" placeholder="text" /><br />
         <form method="get">
             <input type="submit" value="Calibrate" id="calibrate" />
         </form>
