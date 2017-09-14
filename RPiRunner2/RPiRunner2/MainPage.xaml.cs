@@ -51,13 +51,13 @@ namespace RPiRunner2
             uhl = new UserHardwareLinker(clk, dout);
             System.Diagnostics.Debug.WriteLine("Connected to Hardware via GPIO.");
 
-            tcp = new TCPListener(WEB_PORT, easyDebug);
+            tcp = new TCPListener(SOCKET_PORT, easyDebug);
             tcp.OnDataReceived += socket_onDataReceived;
             tcp.OnError += socket_onError;
             tcp.ListenAsync();
             System.Diagnostics.Debug.WriteLine("socket created");
 
-            this.http = new HTTPServer(SOCKET_PORT);
+            this.http = new HTTPServer(9797);
             http.OnDataRecived += http_OnDataRecived;
             http.OnError += http_OnError;
             http.Start();
@@ -127,6 +127,7 @@ namespace RPiRunner2
         /* socket functions */
         public void socket_onDataReceived(string message)
         {
+            System.Diagnostics.Debug.WriteLine("received: " + message);
             //TODO: do not assume for DRP, needs to be checked!
             DRP msg = DRP.deserializeDRP(message);
 
