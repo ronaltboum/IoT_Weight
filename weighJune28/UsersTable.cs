@@ -12,7 +12,13 @@ namespace weighJune28
         [JsonProperty(PropertyName = "UniqueUsername")]
         public string UniqueUsername { get; set; }
 
-        [JsonProperty(PropertyName = "MACaddress")]
-        public long MACaddress { get; set; }
+        [JsonProperty(PropertyName = "height")]
+        public float height { get; set; }
+
+        [JsonProperty(PropertyName = "age")]
+        public int age { get; set; }
+
+        [JsonProperty(PropertyName = "gender")]
+        public string gender { get; set; }
     }
 }

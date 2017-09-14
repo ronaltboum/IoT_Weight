@@ -97,6 +97,7 @@
     <Reference Include="System.Net.Http" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CalculateBMI.cs" />
     <Compile Include="GetGraphs.cs" />
     <Compile Include="GetIPAddress.cs" />
     <Compile Include="GetStatsActivity.cs" />
@@ -139,6 +140,9 @@
       <SubType>Designer</SubType>
     </AndroidResource>
     <AndroidResource Include="Resources\layout\DisplayWeigh.axml">
+      <SubType>Designer</SubType>
+    </AndroidResource>
+    <AndroidResource Include="Resources\layout\BMIview.axml">
       <SubType>Designer</SubType>
     </AndroidResource>
   </ItemGroup>

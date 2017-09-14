@@ -31,6 +31,7 @@ namespace weighJune28
             // Create your application here
             Button getStatsButton = FindViewById<Button>(Resource.Id.GetStats);
             Button startWeighButton = FindViewById<Button>(Resource.Id.StartWeigh);
+            Button BMIButton = FindViewById<Button>(Resource.Id.BMI);
 
             getStatsButton.Click += (sender, e) =>
             {
@@ -41,6 +42,12 @@ namespace weighJune28
             startWeighButton.Click += (sender, e) =>
             {
                 var intent = new Intent(this, typeof(GetIPAddress));
+                StartActivity(intent);
+            };
+
+            BMIButton.Click += (sender, e) =>
+            {
+                var intent = new Intent(this, typeof(CalculateBMI));
                 StartActivity(intent);
             };
 

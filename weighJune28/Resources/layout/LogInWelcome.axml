@@ -17,4 +17,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/StartWeigh" />
+  <Button
+      android:text="Calculate your BMI"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:id="@+id/BMI" />
 </LinearLayout>
