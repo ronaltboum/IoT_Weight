@@ -12,7 +12,7 @@ using Android.Widget;
 
 namespace weighJune28
 {
-    [Activity(Label = "GetStatsChooseDisplay")]
+    [Activity(Label = "Display Format")]
     public class GetStatsChooseDisplay : Activity
     {
         List<string> passParameters = new List<string>();
@@ -27,22 +27,7 @@ namespace weighJune28
         protected override void OnCreate(Bundle savedInstanceState)
         {
             base.OnCreate(savedInstanceState);
-            //SetContentView(Resource.Layout.ChooseDisplay);
-
-            //// Create your application here
-            //RadioButton radioButtonLastMonth = FindViewById<RadioButton>(Resource.Id.radioButtonLastMonth);
-            //RadioButton radioButtonLast3Months = FindViewById<RadioButton>(Resource.Id.radioButtonLast3Months);
-            //RadioButton radioButtonLast6Months = FindViewById<RadioButton>(Resource.Id.radioButtonLast6Months);
-
-            //RadioButton radioButtonGraph = FindViewById<RadioButton>(Resource.Id.radioButtonGraph);
-            //RadioButton radioButtonList = FindViewById<RadioButton>(Resource.Id.radioButtonList);
-
-            //rgTimePeriod = FindViewById<RadioGroup>(Resource.Id.radioGroupTimePeriod);
-            //rgTimePeriod.ClearCheck();
-            //rgTimePeriod.CheckedChange += OnCheckedChange;
-            //rgDisplayFormat = FindViewById<RadioGroup>(Resource.Id.radioGroupDisplayFormat);
-            //rgDisplayFormat.ClearCheck();
-            //rgDisplayFormat.CheckedChange += OnCheckedChange;
+            //SetContentView(Resource.Layout.ChooseDisplay);    
         }
 
 
@@ -124,7 +109,8 @@ namespace weighJune28
                 //if (rgDisplayFormat != null)
                 //    rgDisplayFormat.ClearCheck();
 
-                var intent = new Intent(this, typeof(GetStatsActivity));
+                //var intent = new Intent(this, typeof(GetStatsActivity));
+                var intent = new Intent(this, typeof(WeightHistory));
                 intent.PutStringArrayListExtra("passParameters", passParameters);
                 StartActivity(intent);
 

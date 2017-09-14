@@ -112,6 +112,7 @@
     <Compile Include="WeighDatePair.cs" />
     <Compile Include="WeighDatePairAdapter.cs" />
     <Compile Include="weighTable.cs" />
+    <Compile Include="WeightHistory.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
