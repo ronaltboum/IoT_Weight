@@ -98,7 +98,7 @@ namespace WeightTest
                // System.Diagnostics.Debug.Write((data & 0x1).ToString() + ",");
                
             }
-            System.Diagnostics.Debug.WriteLine("data(bits): " + data.ToString("X"));
+            
             //smear the last bit
             if (((data>>0x17)&0x1) != 0)
             {
@@ -111,7 +111,8 @@ namespace WeightTest
                 SerialDataOutput.Write(GpioPinValue.High);
                 SerialDataOutput.Write(GpioPinValue.Low);
             }
-            
+
+            System.Diagnostics.Debug.WriteLine("data(bits): " + data.ToString("X") + ",\t(" + ((int)data).ToString() + ")");
             return (uint)data;
         }
 

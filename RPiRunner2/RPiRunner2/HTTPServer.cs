@@ -19,33 +19,52 @@ namespace RPiRunner2
         private readonly int _port;
         public int Port { get { return _port; } }
 
+        public bool Restricted { get => restricted; set => restricted = value; }
+
         private StreamSocketListener listener;
         private DataWriter _writer;
 
-        public delegate void DataRecived(string data);
+        public delegate void DataRecived(string data, HTTPServer sender);
         public event DataRecived OnDataRecived;
 
-        public delegate void Error(string message);
+        public delegate void Error(string message, HTTPServer sender);
         public event Error OnError;
 
-        private string page;
+        private bool restricted;
+
+        private string username;
+        private string password;
 
         /// <summary>
         /// Initialize a new web server.
         /// </summary>
         /// <param name="page"> the name of the file (HTML Document) to send to each new client who connects to the server</param>
         /// <param name="port">the port to listen to.</param>
-        public HTTPServer(string page, int port)
+        public HTTPServer(int port, string username = "admin", string password="admin")
         {
             _port = port;
-            this.page = page;
+            this.restricted = true;
+            this.username = username;
+            this.password = password;
+        }
+
+
+        public bool validate(string username, string password)
+        {
+            return username.Equals(this.username) && password.Equals(this.password);
+        }
+
+        public void changeCredentials(string username, string password)
+        {
+            this.username = username;
+            this.password = password;
         }
 
         /// <summary>
         /// Retrives the HTML Document
         /// </summary>
         /// <returns>A string contains the content of the file</returns>
-        public async Task<string> getHTMLAsync()
+        public async Task<string> getHTMLAsync(string page)
         {
             StorageFolder storageFolder = Windows.ApplicationModel.Package.Current.InstalledLocation;
             StorageFile sampleFile = await storageFolder.GetFileAsync(page);
@@ -77,7 +96,7 @@ namespace RPiRunner2
             catch (Exception e)
             {
                 if (OnError != null)
-                    OnError(e.Message);
+                    OnError(e.Message, this);
                 Debug.WriteLine("error listen");
             }
         }
@@ -116,9 +135,9 @@ namespace RPiRunner2
                 }
             }
             if (!error)
-                OnDataRecived(data);
+                OnDataRecived(data, this);
             else
-                OnError("Disconnected during data transfer.");
+                OnError("Disconnected during data transfer.", this);
             _writer = null;
         }
 
@@ -144,7 +163,7 @@ namespace RPiRunner2
                 catch (Exception ex)
                 {
                     if (OnError != null)
-                        OnError(ex.Message);
+                        OnError(ex.Message, this);
                 }
             }
         }
