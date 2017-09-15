@@ -13,7 +13,7 @@ using Microsoft.WindowsAzure.MobileServices;
 
 namespace weighJune28
 {
-    [Activity(Label = "Log In")]
+    [Activity(Label = "What would you like to do ?")]
     public class LogInActivity : Activity
     {
         //// Client reference.
