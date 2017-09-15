@@ -46,18 +46,24 @@ namespace RPiRunner2
             this.InitializeComponent();
 
             gpioController = GpioController.GetDefault();
-            dout = gpioController.OpenPin(DOUT_PIN);
-            clk = gpioController.OpenPin(SLK_PIN);
-            uhl = new UserHardwareLinker(clk, dout);
-            System.Diagnostics.Debug.WriteLine("Connected to Hardware via GPIO.");
-
+            if (gpioController != null)
+            {
+                dout = gpioController.OpenPin(DOUT_PIN);
+                clk = gpioController.OpenPin(SLK_PIN);
+                uhl = new UserHardwareLinker(clk, dout);
+                System.Diagnostics.Debug.WriteLine("Connected to Hardware via GPIO.");
+            }
+            else
+            {
+                System.Diagnostics.Debug.WriteLine("WARNING: Your machine does not support GPIO!");
+            }
             tcp = new TCPListener(SOCKET_PORT, easyDebug);
             tcp.OnDataReceived += socket_onDataReceived;
             tcp.OnError += socket_onError;
             tcp.ListenAsync();
             System.Diagnostics.Debug.WriteLine("socket created");
 
-            this.http = new HTTPServer(9797);
+            this.http = new HTTPServer(WEB_PORT);
             http.OnDataRecived += http_OnDataRecived;
             http.OnError += http_OnError;
             http.Start();
@@ -65,7 +71,20 @@ namespace RPiRunner2
         }
 
 
-        /* web server functions */
+        /*  ============================================================================ */
+        /*  This segment contains the functions that belongs to the installation system */
+        /*  ============================================================================ */
+
+       /// <summary>
+       /// parse the HTTP request that was received from the user to get the data that he/she has sent/
+       /// </summary>
+       /// <param name="data">the HTTP request query</param>
+       /// <returns>
+       /// A dictionary of the data received.
+       /// e.g. if the user tries to login by sending the username and the password, then this method will return a dictionary where:
+       /// "username" -> "myuser"
+       /// "password" -> "Aa123456"
+       /// </returns>
         public Dictionary<string, string> getQuery(string data)
         {
             Dictionary<string, string> queryFields = new Dictionary<string, string>();
@@ -86,27 +105,55 @@ namespace RPiRunner2
                         string[] sep = field.Split('=');
                         prop = sep[0];
                         val = sep[1];
-                        System.Diagnostics.Debug.WriteLine(sep[0] + " -> " + sep[1]); //TODO do something with the data
-                        queryFields.Add(sep[0], sep[1]);
+                        queryFields.Add(sep[0], sep[1]);//TODO do something with the data
                     }
                 }
             }
             return queryFields;
         }
 
+
+        /// <summary>
+        /// This method is activated every time a message has received from the user.
+        /// </summary>
+        /// <param name="data">The first row of the HTTP request query.</param>
+        /// <param name="sender">the HTTPServer object that handles the current connection.</param>
         public async void http_OnDataRecived(string data, HTTPServer sender)
         {
+            System.Diagnostics.Debug.WriteLine(data);
             Dictionary<string, string> fields = getQuery(data);
 
-            if (sender.Restricted ||
-                !(fields.Keys.Contains("username") && fields.Keys.Contains("password") && sender.validate(fields["username"], fields["password"])))
+            //some browsers might ask for the page's icon.
+            if(data.IndexOf(".ico") >= 0)
             {
+                http.Send(CreateHTTP.Code404_NotFound());
+            }
+
+            //logout
+            if (fields.Keys.Contains("logout") || sender.isSessionEnded())
+            {
+                sender.Restricted = true;
+            }
+
+            //login
+            if(fields.Keys.Contains("username") && fields.Keys.Contains("password"))
+            {
+                bool init_restricted = sender.Restricted;
+                sender.Restricted = sender.Restricted && !sender.validate(fields["username"], fields["password"]);
+                if(init_restricted == true && sender.Restricted == false)
+                    sender.Last_login = DateTime.Now;
+            }
+
+            if (sender.Restricted)
+            {
+                //sending the login page for unauthorised clients
                 string html = await http.getHTMLAsync(LOGIN);
                 string response = CreateHTTP.Code200_Ok(html);
                 http.Send(response);
             }
             else
             {
+                //sending the setting page for authorised clients (client that were successfully logged-in)
                 sender.Restricted = false;
                 string html = await http.getHTMLAsync(PAGE);
                 string response = CreateHTTP.Code200_Ok(html);
@@ -121,7 +168,8 @@ namespace RPiRunner2
             System.Diagnostics.Debug.WriteLine("Internal Server Error: " + message);
         }
 
-
+        /* end of installtion methods */
+        /*  ============================================================================ */
 
 
         /* socket functions */
@@ -156,9 +204,11 @@ namespace RPiRunner2
                     uhl.StartUser(profile);
                     try
                     {
-                        float w = uhl.getWeight(10);
+                        //float w = uhl.getWeight(10);
+                        float w = 87.433f;
                         DRP response = new DRP(DRPDevType.RBPI, msg.UserName, msg.DestID, msg.SourceID, new List<float>() { w }, 0, DRPMessageType.DATA);
                         tcp.Send(response.ToString());
+                        System.Diagnostics.Debug.WriteLine("message sent: " + response.ToString());
                         uhl.FinishUser();
                         return;
                     }
@@ -166,6 +216,7 @@ namespace RPiRunner2
                     {
                         DRP response = new DRP(DRPDevType.RBPI, msg.UserName, msg.DestID, msg.SourceID, new List<float>(), 0, DRPMessageType.HARDWARE_ERROR);
                         tcp.Send(response.ToString());
+                        System.Diagnostics.Debug.WriteLine("message sent: " + response.ToString());
                         return;
                     }
 
@@ -175,12 +226,14 @@ namespace RPiRunner2
                     //if somwone already uses the weight
                     DRP response = new DRP(DRPDevType.RBPI, msg.UserName, msg.DestID, msg.SourceID, new List<float>() { }, 0, DRPMessageType.IN_USE);
                     tcp.Send(response.ToString());
+                    System.Diagnostics.Debug.WriteLine("message sent: " + response.ToString());
                 }
             }
             else if (msg.MessageType == DRPMessageType.ILLEGAL)
             {
                 DRP response = new DRP(DRPDevType.RBPI, "", msg.DestID, msg.SourceID, new List<float>(), 0, DRPMessageType.ACK);
                 tcp.Send(response.ToString());
+                System.Diagnostics.Debug.WriteLine("message sent: " + response.ToString());
             }
             else if (msg.MessageType == DRPMessageType.ACK)
             {

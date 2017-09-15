@@ -32,7 +32,7 @@ namespace AppConnectionDemo
            
         }
 
-        private void Btn_Click(object sender, System.EventArgs e)
+        private async void Btn_Click(object sender, System.EventArgs e)
         {
             /*
              * TODO: the code for scanning the QR goes here.
@@ -45,16 +45,15 @@ namespace AppConnectionDemo
                 return;
             }
 
-            Task<DRP> result_task = sendSCANNED(long.Parse("55665566"));
-            if (!result_task.Wait(5000))
+            DRP result = await sendSCANNED(long.Parse("55665566"));
+            if(result == null)
             {
-                tv.Text = "No answer received (Timeout)";
+                tv.Text = "Connection Timeout";
                 return;
             }
-            DRP result = result_task.Result;
             if (result.MessageType == DRPMessageType.DATA)
             {
-                //TODO: Show the scaling result (result.data) on the screen
+                //TODO: Show the scaling result on the screen
                 tv.Text = result.Data[0].ToString();
             }
             else if (result.MessageType == DRPMessageType.IN_USE)
@@ -67,16 +66,24 @@ namespace AppConnectionDemo
                 //TODO: The scaling could not been done due to error.
                 tv.Text = "The scaling could not been done due to error.";
             }
-            //TODO: send ACKs
+            //TODO: send ACKs (we'll do it later)
         }
 
-        private async Task<DRP> sendSCANNED(long serial)
+        private async Task<DRP> sendSCANNED(long serial, int timeout = 10000)
         {
-            DRP msg = new DRP(DRPDevType.APP, "????", 343434, serial, new List<float>(), 0, DRPMessageType.SCANNED); //TODO: what is the username? what is the serial?
+            DRP msg = new DRP(DRPDevType.APP, "a_monkey", 343434, serial, new List<float>(), 0, DRPMessageType.SCANNED); //TODO: what is the username? what is the serial?
             tcps.Send(msg.ToString());
-            string rec_str = await tcps.Receive();
-            DRP rec = DRP.deserializeDRP(rec_str); //TODO: do not assume for DRP, needs to be checked! TODO: set timeout.
-            return rec;
+            Task<string> rec_str_task = tcps.Receive();
+            if (rec_str_task.Wait(timeout))
+            {
+                string rec_str = rec_str_task.Result;
+                DRP rec = DRP.deserializeDRP(rec_str); //TODO: do not assume for DRP, needs to be checked!
+                return rec;
+            }
+            else
+            {
+                return null;
+            }
         }
 
         private string findIpFromSerial(string serial)

@@ -52,8 +52,8 @@ namespace AppConnectionDemo
         [JsonProperty(PropertyName = "MsgType")]
         private string JMessageType { get => ((int)messageType).ToString(); set => messageType = (DRPMessageType)int.Parse(value); } //TODO Change to number.
         [JsonProperty(PropertyName = "Date")]
-        private string JDate { get => date.ToString(); set => date = DateTime.Parse(value); }
-        
+        private string JDate { get => date.Ticks.ToString(); set => date = DateTime.MinValue + TimeSpan.FromTicks(long.Parse(value)); }
+
 
 
         /** constructors **/
@@ -87,8 +87,6 @@ namespace AppConnectionDemo
         /**
          * Deserializing DRP message
          * @param mepMessage the string to deserialize
-         * EXAMPLE:
-         * {"$DRP":{"DevType":"RBPI","MACAddr":"123456789ABC","IPAddr":"C0A80101","Callback":"RES","Addressee":"123456789ABC","Date": "28/07/2017 19:02"}}
          **/
        
        public static DRP deserializeDRP(string drpMessage)

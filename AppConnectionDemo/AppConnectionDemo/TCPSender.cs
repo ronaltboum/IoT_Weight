@@ -71,13 +71,13 @@ namespace AppConnectionDemo
             int msize;
             string msg;
 
-            await nets.ReadAsync(bmsize, 0, sizeof(uint)); //reading first 4 bytes (which contains the size of the message)
+            nets.Read(bmsize, 0, sizeof(uint)); //reading first 4 bytes (which contains the size of the message)
             Array.Reverse(bmsize); //change from big endian to little endian
             msize = BitConverter.ToInt32(bmsize, 0);
 
 
             bmsg = new byte[msize];
-            await nets.ReadAsync(bmsg, 0, msize); //read the message
+            nets.Read(bmsg, 0, msize); //read the message
 
             msg = Encoding.ASCII.GetString(bmsg); //convert it to string
 

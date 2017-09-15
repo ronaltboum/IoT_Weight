@@ -38,9 +38,9 @@ namespace RPiRunner2
         [JsonProperty(PropertyName = "Protocol")]
         private string JProtocol { get => PROTOCOL; }
         [JsonProperty(PropertyName = "DevType")]
-        private string JDevType { get =>stringer( devType); set => devType =parseDevType( value); }
+        private string JDevType { get => stringer(devType); set => devType = parseDevType(value); }
         [JsonProperty(PropertyName = "sourceID")]
-        private string JSourceUD { get => sourceID.ToString("X"); set => sourceID = long.Parse( value, NumberStyles.HexNumber); }
+        private string JSourceUD { get => sourceID.ToString("X"); set => sourceID = long.Parse(value, NumberStyles.HexNumber); }
         [JsonProperty(PropertyName = "destID")]
         private string JDestID { get => destID.ToString("X"); set => destID = long.Parse(value, NumberStyles.HexNumber); }
         [JsonProperty(PropertyName = "Username")]
@@ -52,8 +52,8 @@ namespace RPiRunner2
         [JsonProperty(PropertyName = "MsgType")]
         private string JMessageType { get => ((int)messageType).ToString(); set => messageType = (DRPMessageType)int.Parse(value); } //TODO Change to number.
         [JsonProperty(PropertyName = "Date")]
-        private string JDate { get => date.ToString(); set => date = DateTime.Parse(value); }
-        
+        private string JDate { get => date.Ticks.ToString(); set => date = DateTime.MinValue + TimeSpan.FromTicks(long.Parse(value)); }
+
 
 
         /** constructors **/
@@ -90,14 +90,14 @@ namespace RPiRunner2
          * EXAMPLE:
          * {"$DRP":{"DevType":"RBPI","MACAddr":"123456789ABC","IPAddr":"C0A80101","Callback":"RES","Addressee":"123456789ABC","Date": "28/07/2017 19:02"}}
          **/
-       
-       public static DRP deserializeDRP(string drpMessage)
-       {
-           drpMessage = drpMessage.Replace('?', '\"');
-           DRP drp = JsonConvert.DeserializeObject<DRP>(drpMessage);
-           return drp;
-       }
-      
+
+        public static DRP deserializeDRP(string drpMessage)
+        {
+            drpMessage = drpMessage.Replace('?', '\"');
+            DRP drp = JsonConvert.DeserializeObject<DRP>(drpMessage);
+            return drp;
+        }
+
 
         /**
          * convert enum type to string 

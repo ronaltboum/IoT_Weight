@@ -18,9 +18,9 @@ namespace DRPTester
 
             DRP[] drpin = new DRP[5];
             drpin[0] = new DRP(DRPDevType.RBPI, "Bar", 0xAAABBB, 1, lst, 0, DRPMessageType.DATA);
-            drpin[1] = new DRP(DRPDevType.APP, "Ramy", 0x1234567890, 2, lst2, 1, DRPMessageType.EXCEPTION);
-            drpin[2] = new DRP(DRPDevType.RBPI, "Ron", 0x0, -1, lst3, 2, DRPMessageType.ACKNOWLEDGE);
-            drpin[3] = new DRP(DRPDevType.RBPI, "We", 0xFFFFF, -10, lst4, 9000, DRPMessageType.FINAL);
+            drpin[1] = new DRP(DRPDevType.APP, "Ramy", 0x1234567890, 2, lst2, 1, DRPMessageType.HARDWARE_ERROR);
+            drpin[2] = new DRP(DRPDevType.RBPI, "Ron", 0x0, -1, lst3, 2, DRPMessageType.ILLEGAL);
+            drpin[3] = new DRP(DRPDevType.RBPI, "We", 0xFFFFF, -10, lst4, 9000, DRPMessageType.ACK);
             drpin[4] = new DRP(DRPDevType.RBPI, "You", 2, 71, lst5, 10000, DRPMessageType.SCANNED);
 
 

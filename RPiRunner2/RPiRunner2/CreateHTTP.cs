@@ -21,7 +21,19 @@ namespace RPiRunner2
         }
         public static string Code400_BadRequest()
         {
-            return "";
+            string response = "HTTP / 1.1 400 Bad Request";
+            response += "Date: " + DateTime.Now.ToString();
+            response += "Server: TAU_IoT_Workshop";
+            response += "Connection: Closed";
+            return response;
+        }
+        public static string Code404_NotFound()
+        {
+            string response = "HTTP / 1.1 404 Not Found";
+            response += "Date: " + DateTime.Now.ToString();
+            response += "Server: TAU_IoT_Workshop";
+            response += "Connection: Closed";
+            return response;
         }
         //before popping the login window
         public static string Code401_Unauthorized()

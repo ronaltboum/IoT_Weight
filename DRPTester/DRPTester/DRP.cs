@@ -17,8 +17,8 @@ namespace RPiRunner2
         public const string PROTOCOL = "$DRP";
         private DRPDevType devType;
         private string userName;
-        private long raspID;
-        private long appID;
+        private long sourceID;
+        private long destID;
         private IList<float> data;
         private ulong token;
         private DRPMessageType messageType;
@@ -27,11 +27,11 @@ namespace RPiRunner2
         /* Setters & Getters */
         public DRPDevType DevType { get => devType; set => devType = value; }
         public string UserName { get => userName; set => userName = value; }
-        public long RaspID { get => raspID; set => raspID = value; }
+        public long DestID { get => destID; set => destID = value; }
+        public long SourceID { get => sourceID; set => sourceID = value; }
         public ulong Token { get => token; set => token = value; }
         public DRPMessageType MessageType { get => messageType; set => messageType = value; }
         public DateTime Date { get => date; set => date = value; }
-        public long AppID { get => appID; set => appID = value; }
         public IList<float> Data { get => data; }
 
         /* Setters & Getters for JSON */
@@ -39,18 +39,18 @@ namespace RPiRunner2
         private string JProtocol { get => PROTOCOL; }
         [JsonProperty(PropertyName = "DevType")]
         private string JDevType { get =>stringer( devType); set => devType =parseDevType( value); }
-        [JsonProperty(PropertyName = "RaspID")]
-        private string JRaspID { get => raspID.ToString("X"); set => raspID = long.Parse( value, NumberStyles.HexNumber); }
-        [JsonProperty(PropertyName = "AppID")]
-        private string JAppID { get => appID.ToString("X"); set => appID = long.Parse(value, NumberStyles.HexNumber); }
+        [JsonProperty(PropertyName = "sourceID")]
+        private string JSourceUD { get => sourceID.ToString("X"); set => sourceID = long.Parse( value, NumberStyles.HexNumber); }
+        [JsonProperty(PropertyName = "destID")]
+        private string JDestID { get => destID.ToString("X"); set => destID = long.Parse(value, NumberStyles.HexNumber); }
         [JsonProperty(PropertyName = "Username")]
         private string JUserName { get => userName; set => userName = value; }
-        [JsonProperty(PropertyName = "data")]
+        [JsonProperty(PropertyName = "Data")]
         private string JData { get => JsonConvert.SerializeObject(data); set => data = JsonConvert.DeserializeObject<IList<float>>(value); }
         [JsonProperty(PropertyName = "Token")]
         private string JToken { get => token.ToString("X"); set => token = ulong.Parse(value, NumberStyles.HexNumber); }
         [JsonProperty(PropertyName = "MsgType")]
-        private string JMessageType { get => stringer( messageType); set => messageType = parseCallbackAction( value); }
+        private string JMessageType { get => ((int)messageType).ToString(); set => messageType = (DRPMessageType)int.Parse(value); } //TODO Change to number.
         [JsonProperty(PropertyName = "Date")]
         private string JDate { get => date.ToString(); set => date = DateTime.Parse(value); }
         
@@ -61,23 +61,23 @@ namespace RPiRunner2
         //Empty constructor is needed for deserialize JSON
         private DRP() { }
 
-        public DRP(DRPDevType devType, string userName, long raspID, long appID, IList<float> data, ulong token, DRPMessageType messageType, DateTime date)
+        public DRP(DRPDevType devType, string userName, long sourceID, long destID, IList<float> data, ulong token, DRPMessageType messageType, DateTime date)
         {
             this.devType = devType;
             this.userName = userName;
-            this.raspID = raspID;
-            this.appID = appID;
+            this.sourceID = sourceID;
+            this.destID = destID;
             this.data = data;
             this.token = token;
             this.messageType = messageType;
             this.date = date;
         }
-        public DRP(DRPDevType devType, string userName, long raspID, long appID, IList<float> data, ulong token, DRPMessageType messageType)
+        public DRP(DRPDevType devType, string userName, long sourceID, long destID, IList<float> data, ulong token, DRPMessageType messageType)
         {
             this.devType = devType;
             this.userName = userName;
-            this.raspID = raspID;
-            this.appID = appID;
+            this.sourceID = sourceID;
+            this.destID = destID;
             this.data = data;
             this.token = token;
             this.messageType = messageType;
@@ -114,28 +114,7 @@ namespace RPiRunner2
                     return "";
             }
         }
-        /**
-         * convert enum type to string 
-         */
-        private static string stringer(DRPMessageType type)
-        {
-            switch (type)
-            {
-                case DRPMessageType.SCANNED:
-                    return "SCN";
 
-                case DRPMessageType.FINAL:
-                    return "FIN";
-                case DRPMessageType.DATA:
-                    return "DTA";
-                case DRPMessageType.EXCEPTION:
-                    return "EXC";
-                case DRPMessageType.ACKNOWLEDGE:
-                    return "ACK";
-                default:
-                    return "";
-            }
-        }
         /**
          * convert string to enum type
          */
@@ -149,27 +128,6 @@ namespace RPiRunner2
                     return DRPDevType.RBPI;
                 default:
                     return DRPDevType.RBPI;
-            }
-        }
-        /**
-         * convert string to enum type
-         */
-        private static DRPMessageType parseCallbackAction(string type)
-        {
-            switch (type)
-            {
-                case "SCN":
-                    return DRPMessageType.SCANNED;
-                case "FIN":
-                    return DRPMessageType.FINAL;
-                case "DTA":
-                    return DRPMessageType.DATA;
-                case "EXC":
-                    return DRPMessageType.EXCEPTION;
-                case "ACK":
-                    return DRPMessageType.ACKNOWLEDGE;
-                default:
-                    return DRPMessageType.ACKNOWLEDGE;
             }
         }
 
@@ -194,9 +152,9 @@ namespace RPiRunner2
             DRP compto = obj as DRP;
             if (this.devType != compto.devType)
                 return false;
-            if (this.appID != compto.appID)
+            if (this.sourceID != compto.sourceID)
                 return false;
-            if (this.raspID != compto.raspID)
+            if (this.destID != compto.destID)
                 return false;
             if (!JsonConvert.SerializeObject(data).Equals(JsonConvert.SerializeObject(compto.data)))
                 return false;
@@ -206,5 +164,5 @@ namespace RPiRunner2
         }
     }
     enum DRPDevType { RBPI, APP }
-    enum DRPMessageType { SCANNED, FINAL, DATA, EXCEPTION, ACKNOWLEDGE }
+    enum DRPMessageType { SCANNED, DATA, ACK, IN_USE, HARDWARE_ERROR, ILLEGAL  }
 }

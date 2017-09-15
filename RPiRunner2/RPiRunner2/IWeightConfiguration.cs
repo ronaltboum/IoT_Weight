@@ -8,5 +8,6 @@ namespace RPiRunner2
 {
     interface IWeightConfiguration
     {
+        void setData(Dictionary<string, string> query);
     }
 }

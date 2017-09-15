@@ -20,6 +20,7 @@ namespace RPiRunner2
         public int Port { get { return _port; } }
 
         public bool Restricted { get => restricted; set => restricted = value; }
+        public DateTime Last_login { get => last_login; set => last_login = value; }
 
         private StreamSocketListener listener;
         private DataWriter _writer;
@@ -31,6 +32,9 @@ namespace RPiRunner2
         public event Error OnError;
 
         private bool restricted;
+        private DateTime last_login;
+
+        public const int SESSION = 20; // session time in minutes;
 
         private string username;
         private string password;
@@ -48,6 +52,10 @@ namespace RPiRunner2
             this.password = password;
         }
 
+        public bool isSessionEnded()
+        {
+            return (DateTime.Now - last_login).Minutes == SESSION;
+        }
 
         public bool validate(string username, string password)
         {
@@ -109,6 +117,7 @@ namespace RPiRunner2
         private async void Listener_ConnectionReceived(StreamSocketListener sender, StreamSocketListenerConnectionReceivedEventArgs args)
         {
             Debug.WriteLine("connected to " + args.Socket.Information.RemoteAddress + " my ip: " + args.Socket.Information.LocalAddress);
+
             var reader = new DataReader(args.Socket.InputStream);
             _writer = new DataWriter(args.Socket.OutputStream);
             string data = "";
@@ -116,29 +125,29 @@ namespace RPiRunner2
             while (true)
             {
                 Task<uint> load_task = reader.LoadAsync(1).AsTask();
-                bool finished = !load_task.Wait(4000);
-                if (!finished)
-                {
-                    if (load_task.Result == 0)
-                    {
-                        Debug.WriteLine("disconnected :-(");
-                        error = true;
-                        break;
-                    }
-                    data += reader.ReadString(load_task.Result);
-                    
-                   
-                }
-                else
-                {
+                
+                bool isReceived = load_task.Wait(10000);
+                if (!isReceived) {
+                    Debug.WriteLine("disconnected :-(");
+                    error = true;
                     break;
                 }
+                data += reader.ReadString(load_task.Result);
+                
+                if(data.Length > 3 && data.ToUpper().IndexOf("GET") < 0)
+                {
+                    Debug.WriteLine("Illegal message (non HTTP)");
+                    error = true;
+                    break;
+                }
+                
+                if (data.IndexOf("\n") >= 0 || data.IndexOf("\r") >= 0)
+                    break;
             }
             if (!error)
                 OnDataRecived(data, this);
             else
                 OnError("Disconnected during data transfer.", this);
-            _writer = null;
         }
 
         /// <summary>
