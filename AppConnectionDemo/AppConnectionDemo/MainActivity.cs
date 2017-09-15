@@ -27,8 +27,7 @@ namespace AppConnectionDemo
 
             btn.Click += Btn_Click;
 
-            tcps = new TCPSender();
-
+            tcps = new TCPSender(); //Creating the socket on the default port, which is 9888.
            
         }
 
@@ -38,19 +37,21 @@ namespace AppConnectionDemo
              * TODO: the code for scanning the QR goes here.
              */
 
-            string ip = findIpFromSerial("[QR scan result]");
+            string ip = findIpFromSerial("[QR scan result]"); //TODO: replace the string here with the scanning result
             if (!tcps.Connect(ip))
             {
                 System.Diagnostics.Debug.WriteLine("Connection failed.");
                 return;
             }
 
-            DRP result = await sendSCANNED(long.Parse("55665566"));
+            DRP result = await sendSCANNED(long.Parse("55665566")); //TODO: replace the string here with the scanning result
             if(result == null)
             {
+                //in case there no answer from the server
                 tv.Text = "Connection Timeout";
                 return;
             }
+
             if (result.MessageType == DRPMessageType.DATA)
             {
                 //TODO: Show the scaling result on the screen
@@ -69,19 +70,26 @@ namespace AppConnectionDemo
             //TODO: send ACKs (we'll do it later)
         }
 
+        //sending a message of type SCANNED to the RBPi and waiting to the result
         private async Task<DRP> sendSCANNED(long serial, int timeout = 10000)
         {
+
             DRP msg = new DRP(DRPDevType.APP, "a_monkey", 343434, serial, new List<float>(), 0, DRPMessageType.SCANNED); //TODO: what is the username? what is the serial?
+
+            //sending the message
             tcps.Send(msg.ToString());
+
+            //waiting for result
             Task<string> rec_str_task = tcps.Receive();
             if (rec_str_task.Wait(timeout))
             {
                 string rec_str = rec_str_task.Result;
                 DRP rec = DRP.deserializeDRP(rec_str); //TODO: do not assume for DRP, needs to be checked!
-                return rec;
+                return rec; //returns the RBPi's response
             }
             else
             {
+                //in there is no response, returns null
                 return null;
             }
         }
