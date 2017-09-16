@@ -14,5 +14,8 @@ namespace weighJune28
 
         [JsonProperty(PropertyName = "IPNumber")]
         public uint IPNumber { get; set; }
+
+        [JsonProperty(PropertyName = "IPAddress")]
+        public string IPAddress { get; set; }
     }
 }
