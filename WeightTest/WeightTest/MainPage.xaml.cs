@@ -42,9 +42,13 @@ namespace WeightTest
             dout = gpio.OpenPin(DOUT_PIN);
             hx711b = new LinearHX(dout, slk, 128);
 
-           // Task task = Task.Run(() => Clock(10));
-            Debug.WriteLine("continue");
-           
+
+            hx711b.power_down();
+            Debug.WriteLine("down");
+            hx711b.power_up();
+            Debug.WriteLine("up");
+
+
         }
 
         bool inMidCalibration = false;

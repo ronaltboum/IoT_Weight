@@ -64,6 +64,8 @@ namespace RPiRunner2
 
         private async void Listener_ConnectionReceived(StreamSocketListener sender, StreamSocketListenerConnectionReceivedEventArgs args)
         {
+            Debug.WriteLine("connection accepted to client " + args.Socket.Information.RemoteAddress);
+
             //We assume here that the first 4 bytes of the message will always contain the message's length.
             var reader = new DataReader(args.Socket.InputStream);
             writer = new DataWriter(args.Socket.OutputStream);

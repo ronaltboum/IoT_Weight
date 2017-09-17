@@ -153,8 +153,36 @@ namespace RPiRunner2
             }
             else
             {
-                //sending the setting page for authorised clients (client that were successfully logged-in)
-                sender.Restricted = false;
+                //change Password
+                if (fields.Keys.Contains("chpass"))
+                {
+                    if (!sender.validate("admin", fields["curr_pass"]))
+                    {
+                        //invalid password
+                    }
+                    else if (!fields["currpass"].Equals(fields["comfirm"]))
+                    {
+                        //passwords don't match
+                    }
+                    else
+                    {
+                        sender.changeCredentials("admin", fields["password"]);
+                    }
+                }
+
+                //register to the cloud
+                else if (fields.Keys.Contains("register"))
+                {
+                    long serial = long.Parse(fields["serial"]);
+
+                    /*
+                     * TODO: Ron - complete this section
+                     */
+                }
+
+
+                    //sending the setting page for authorised clients (client that were successfully logged-in)
+                    sender.Restricted = false;
                 string html = await http.getHTMLAsync(PAGE);
                 string response = CreateHTTP.Code200_Ok(html);
                 http.Send(response);
@@ -176,6 +204,11 @@ namespace RPiRunner2
         public void socket_onDataReceived(string message)
         {
             System.Diagnostics.Debug.WriteLine("received: " + message);
+            if (message.Equals("@welcome@"))
+            {
+                tcp.Send("TAUIOT@devname=MyScale"); //TODO: enter the real dev name
+                return;
+            }
             //TODO: do not assume for DRP, needs to be checked!
             DRP msg = DRP.deserializeDRP(message);
 
@@ -210,6 +243,8 @@ namespace RPiRunner2
                         tcp.Send(response.ToString());
                         System.Diagnostics.Debug.WriteLine("message sent: " + response.ToString());
                         uhl.FinishUser();
+
+                        //TODO: send to the cloud
                         return;
                     }
                     catch

@@ -65,7 +65,7 @@
         <h2>Give your Weight-Scale a Name</h2>
         <form method="get">
             The name will be presented before anyone how wants to weigh.<br />
-            <input type="text" name="name" placeholder="name" /><input type="submit" value="Change Name" />
+            <input type="text" name="name" placeholder="name" /><input type="submit" name="chname" value="Change Name (chname)" />
         </form>
     </div>
     <div>
@@ -75,20 +75,20 @@
             Current password: <input type="password" name="curr_pass" placeholder="curr_pass" /><br />
             New Password: <input type="password" name="password" placeholder="password" /><br />
             Confirm Password: <input type="password" name="confirm"  placeholder="confirm"/><br />
-            <input type="submit" value="Change Password" />
+            <input type="submit" name="chpass" value="Change Password (chpass)" />
         </form>
     </div>
     <div>
         <h2>Register Your Device to the Cloud</h2>
         <form method="get">
             insert the weight serial no. that you received with your scale<br />
-            serial: <input type="text" name="serial" placeholder="serial" /><input type="submit" value="Register" />
+            serial: <input type="text" name="serial" placeholder="serial" /><input type="submit" name="register" value="Register (register)" />
         </form>
     </div>
     <div>
         <h2>Check your hardware</h2>
         <form method="get">
-            <input type="submit" name="check_hw" value="Click here to perform a quick hardware checking." />
+            <input type="submit" name="check_hw" value="Click here to perform a quick hardware checking. (check_hw)" />
         </form>
     </div>
     <div>
@@ -106,14 +106,14 @@
         </ol>
         Known weight: <input type="text" name="known" placeholder="text" /><br />
         <form method="get">
-            <input type="submit" value="Calibrate" id="calibrate" />
+            <input type="submit" name="calibrate" value="Calibrate (calibrate)" id="calibrate" />
         </form>
         <span id="calibration_guide"></span>
     </div>
     <div>
         <h2>Log out</h2>
         <form method="get">
-            <input type="submit" name="logout" value="Click here to log out" />
+            <input type="submit" name="logout" value="Click here to log out (logout)" />
         </form>
     </div>
 </body>

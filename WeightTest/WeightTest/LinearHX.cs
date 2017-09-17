@@ -111,8 +111,8 @@ namespace WeightTest
                 SerialDataOutput.Write(GpioPinValue.High);
                 SerialDataOutput.Write(GpioPinValue.Low);
             }
-
-            System.Diagnostics.Debug.WriteLine("data(bits): " + data.ToString("X") + ",\t(" + ((int)data).ToString() + ")");
+            //if ((int)data != -1 && (int)data != -8388608)
+                System.Diagnostics.Debug.WriteLine("data(bits): " + data.ToString("X") + ",\t(" + ((int)data).ToString() + ")");
             return (uint)data;
         }
 
@@ -168,14 +168,14 @@ namespace WeightTest
         // puts the chip into power down mode
         public void power_down()
         {
-            SerialDataOutput.Write(GpioPinValue.Low);
-            SerialDataOutput.Write(GpioPinValue.High);
+            PowerDownAndSerialClockInput.Write(GpioPinValue.Low);
+            PowerDownAndSerialClockInput.Write(GpioPinValue.High);
         }
 
         // wakes up the chip after power down mode
         public void power_up()
         {
-            SerialDataOutput.Write(GpioPinValue.Low);
+            PowerDownAndSerialClockInput.Write(GpioPinValue.Low);
         }
     }
 }
