@@ -30,6 +30,9 @@ namespace RPiRunner2
         public const int WEB_PORT = 9000;
         public const int SOCKET_PORT = 9888;
 
+        public const int WEIGH_AVG = 1500;
+        public const float CALIB_FACTOR = 1.75f;
+
         const byte DOUT_PIN = 26;
         const byte SLK_PIN = 19;
 
@@ -124,6 +127,7 @@ namespace RPiRunner2
 
         float nullweight;
         float knownWeight;
+        float rawWeight;
         /// <summary>
         /// This method is activated every time a message has received from the user.
         /// </summary>
@@ -160,20 +164,23 @@ namespace RPiRunner2
                 string ip = GetLocalIp();
                 putRecordInDatabase(ip, serial);
             }
-            if (fields.Keys.Contains("calibrate1"))
+            if (fields.Keys.Contains("sscale"))
+            {
+                rawWeight = uhl.getWeight(WEIGH_AVG * CALIB_FACTOR);
+                System.Diagnostics.Debug.WriteLine("rawWeight: " + rawWeight);
+                html = HTTPServer.HTMLRewrite(html, "span", "calibration_feedback", "The scale calculated successfully");
+            }
+            if (fields.Keys.Contains("soffset"))
+            {
+                nullweight = uhl.getWeight(WEIGH_AVG * CALIB_FACTOR);
+                System.Diagnostics.Debug.WriteLine("nullweight: " + rawWeight);
+                html = HTTPServer.HTMLRewrite(html, "span", "calibration_feedback", "The offset calculated successfully");
+            }
+            if (fields.Keys.Contains("calibrate"))
             {
                 knownWeight = float.Parse(fields["known"]);
-                nullweight = uhl.getWeight(10);
-                System.Diagnostics.Debug.WriteLine("OFFSET: " + nullweight);
-                html = HTTPServer.HTMLRewrite(html, "span", "calibration_feedback", "OK! Now remove the object and click on 'calibrate II'");
-            }
-            if (fields.Keys.Contains("calibrate2"))
-            {
-                System.Diagnostics.Debug.WriteLine("calibrate2");
-                float rawWeight = uhl.getWeight(10);
                 uhl.setParameters(nullweight, rawWeight, knownWeight);
-                System.Diagnostics.Debug.WriteLine("rawWeight: " + rawWeight);
-                html = HTTPServer.HTMLRewrite(html, "span", "calibration_feedback", "Your device is calibrated!");
+                html = HTTPServer.HTMLRewrite(html, "span", "calibration_feedback", "OK! the device's parameters are:<br />OFFSET: " + uhl.Offset + "<br />SCALE: " + uhl.Scale);
             }
 
             string response = CreateHTTP.Code200_Ok(html);
@@ -351,8 +358,7 @@ namespace RPiRunner2
                     uhl.StartUser(profile);
                     try
                     {
-                        float w = uhl.getWeight(10);
-                        //float w = 87.433f;
+                        float w = uhl.getWeight(WEIGH_AVG);
                         DRP response = new DRP(DRPDevType.RBPI, msg.UserName, msg.DestID, msg.SourceID, new List<float>() { w }, 0, DRPMessageType.DATA);
                         tcp.Send(response.ToString());
                         System.Diagnostics.Debug.WriteLine("message sent: " + response.ToString());
