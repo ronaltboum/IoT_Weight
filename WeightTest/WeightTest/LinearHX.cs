@@ -112,7 +112,7 @@ namespace WeightTest
                 SerialDataOutput.Write(GpioPinValue.Low);
             }
             //if ((int)data != -1 && (int)data != -8388608)
-                System.Diagnostics.Debug.WriteLine("data(bits): " + data.ToString("X") + ",\t(" + ((int)data).ToString() + ")");
+               // System.Diagnostics.Debug.WriteLine("data(bits): " + data.ToString("X") + ",\t(" + ((int)data).ToString() + ")");
             return (uint)data;
         }
 
@@ -145,17 +145,17 @@ namespace WeightTest
 
         // returns an average reading; times = how many times to read
         // NOTE: reaturns raw data!
-        public float getRawWeight(byte times = 100)
+        public float getRawWeight(int times = 100)
         {
             long sum = 0;
-            for (byte i = 0; i < times; i++)
+            for (int i = 0; i < times; i++)
             {
                 sum += (int)read();
             }
             return (float)sum / times;
         }
 
-        public float getWeight(byte times = 100)
+        public float getWeight(int times = 100)
         {
             float raw = getRawWeight(times);
             return transform(raw);

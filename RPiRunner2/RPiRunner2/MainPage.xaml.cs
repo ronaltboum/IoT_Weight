@@ -13,6 +13,9 @@ using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 using Windows.Devices.Gpio;
+using Newtonsoft.Json;
+using Microsoft.WindowsAzure.MobileServices;
+using Windows.Networking.Connectivity;
 
 // The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=402352&clcid=0x409
 
@@ -41,9 +44,16 @@ namespace RPiRunner2
 
         private GpioController gpioController;
         private GpioPin dout, clk;
+
+        private string devname;
+       // public MobileServiceClient client;
+        const string applicationURL = @"https://weighjune28.azurewebsites.net";
+
         public MainPage()
         {
             this.InitializeComponent();
+
+            devname = "IOTWeightScale"; //TODO: load from disk
 
             gpioController = GpioController.GetDefault();
             if (gpioController != null)
@@ -112,13 +122,14 @@ namespace RPiRunner2
             return queryFields;
         }
 
-
+        float nullweight;
+        float knownWeight;
         /// <summary>
         /// This method is activated every time a message has received from the user.
         /// </summary>
         /// <param name="data">The first row of the HTTP request query.</param>
         /// <param name="sender">the HTTPServer object that handles the current connection.</param>
-        public async void http_OnDataRecived(string data, HTTPServer sender)
+        public async void http_OnDataRecived(string data)
         {
             System.Diagnostics.Debug.WriteLine(data);
             Dictionary<string, string> fields = getQuery(data);
@@ -128,72 +139,167 @@ namespace RPiRunner2
             {
                 http.Send(CreateHTTP.Code404_NotFound());
             }
-
-            //logout
-            if (fields.Keys.Contains("logout") || sender.isSessionEnded())
+            string html = await HTTPServer.getHTMLAsync(PAGE);
+            if (fields.Keys.Contains("chname"))
             {
-                sender.Restricted = true;
+                System.Diagnostics.Debug.WriteLine("got: " + fields["name"]);
+                devname = fields["name"];
+                html = HTTPServer.HTMLRewrite(html, "span", "name_feedback", "Your device's name was changed to  " + devname);
+            }
+            if (fields.Keys.Contains("register"))
+            {/*
+                System.Diagnostics.Debug.WriteLine("got: " + fields["serial"]);
+                long serial = long.Parse(fields["serial"]);
+                Dictionary<string, string> entry = new Dictionary<string, string>();
+                entry.Add("serial", fields["serial"]);
+                entry.Add("IPaddr", "192.168.1.199");
+                //await AzureIoTHub.SendDeviceToCloudMessageAsync(JsonConvert.SerializeObject(entry));
+                html = HTTPServer.HTMLRewrite(html, "span", "serial_feedback", "The serial number  " + serial + " was registered to the cloud!");
+                */
+                string serial = fields["serial"];
+                string ip = GetLocalIp();
+                putRecordInDatabase(ip, serial);
+            }
+            if (fields.Keys.Contains("calibrate1"))
+            {
+                knownWeight = float.Parse(fields["known"]);
+                nullweight = uhl.getWeight(10);
+                System.Diagnostics.Debug.WriteLine("OFFSET: " + nullweight);
+                html = HTTPServer.HTMLRewrite(html, "span", "calibration_feedback", "OK! Now remove the object and click on 'calibrate II'");
+            }
+            if (fields.Keys.Contains("calibrate2"))
+            {
+                System.Diagnostics.Debug.WriteLine("calibrate2");
+                float rawWeight = uhl.getWeight(10);
+                uhl.setParameters(nullweight, rawWeight, knownWeight);
+                System.Diagnostics.Debug.WriteLine("rawWeight: " + rawWeight);
+                html = HTTPServer.HTMLRewrite(html, "span", "calibration_feedback", "Your device is calibrated!");
             }
 
-            //login
-            if(fields.Keys.Contains("username") && fields.Keys.Contains("password"))
-            {
-                bool init_restricted = sender.Restricted;
-                sender.Restricted = sender.Restricted && !sender.validate(fields["username"], fields["password"]);
-                if(init_restricted == true && sender.Restricted == false)
-                    sender.Last_login = DateTime.Now;
-            }
+            string response = CreateHTTP.Code200_Ok(html);
+            http.Send(response);
 
-            if (sender.Restricted)
-            {
-                //sending the login page for unauthorised clients
-                string html = await http.getHTMLAsync(LOGIN);
-                string response = CreateHTTP.Code200_Ok(html);
-                http.Send(response);
-            }
-            else
-            {
-                //change Password
-                if (fields.Keys.Contains("chpass"))
-                {
-                    if (!sender.validate("admin", fields["curr_pass"]))
-                    {
-                        //invalid password
-                    }
-                    else if (!fields["currpass"].Equals(fields["comfirm"]))
-                    {
-                        //passwords don't match
-                    }
-                    else
-                    {
-                        sender.changeCredentials("admin", fields["password"]);
-                    }
-                }
+            /*
+                        //logout
+                        if (fields.Keys.Contains("logout") || http.isSessionEnded())
+                        {
+                            http.Restricted = true;
+                        }
 
-                //register to the cloud
-                else if (fields.Keys.Contains("register"))
-                {
-                    long serial = long.Parse(fields["serial"]);
+                        //login
+                        if(fields.Keys.Contains("username") && fields.Keys.Contains("password"))
+                        {
+                            bool init_restricted = http.Restricted;
+                            http.Restricted = http.Restricted && !http.validate(fields["username"], fields["password"]);
+                            if(init_restricted == true && http.Restricted == false)
+                                http.Last_login = DateTime.Now;
+                        }
 
-                    /*
-                     * TODO: Ron - complete this section
-                     */
-                }
+                        if (http.Restricted)
+                        {
+                            //sending the login page for unauthorised clients
+                            string html = await HTTPServer.getHTMLAsync(LOGIN);
+                            string response = CreateHTTP.Code200_Ok(html);
+                            http.Send(response);
+                        }
+                        else
+                        {
+                            string html = await HTTPServer.getHTMLAsync(PAGE);
+
+                            //change Password
+                            if (fields.Keys.Contains("chpass"))
+                            {
+                                //TODO: fix that.
+                                if (!http.validate("admin", fields["curr_pass"]))
+                                {
+                                    html = HTTPServer.HTMLRewrite(html, "span", "chpass_feedback", "invalid password");
+                                }
+                                else if (!fields["curr_pass"].Equals(fields["confirm"]))
+                                {
+                                    html = HTTPServer.HTMLRewrite(html, "span", "chpass_feedback", "passwords do not match");
+                                }
+                                else
+                                {
+                                    http.changeCredentials("admin", fields["password"]);
+                                    html = HTTPServer.HTMLRewrite(html, "span", "chpass_feedback", "password has changed successfully!");
+                                }
+                            }
+
+                            //register to the cloud
+                            else if (fields.Keys.Contains("register"))
+                            {
+                                long serial = long.Parse(fields["serial"]);
+
+                                html = HTTPServer.HTMLRewrite(html, "span", "serial_feedback", "the device was registered!");
+                            }
 
 
-                    //sending the setting page for authorised clients (client that were successfully logged-in)
-                    sender.Restricted = false;
-                string html = await http.getHTMLAsync(PAGE);
-                string response = CreateHTTP.Code200_Ok(html);
-                http.Send(response);
-            }
+                            //sending the setting page for authorised clients (client that were successfully logged-in)
 
+                            http.Restricted = false;
+                            string response = CreateHTTP.Code200_Ok(html);
+                            http.Send(response);
+                        }
 
+                        */
         }
 
-        public void http_OnError(string message, HTTPServer senders)
+        public void http_OnError(string message)
         {
             System.Diagnostics.Debug.WriteLine("Internal Server Error: " + message);
+        }
+
+        //Returns the device's IP Address
+        private string GetLocalIp()
+        {
+            var icp = NetworkInformation.GetInternetConnectionProfile();
+
+            if (icp?.NetworkAdapter == null) return null;
+            var hostname =
+                NetworkInformation.GetHostNames()
+                    .SingleOrDefault(
+                        hn =>
+                            hn.IPInformation?.NetworkAdapter != null && hn.IPInformation.NetworkAdapter.NetworkAdapterId
+                            == icp.NetworkAdapter.NetworkAdapterId);
+
+            // the ip address
+            return hostname?.CanonicalName;
+        }
+
+        //Ron
+        //This function inserts to the SQL database a record with the Raspberry's Ip address and QR code.
+        //Also: In case the Raspberry's Ip address was changed,  this function updates the database with the current IP.
+        public async void putRecordInDatabase(string ipAdd, string QR_Code)
+        {
+            var client = new MobileServiceClient(applicationURL);
+            IMobileServiceTable<RaspberryTable> raspberryTableRef = client.GetTable<RaspberryTable>();
+            try
+            {
+                List<RaspberryTable> ipAddressList = await raspberryTableRef.Where(item => (item.QRCode == QR_Code)).ToListAsync();
+                if (ipAddressList.Count == 0)
+                {
+                    var record1 = new RaspberryTable
+                    {
+                        QRCode = QR_Code,
+                        IPAddress = ipAdd,
+                    };
+                    await raspberryTableRef.InsertAsync(record1);
+                }
+                else    //case where we want to update an old ip address
+                {
+                    var address = ipAddressList[0];
+                    address.IPAddress = ipAdd;
+                    await raspberryTableRef.UpdateAsync(address);
+                }
+
+
+                //System.Diagnostics.Debug.WriteLine("i'm after insert");
+            }
+            catch (Exception e)
+            {
+                //TODO Ron
+                System.Diagnostics.Debug.WriteLine(e.Message);
+            }
         }
 
         /* end of installtion methods */
@@ -201,16 +307,24 @@ namespace RPiRunner2
 
 
         /* socket functions */
-        public void socket_onDataReceived(string message)
+        public async void socket_onDataReceived(string message)
         {
             System.Diagnostics.Debug.WriteLine("received: " + message);
             if (message.Equals("@welcome@"))
             {
-                tcp.Send("TAUIOT@devname=MyScale"); //TODO: enter the real dev name
+                tcp.Send("TAUIOT@devname=" + devname);
                 return;
             }
-            //TODO: do not assume for DRP, needs to be checked!
-            DRP msg = DRP.deserializeDRP(message);
+            DRP msg;
+            try
+            {
+                msg = DRP.deserializeDRP(message);
+            }
+            catch
+            {
+                System.Diagnostics.Debug.WriteLine("non-DRP message received.");
+                return;
+            }
 
             /* taking care of illegal messages */
             if (msg.DevType == DRPDevType.RBPI)
@@ -237,14 +351,21 @@ namespace RPiRunner2
                     uhl.StartUser(profile);
                     try
                     {
-                        //float w = uhl.getWeight(10);
-                        float w = 87.433f;
+                        float w = uhl.getWeight(10);
+                        //float w = 87.433f;
                         DRP response = new DRP(DRPDevType.RBPI, msg.UserName, msg.DestID, msg.SourceID, new List<float>() { w }, 0, DRPMessageType.DATA);
                         tcp.Send(response.ToString());
                         System.Diagnostics.Debug.WriteLine("message sent: " + response.ToString());
                         uhl.FinishUser();
 
-                        //TODO: send to the cloud
+                        //sending to cloud
+                        Dictionary<string, string> jsend = new Dictionary<string, string>();
+                        jsend.Add("username", uhl.currentServedUser().Username);
+                        jsend.Add("weigh", w.ToString());
+                        jsend.Add("createdAt", DateTime.Now.ToString());
+
+                        string sendToCloud = JsonConvert.SerializeObject(jsend);
+                        await AzureIoTHub.SendDeviceToCloudMessageAsync(sendToCloud);
                         return;
                     }
                     catch

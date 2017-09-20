@@ -26,12 +26,15 @@ namespace WeightTest
     {
         const byte DOUT_PIN = 26;
         const byte SLK_PIN = 19;
-        private const int AVG_NUM = 10;
+        private const int AVG_NUM = 1500;
 
         private GpioPin dout;
         private GpioPin slk;
         private GpioController gpio;
         private LinearHX hx711b;
+
+        public const float BEST_OFFSET = -261614.7f;
+        public const float BEST_SCALE = -13228.89f;
 
         public MainPage()
         {
@@ -48,7 +51,9 @@ namespace WeightTest
             hx711b.power_up();
             Debug.WriteLine("up");
 
-
+            hx711b.setParameters(BEST_OFFSET, BEST_SCALE);
+            txt_offset.Text = BEST_OFFSET.ToString();
+            txt_scale.Text = BEST_SCALE.ToString();
         }
 
         bool inMidCalibration = false;
@@ -200,10 +205,19 @@ namespace WeightTest
 
         private void Button_test_Click(object sender, RoutedEventArgs e)
         {
-            //txt_offset.Text = txt_debug_null.Text;
-           // hx711b.set_offset(long.Parse(txt_debug_null.Text));
-           // float g = float.Parse(txt_debug_raw.Text);
+            while (true)
+            {
+                System.Diagnostics.Debug.WriteLine(hx711b.getWeight(AVG_NUM));
+            }
 
+        }
+
+        private void Button_set_Click(object sender, RoutedEventArgs e)
+        {
+            float scale = float.Parse(txt_scale.Text);
+            float offset = float.Parse(txt_offset.Text);
+            hx711b.setParameters(offset, scale);
+            appendLine("offset: " + hx711b.Offset + ",\t scale: " + scale, txt_results);
         }
         /*private void Button_weigh2_Click(object sender, RoutedEventArgs e)
 {

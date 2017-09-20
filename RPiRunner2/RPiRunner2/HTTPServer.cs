@@ -8,6 +8,7 @@ using System.Diagnostics;
 using System.IO;
 using Windows.Storage.Streams;
 using Windows.Storage;
+using System.Text.RegularExpressions;
 
 namespace RPiRunner2
 {
@@ -25,10 +26,10 @@ namespace RPiRunner2
         private StreamSocketListener listener;
         private DataWriter _writer;
 
-        public delegate void DataRecived(string data, HTTPServer sender);
+        public delegate void DataRecived(string data);
         public event DataRecived OnDataRecived;
 
-        public delegate void Error(string message, HTTPServer sender);
+        public delegate void Error(string message);
         public event Error OnError;
 
         private bool restricted;
@@ -72,12 +73,21 @@ namespace RPiRunner2
         /// Retrives the HTML Document
         /// </summary>
         /// <returns>A string contains the content of the file</returns>
-        public async Task<string> getHTMLAsync(string page)
+        public static async Task<string> getHTMLAsync(string page)
         {
             StorageFolder storageFolder = Windows.ApplicationModel.Package.Current.InstalledLocation;
             StorageFile sampleFile = await storageFolder.GetFileAsync(page);
             string text = await FileIO.ReadTextAsync(sampleFile);
             return text;
+        }
+        public static string HTMLRewrite(string html, string tag, string id, string content)
+        {
+            Regex regex = new Regex("\\<" + tag + ".*id=\"" + id + "\".*\\>.*\\<\\/" + tag + "\\>");
+            Match m = regex.Match(html);
+            string str = m.Value;
+            string repstr = str.Replace("><", ">" + content + "<");
+
+            return html.Replace(str, repstr);
         }
 
         /// <summary>
@@ -104,7 +114,7 @@ namespace RPiRunner2
             catch (Exception e)
             {
                 if (OnError != null)
-                    OnError(e.Message, this);
+                    OnError(e.Message);
                 Debug.WriteLine("error listen");
             }
         }
@@ -145,9 +155,9 @@ namespace RPiRunner2
                     break;
             }
             if (!error)
-                OnDataRecived(data, this);
+                OnDataRecived(data);
             else
-                OnError("Disconnected during data transfer.", this);
+                OnError("Disconnected during data transfer.");
         }
 
         /// <summary>
@@ -172,7 +182,7 @@ namespace RPiRunner2
                 catch (Exception ex)
                 {
                     if (OnError != null)
-                        OnError(ex.Message, this);
+                        OnError(ex.Message);
                 }
             }
         }

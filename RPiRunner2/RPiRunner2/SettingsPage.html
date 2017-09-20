@@ -67,6 +67,7 @@
             The name will be presented before anyone how wants to weigh.<br />
             <input type="text" name="name" placeholder="name" /><input type="submit" name="chname" value="Change Name (chname)" />
         </form>
+        <span id="name_feedback"></span>
     </div>
     <div>
         <h2>Change Your Password</h2>
@@ -77,6 +78,7 @@
             Confirm Password: <input type="password" name="confirm"  placeholder="confirm"/><br />
             <input type="submit" name="chpass" value="Change Password (chpass)" />
         </form>
+        <span id="chpass_feedback"></span>
     </div>
     <div>
         <h2>Register Your Device to the Cloud</h2>
@@ -84,12 +86,14 @@
             insert the weight serial no. that you received with your scale<br />
             serial: <input type="text" name="serial" placeholder="serial" /><input type="submit" name="register" value="Register (register)" />
         </form>
+        <span id="serial_feedback"></span>
     </div>
     <div>
         <h2>Check your hardware</h2>
         <form method="get">
             <input type="submit" name="check_hw" value="Click here to perform a quick hardware checking. (check_hw)" />
         </form>
+        <span id="check_hw_feedback"></span>
     </div>
     <div>
         <h2>Calibrate Your Scale</h2>
@@ -98,18 +102,21 @@
         <ol>
             <li>Take an object with a known weight</li>
             <li>Write its weight in the textbox below</li>
-            <li>Make sure there is nothing on the weight-scale (i.e. you 'weighing air')</li>
-            <li>Click on 'Calibrate'</li>
             <li>Place your object on the weight-scale</li>
-            <li>Click on 'Calibrate' again</li>
-            <li>The server will calculate the values of SCALE and OFFSET that are suitable for your device.</li>
+            <li>Click on 'Calibrate I'</li>
+            <li>Remove your object from the scale</li>
+            <li>Click on 'Calibrate II'</li>
+            <li>All Done! The device will calculate the values of SCALE and OFFSET that are suitable for you.</li>
         </ol>
-        Known weight: <input type="text" name="known" placeholder="text" /><br />
         <form method="get">
-            <input type="submit" name="calibrate" value="Calibrate (calibrate)" id="calibrate" />
+            Known weight: <input type="text" name="known" placeholder="text" /><br />
+            <input type="submit" name="calibrate1" value="Calibrate I" id="calibrate" />
         </form>
-        <span id="calibration_guide"></span>
-    </div>
+        <form method="get">
+            <input type="submit" name="calibrate2" value="Calibrate II" id="calibrate" />
+        </form>
+            <span id="calibration_feedback"></span>
+</div>
     <div>
         <h2>Log out</h2>
         <form method="get">
