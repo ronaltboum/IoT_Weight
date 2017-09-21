@@ -94,7 +94,7 @@
     <div>
         <h2>Calibrate Your Scale</h2>
         You'll need to perform a calibration for your scale so it will give an accurate result. <br />
-        calibration is simple, just follow these instuctions:
+        to calibrate calibrate the weight-scale you can either manually enter the SCALE and OFFSET values of it, or just follow these instuctions to calculate these values:
         <ol>
             <li>Take an object with a known weight</li>
             <li>Write its weight in the textbox below</li>
@@ -107,6 +107,15 @@
         Known weight: <input type="text" name="known" placeholder="text" /><br />
         <form method="get">
             <input type="submit" value="Calibrate" id="calibrate" />
+        </form>
+        <br />
+        <br />
+        <form method="get">
+            Insert SCALE and OFFSET manually:<br />
+            SCALE: <input type="text" name="mcal_scale" placeholder=""/><br />
+            OFFSET: <input type="text" name="mcal_offset" placeholder=""/><br />
+            <input type="submit" value="Set Parameters" />
+
         </form>
         <span id="calibration_guide"></span>
     </div>
