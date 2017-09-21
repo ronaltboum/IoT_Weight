@@ -41,7 +41,7 @@ namespace weighJune28
 
             startWeighButton.Click += (sender, e) =>
             {
-                var intent = new Intent(this, typeof(GetIPAddress));
+                var intent = new Intent(this, typeof(QRScan));
                 StartActivity(intent);
             };
 
@@ -51,6 +51,7 @@ namespace weighJune28
                 StartActivity(intent);
             };
 
+            
             //button.Click += delegate {
             //    var activity2 = new Intent(this, typeof(Activity2));
             //    activity2.PutExtra("MyData", "Data from Activity1");

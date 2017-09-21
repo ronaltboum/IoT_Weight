@@ -13,13 +13,13 @@
         android:id="@+id/GetStats"
         android:layout_marginTop="18.0dp" />
     <Button
-        android:text="Start Weigh"
+        android:text="Weigh Yourself"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/StartWeigh" />
-  <Button
-      android:text="Calculate your BMI"
-      android:layout_width="match_parent"
-      android:layout_height="wrap_content"
-      android:id="@+id/BMI" />
+    <Button
+        android:text="Calculate your BMI"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/BMI" />
 </LinearLayout>

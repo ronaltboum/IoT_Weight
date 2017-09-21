@@ -27,6 +27,8 @@ namespace weighJune28
         //calculate BMI,  but he has no weighs in the database,  then he goes back and 
         //weighs himself,  and then tries to calculate BMI again.
 
+        //TODO:  updated profile:   change height, gender, age.  Also?  age should go up with time.  handle it.
+
         protected override async void OnCreate(Bundle savedInstanceState)
         {
             base.OnCreate(savedInstanceState);
@@ -37,10 +39,25 @@ namespace weighJune28
             weighTableRef = client.GetTable<weighTable>();
             UsersTableRef = client.GetTable<UsersTable>();
 
+            var RecomendedBMI_Button = FindViewById<Button>(Resource.Id.RecomendedBMI);
             var enterHeight = FindViewById<EditText>(Resource.Id.enterHeight);
             var heightText = FindViewById<TextView>(Resource.Id.heightText);
+            var BMI_text = FindViewById<TextView>(Resource.Id.BMI_TextView);
+            BMI_text.Visibility = ViewStates.Gone;
+            RecomendedBMI_Button.Visibility = ViewStates.Gone;
             heightText.Visibility = ViewStates.Gone;
             enterHeight.Visibility = ViewStates.Gone;
+
+            RecomendedBMI_Button.Click += async (sender, e) =>
+            {
+                //TODO:  should add a global user variable.  also global BMI
+                //delete this database query later:
+                var userRecord = await UsersTableRef.Where(item => (item.UniqueUsername == ourUserId)).ToListAsync();
+                var user = userRecord[0];
+                CalculateBMICategory(user,32);
+            };
+
+
             enterHeight.TextChanged += (object sender, Android.Text.TextChangedEventArgs e) => {
 
                 //heightText.Text = e.Text.ToString();
@@ -74,6 +91,7 @@ namespace weighJune28
                     heightText.Visibility = ViewStates.Gone;
                     enterHeight.Visibility = ViewStates.Gone;
                     CalculateUserBMI();
+                    RecomendedBMI_Button.Visibility = ViewStates.Visible;
                 }
             };
 
@@ -126,7 +144,7 @@ namespace weighJune28
                         CreateAndShowDialog(debugMessage,  "Debugg message " );
                         //TODO:  alert user if his BMI is out of normal range.  see wiki.  maybe give
                         //wiki link for further information.
-
+                        RecomendedBMI_Button.Visibility = ViewStates.Visible;
                     }
                 }
 
@@ -154,29 +172,93 @@ namespace weighJune28
 
         private async void CalculateUserBMI()
         {
-            var weighRecords = await weighTableRef.Where(item => (item.username == ourUserId)).ToListAsync();
-            if (weighRecords.Count == 0)
+            try
             {
-                CreateAndShowDialog("Cannot calculate BMI", "No previous weighs were found. Please weigh yourself and try again");
-                //TODO:   return to main screen after user presses back once
+                var weighRecords = await weighTableRef.Where(item => (item.username == ourUserId)).ToListAsync();
+                if (weighRecords.Count == 0)
+                {
+                    CreateAndShowDialog("Cannot calculate BMI", "No previous weighs were found. Please weigh yourself and try again");
+                    //TODO:   return to main screen after user presses back once
+                }
+                else
+                {
+                    //calculate BMI from user's most recent weighing:
+                    var mostRecendWeigh = weighRecords[weighRecords.Count - 1];
+                    float weight = mostRecendWeigh.weigh;
+                    //BMI formula from wikipedia:   BMI = weight in kg / (height in meters)^2
+                    //https://en.wikipedia.org/wiki/Body_mass_index
+                    //TODO:  make sure user didn't enter height of zero
+                    double heigtSquared = Math.Pow(enteredHeight, 2);
+                    double BMI = weight / heigtSquared;
+                    string BMIInStringFormat = Convert.ToString(BMI);
+                    string debugMessage = "Your most recent weight = " + weight + " , and your BMI = " + BMIInStringFormat;
+                    CreateAndShowDialog(debugMessage, "Debugg message ");
+                    //TODO:  alert user if his BMI is out of normal range.  see wiki.  maybe give
+                    //wiki link for further information.
+
+                }
+            }
+            catch (Exception e)
+            {
+                CreateAndShowDialog(e, "Error");
+            }
+        }
+
+
+        private async void CalculateBMICategory(UsersTable user, double BMI)
+        {
+            if(user == null)
+            {
+                CreateAndShowDialog("Cannot calculate the RecommendedBMI", "Error");
+                return;
+            }
+            float userAge = user.age;
+            string BMI_Category = "";
+
+            //case where all details are updated:
+            //TODO:  different for ages 2-20
+            if (userAge <= 0)
+            {
+               //TODO 
+            }
+
+            if(BMI < 15)
+            {
+                BMI_Category = "Very Severely Underweight";
+            }
+            else if (BMI <= 16)
+            {
+                BMI_Category = "Severely Underweight";
+            }
+            else if (BMI <= 18.5)
+            {
+                BMI_Category = "Underweight";
+            }
+            else if (BMI <= 25)
+            {
+                BMI_Category = "Normal";
+            }
+            else if (BMI <= 30)
+            {
+                BMI_Category = "Overweight";
+            }
+            else if (BMI <= 35)
+            {
+                BMI_Category = "Moderately Obese";
+            }
+            else if (BMI <= 40)
+            {
+                BMI_Category = "Severely Obese";
             }
             else
             {
-                //calculate BMI from user's most recent weighing:
-                var mostRecendWeigh = weighRecords[weighRecords.Count - 1];
-                float weight = mostRecendWeigh.weigh;
-                //BMI formula from wikipedia:   BMI = weight in kg / (height in meters)^2
-                //https://en.wikipedia.org/wiki/Body_mass_index
-                //TODO:  make sure user didn't enter height of zero
-                double heigtSquared = Math.Pow(enteredHeight, 2);
-                double BMI = weight / heigtSquared;
-                string BMIInStringFormat = Convert.ToString(BMI);
-                string debugMessage = "Your most recent weight = " + weight + " , and your BMI = " + BMIInStringFormat;
-                CreateAndShowDialog(debugMessage, "Debugg message ");
-                //TODO:  alert user if his BMI is out of normal range.  see wiki.  maybe give
-                //wiki link for further information.
-
+                BMI_Category = "Very Severely Obese";
             }
+            var RecomendedBMI_Button = FindViewById<Button>(Resource.Id.RecomendedBMI);
+            RecomendedBMI_Button.Visibility = ViewStates.Gone;
+            var BMI_text = FindViewById<TextView>(Resource.Id.BMI_TextView);
+            BMI_text.Visibility = ViewStates.Visible;
+            BMI_text.Text = "Your BMI Category is:  " + BMI_Category;
         }
     }
 }

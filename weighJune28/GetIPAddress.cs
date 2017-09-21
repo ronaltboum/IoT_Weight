@@ -35,18 +35,20 @@ namespace weighJune28
             SetContentView(Resource.Layout.DisplayWeigh);
 
             string qrCode = Intent.GetStringExtra("qrcode") ?? "QR Code not available";
+            Console.WriteLine("In GetIPAddress activity and qrCode = {0}", qrCode);
             //TODO:  DELETE LATER:
-            qrCode = "Testing 2";
+            //qrCode = "Testing 2";
     
             MobileServiceClient client = ToDoActivity.CurrentActivity.CurrentClient;
             raspberryTableRef = client.GetTable<RaspberryTable>();
+            //TODO BAR:   add to protocol OK message, so that app will notify Rpi that it has recieved the weight
             try
             {
                 //some inserts for debugging:
                 //var record1 = new RaspberryTable
                 //{
-                //    QRCode = "Testing 3",
-                //    IPAddress = "11.0.0.9",
+                //    QRCode = "Testing 2",
+                //    IPAddress = "10.0.0.2",
                 //};
                 //await raspberryTableRef.InsertAsync(record1);
                 //if (8 == 8)
@@ -56,7 +58,7 @@ namespace weighJune28
                 //TODO:  handle this case
                 if (ipAddressList.Count == 0)
                 {
-                    CreateAndShowDialog("Sorry:", "No Raspberries with the scanned QR Code were found in the database ");
+                    CreateAndShowDialog("Sorry:", "No Raspberries with the scanned QR Code were found in the database. The Raspberry must first be registered in the cloud via the installation process ");
                 }
                 
                 else 
@@ -78,11 +80,7 @@ namespace weighJune28
                     //FindViewById<TextView>(Resource.Id.currentWeigh).Text = Convert.ToString(currentWeigh);
 
                 }
-                //TODO:   handle case where there are more than one ip address for the given QR Code.  
-                //Decide whether the Raspberry (at the installation process), or the 
-                //application will delete the old ip addresses
-                //(in case the Raspberry was moved to a place with a different ip address)
-
+               
             }
             catch (Exception e)
             {
