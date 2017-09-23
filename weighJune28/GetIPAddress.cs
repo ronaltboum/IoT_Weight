@@ -58,7 +58,7 @@ namespace weighJune28
                 //TODO:  handle this case
                 if (ipAddressList.Count == 0)
                 {
-                    CreateAndShowDialog("Sorry:", "No Raspberries with the scanned QR Code were found in the database. The Raspberry must first be registered in the cloud via the installation process ");
+                    CreateAndShowDialog("No Raspberries with the scanned QR Code were found in the database. The Raspberry must first be registered in the cloud via the installation process ", "Sorry:");
                 }
                 
                 else 
