@@ -83,8 +83,17 @@ namespace RPiRunner2
             PermanentData.CurrIP = GetLocalIp();
             if (!PermanentData.Serial.Equals(PermanentData.NULL_SYMBOL))
                 putRecordInDatabase(PermanentData.CurrIP, PermanentData.Serial);
-            uhl.setParameters(PermanentData.Offset, PermanentData.Scale);
+            if(uhl != null)
+                uhl.setParameters(PermanentData.Offset, PermanentData.Scale);
 
+            NetworkInformation.NetworkStatusChanged += NetworkInformation_NetworkStatusChanged;
+        }
+
+        private void NetworkInformation_NetworkStatusChanged(object sender)
+        {
+            System.Diagnostics.Debug.WriteLine("Net status has changed!");
+            PermanentData.CurrIP = GetLocalIp();
+            System.Diagnostics.Debug.WriteLine("new IP: " + PermanentData.CurrIP);
         }
 
 
@@ -92,16 +101,16 @@ namespace RPiRunner2
         /*  This segment contains the functions that belongs to the installation system */
         /*  ============================================================================ */
 
-       /// <summary>
-       /// parse the HTTP request that was received from the user to get the data that he/she has sent/
-       /// </summary>
-       /// <param name="data">the HTTP request query</param>
-       /// <returns>
-       /// A dictionary of the data received.
-       /// e.g. if the user tries to login by sending the username and the password, then this method will return a dictionary where:
-       /// "username" -> "myuser"
-       /// "password" -> "Aa123456"
-       /// </returns>
+        /// <summary>
+        /// parse the HTTP request that was received from the user to get the data that he/she has sent/
+        /// </summary>
+        /// <param name="data">the HTTP request query</param>
+        /// <returns>
+        /// A dictionary of the data received.
+        /// e.g. if the user tries to login by sending the username and the password, then this method will return a dictionary where:
+        /// "username" -> "myuser"
+        /// "password" -> "Aa123456"
+        /// </returns>
         public Dictionary<string, string> getQuery(string data)
         {
             Dictionary<string, string> queryFields = new Dictionary<string, string>();
