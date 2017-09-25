@@ -94,18 +94,6 @@
     <Folder Include="Resources\mipmap-xxhdpi\" />
     <Folder Include="Resources\mipmap-xxxhdpi\" />
   </ItemGroup>
-  <ItemGroup>
-    <Content Include="QR\notwork1.jpg" />
-    <Content Include="QR\notwork2.jpg" />
-    <Content Include="QR\notwork3.jpg" />
-    <Content Include="QR\notwork4.jpg" />
-    <Content Include="QR\rons.jpg" />
-    <Content Include="QR\ron_works.jpg" />
-    <Content Include="QR\working1.jpg" />
-    <Content Include="QR\working2.jpg" />
-    <Content Include="QR\working3.jpg" />
-    <Content Include="QR\working4.jpg" />
-  </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
 		Other similar extension points exist, see Microsoft.Common.targets.

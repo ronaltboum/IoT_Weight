@@ -20,9 +20,9 @@ namespace weighJune28
     public class GetIPAddress : Activity
     {
         private IMobileServiceTable<RaspberryTable> raspberryTableRef;
-        uint ipAddress = 0;
         string ipaddress = "";
         float currentWeigh = 0;   //to be returned from Raspberry
+        string qrCode;
         TCPSender tcps;
         string ourUserId = ToDoActivity.CurrentActivity.Currentuserid;  //username
 
@@ -34,37 +34,32 @@ namespace weighJune28
             // This activity receives from QRActivity a string which is the Raspberry's QRCode,  and returns this Raspberry's IP Address
             SetContentView(Resource.Layout.DisplayWeigh);
 
-            string qrCode = Intent.GetStringExtra("qrcode") ?? "QR Code not available";
+            //qrCode = Intent.GetStringExtra("qrcode") ?? "QR Code not available";
+            qrCode = (121212).ToString();
+            Console.WriteLine("In GetIPAddress activity and qrCode = {0}", qrCode);
             //TODO:  DELETE LATER:
-            qrCode = "55445544";
+            //qrCode = "Testing 2";
     
             MobileServiceClient client = ToDoActivity.CurrentActivity.CurrentClient;
             raspberryTableRef = client.GetTable<RaspberryTable>();
+            //TODO BAR:   add to protocol OK message, so that app will notify Rpi that it has recieved the weight
             try
             {
                 //some inserts for debugging:
                 //var record1 = new RaspberryTable
                 //{
-                //    QRCode = "Testing 3",
-                //    IPAddress = "11.0.0.9",
+                //    QRCode = "Testing 2",
+                //    IPAddress = "10.0.0.2",
                 //};
                 //await raspberryTableRef.InsertAsync(record1);
                 //if (8 == 8)
                 //    return;
 
-                var ipAddressList_task = raspberryTableRef.Where(item => (item.QRCode == qrCode)).ToListAsync();
-                List<RaspberryTable> ipAddressList;
-                if (ipAddressList_task.Wait(10000)){
-                    ipAddressList = ipAddressList_task.Result;
-                }
-                else
-                {
-                    throw new Exception("Failed to retrive query from the cloud");
-                }
+                var ipAddressList = await raspberryTableRef.Where(item => (item.QRCode == qrCode) ).ToListAsync();
                 //TODO:  handle this case
                 if (ipAddressList.Count == 0)
                 {
-                    CreateAndShowDialog("Sorry:", "No Raspberries with the scanned QR Code were found in the database ");
+                    CreateAndShowDialog("Sorry:", "No Raspberries with the scanned QR Code were found in the database. The Raspberry must first be registered in the cloud via the installation process ");
                 }
                 
                 else 
@@ -86,15 +81,10 @@ namespace weighJune28
                     //FindViewById<TextView>(Resource.Id.currentWeigh).Text = Convert.ToString(currentWeigh);
 
                 }
-                //TODO:   handle case where there are more than one ip address for the given QR Code.  
-                //Decide whether the Raspberry (at the installation process), or the 
-                //application will delete the old ip addresses
-                //(in case the Raspberry was moved to a place with a different ip address)
-
+               
             }
             catch (Exception e)
             {
-                System.Diagnostics.Debug.WriteLine(e.Message);
                 CreateAndShowDialog(e, "Error");
             }
 
@@ -103,8 +93,6 @@ namespace weighJune28
 
         private async void TalkToRaspberry()
         {
-            //string ip = findIpFromSerial("[QR scan result]"); //TODO: replace the string here with the scanning result
-            //string ip =  Convert.ToString(ipAddress);
             string ip = ipaddress;
             if (!tcps.Connect(ip))
             {
@@ -114,10 +102,11 @@ namespace weighJune28
                 return;
             }
 
-            DRP result = await sendSCANNED(long.Parse("55665566")); //TODO: replace the string here with the scanning result
+            DRP result = await sendSCANNED(1122); //TODO: replace the string here with the scanning result
             if (result == null)
             {
                 //in case there no answer from the server
+                //tv.Text = "Connection Timeout";
                 handleGUI_OnFailure("Connection Timeout");
                 return;
             }
@@ -125,18 +114,21 @@ namespace weighJune28
             if (result.MessageType == DRPMessageType.DATA)
             {
                 //TODO: Show the scaling result on the screen
+                //tv.Text = result.Data[0].ToString();
                 handleGUI_OnSuccess(result.Data[0].ToString());
                 return;
             }
             else if (result.MessageType == DRPMessageType.IN_USE)
             {
                 //TODO: Show a message for the user that informs him the device is already in use by another user.
+                //tv.Text = "the scale is in use";
                 handleGUI_OnFailure("the scale is in use");
                 return;
             }
             else if (result.MessageType == DRPMessageType.ILLEGAL || result.MessageType == DRPMessageType.HARDWARE_ERROR)
             {
                 //TODO: The scaling could not been done due to error.
+                //tv.Text = "The scaling could not been done due to error.";
                 handleGUI_OnFailure("The scaling could not been done due to error.");
                 return;
             }
@@ -200,9 +192,9 @@ namespace weighJune28
         private string findIpFromSerial(string serial)
         {
             //TODO: I've hardcoded my RPi ip here. In the final version we need to look for the ip in the DB
-            return "192.168.1.104";
+            //return "192.168.1.104";
             //Ron's laptop ip:
-            //return "10.0.0.2";
+            return "10.0.0.2";
         }
     }
 }

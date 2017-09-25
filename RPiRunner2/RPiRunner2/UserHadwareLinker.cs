@@ -6,6 +6,10 @@ using System.Threading.Tasks;
 using Windows.Devices.Gpio;
 namespace RPiRunner2
 {
+    /// <summary>
+    /// Links between the users and the hardware.
+    /// This class expands the basic LinearHX class and allow to inform whether the weight-scale is being used, and provide information about the current user or previous uses.
+    /// </summary>
     class UserHardwareLinker : LinearHX
     {
         private TempProfile currUser;

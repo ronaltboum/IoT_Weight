@@ -30,7 +30,7 @@ namespace RPiRunner2
         public const int WEB_PORT = 9000;
         public const int SOCKET_PORT = 9888;
 
-        public const int WEIGH_AVG = 1500;
+        public const int WEIGH_AVG = 1000;
         public const float CALIB_FACTOR = 1.75f;
 
         const byte DOUT_PIN = 26;
@@ -48,15 +48,12 @@ namespace RPiRunner2
         private GpioController gpioController;
         private GpioPin dout, clk;
 
-        private string devname;
        // public MobileServiceClient client;
-        const string applicationURL = @"https://weighjune28.azurewebsites.net";
+        const string applicationURL = @"https://iotweight.azurewebsites.net";
 
         public MainPage()
         {
             this.InitializeComponent();
-
-            devname = "IOTWeightScale"; //TODO: load from disk
 
             gpioController = GpioController.GetDefault();
             if (gpioController != null)
@@ -81,6 +78,13 @@ namespace RPiRunner2
             http.OnError += http_OnError;
             http.Start();
             System.Diagnostics.Debug.WriteLine("web server created");
+
+            PermanentData.LoadFromMemory();
+            PermanentData.CurrIP = GetLocalIp();
+            if (!PermanentData.Serial.Equals(PermanentData.NULL_SYMBOL))
+                putRecordInDatabase(PermanentData.CurrIP, PermanentData.Serial);
+            uhl.setParameters(PermanentData.Offset, PermanentData.Scale);
+
         }
 
 
@@ -133,22 +137,25 @@ namespace RPiRunner2
         /// </summary>
         /// <param name="data">The first row of the HTTP request query.</param>
         /// <param name="sender">the HTTPServer object that handles the current connection.</param>
-        public async void http_OnDataRecived(string data)
+        public async System.Threading.Tasks.Task http_OnDataRecived(string data)
         {
             System.Diagnostics.Debug.WriteLine(data);
             Dictionary<string, string> fields = getQuery(data);
 
-            //some browsers might ask for the page's icon.
-            if(data.IndexOf(".ico") >= 0)
-            {
-                http.Send(CreateHTTP.Code404_NotFound());
-            }
+            
             string html = await HTTPServer.getHTMLAsync(PAGE);
+
+            //some browsers might ask for the page's icon.
+            if (data.IndexOf("favicon.ico") >= 0)
+            {
+                http.Send(CreateHTTP.Code204_NoContent());
+                return;
+            }
             if (fields.Keys.Contains("chname"))
             {
                 System.Diagnostics.Debug.WriteLine("got: " + fields["name"]);
-                devname = fields["name"];
-                html = HTTPServer.HTMLRewrite(html, "span", "name_feedback", "Your device's name was changed to  " + devname);
+                PermanentData.Devname = fields["name"];
+                html = HTTPServer.HTMLRewrite(html, "span", "name_feedback", "Your device's name was changed to  " + PermanentData.Devname);
             }
             if (fields.Keys.Contains("register"))
             {/*
@@ -163,6 +170,8 @@ namespace RPiRunner2
                 string serial = fields["serial"];
                 string ip = GetLocalIp();
                 putRecordInDatabase(ip, serial);
+                PermanentData.Serial = serial;
+                PermanentData.CurrIP = ip;
             }
             if (fields.Keys.Contains("sscale"))
             {
@@ -181,10 +190,13 @@ namespace RPiRunner2
                 knownWeight = float.Parse(fields["known"]);
                 uhl.setParameters(nullweight, rawWeight, knownWeight);
                 html = HTTPServer.HTMLRewrite(html, "span", "calibration_feedback", "OK! the device's parameters are:<br />OFFSET: " + uhl.Offset + "<br />SCALE: " + uhl.Scale);
+                PermanentData.Scale = uhl.Scale;
+                PermanentData.Offset = uhl.Offset;
             }
 
-            string response = CreateHTTP.Code200_Ok(html);
+            string response =  CreateHTTP.Code200_Ok(html);
             http.Send(response);
+            PermanentData.WriteToMemory();
 
             /*
                         //logout
@@ -319,7 +331,7 @@ namespace RPiRunner2
             System.Diagnostics.Debug.WriteLine("received: " + message);
             if (message.Equals("@welcome@"))
             {
-                tcp.Send("TAUIOT@devname=" + devname);
+                tcp.Send("TAUIOT@devname=" + PermanentData.Devname);
                 return;
             }
             DRP msg;
@@ -362,7 +374,6 @@ namespace RPiRunner2
                         DRP response = new DRP(DRPDevType.RBPI, msg.UserName, msg.DestID, msg.SourceID, new List<float>() { w }, 0, DRPMessageType.DATA);
                         tcp.Send(response.ToString());
                         System.Diagnostics.Debug.WriteLine("message sent: " + response.ToString());
-                        uhl.FinishUser();
 
                         //sending to cloud
                         Dictionary<string, string> jsend = new Dictionary<string, string>();
@@ -372,6 +383,8 @@ namespace RPiRunner2
 
                         string sendToCloud = JsonConvert.SerializeObject(jsend);
                         await AzureIoTHub.SendDeviceToCloudMessageAsync(sendToCloud);
+
+                        uhl.FinishUser();
                         return;
                     }
                     catch

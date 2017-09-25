@@ -96,10 +96,12 @@
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
     <Compile Include="AzureIoTHub.cs" />
+    <Compile Include="DRP.cs" />
     <Compile Include="MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SimpleEventProcessor.cs" />
   </ItemGroup>
   <ItemGroup>
     <AppxManifest Include="Package.appxmanifest">
@@ -158,6 +160,12 @@
     </PackageReference>
     <PackageReference Include="Microsoft.Azure.Devices.Shared">
       <Version>1.0.10</Version>
+    </PackageReference>
+    <PackageReference Include="Microsoft.Azure.EventHubs">
+      <Version>1.0.3</Version>
+    </PackageReference>
+    <PackageReference Include="Microsoft.Azure.EventHubs.Processor">
+      <Version>1.0.3</Version>
     </PackageReference>
     <PackageReference Include="Microsoft.Extensions.Logging">
       <Version>1.1.1</Version>

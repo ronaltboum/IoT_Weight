@@ -21,4 +21,14 @@
         android:layout_height="wrap_content"
         android:id="@+id/OKButton"
         android:layout_marginRight="0.0dp" />
+    <Button
+        android:text="Click Here to Find Out Your BMI Category:"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/RecomendedBMI" />
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/BMI_TextView"
+        android:layout_marginTop="16.0dp" />
 </LinearLayout>

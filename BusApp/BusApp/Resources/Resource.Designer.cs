@@ -26,6 +26,7 @@ namespace BusApp
 		
 		public static void UpdateIdValues()
 		{
+			global::Microsoft.Azure.Amqp.Amqp.Resource.String.ApplicationName = global::BusApp.Resource.String.ApplicationName;
 		}
 		
 		public partial class Attribute
@@ -41,11 +42,27 @@ namespace BusApp
 			}
 		}
 		
-		public partial class Layout
+		public partial class Drawable
 		{
 			
 			// aapt resource value: 0x7f020000
-			public const int Main = 2130837504;
+			public const int ic_launcher = 2130837504;
+			
+			static Drawable()
+			{
+				global::Android.Runtime.ResourceIdManager.UpdateIdValues();
+			}
+			
+			private Drawable()
+			{
+			}
+		}
+		
+		public partial class Layout
+		{
+			
+			// aapt resource value: 0x7f030000
+			public const int Main = 2130903040;
 			
 			static Layout()
 			{
@@ -60,8 +77,11 @@ namespace BusApp
 		public partial class String
 		{
 			
-			// aapt resource value: 0x7f030000
-			public const int app_name = 2130903040;
+			// aapt resource value: 0x7f040001
+			public const int ApplicationName = 2130968577;
+			
+			// aapt resource value: 0x7f040000
+			public const int app_name = 2130968576;
 			
 			static String()
 			{

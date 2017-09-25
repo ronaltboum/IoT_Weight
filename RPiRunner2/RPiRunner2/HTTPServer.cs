@@ -26,7 +26,7 @@ namespace RPiRunner2
         private StreamSocketListener listener;
         private DataWriter _writer;
 
-        public delegate void DataRecived(string data);
+        public delegate Task DataRecived(string data);
         public event DataRecived OnDataRecived;
 
         public delegate void Error(string message);
@@ -119,6 +119,7 @@ namespace RPiRunner2
             }
         }
 
+        private bool busy = false;
         /// <summary>
         /// This event activated for each new connection.
         /// </summary>
@@ -127,7 +128,9 @@ namespace RPiRunner2
         private async void Listener_ConnectionReceived(StreamSocketListener sender, StreamSocketListenerConnectionReceivedEventArgs args)
         {
             Debug.WriteLine("connected to " + args.Socket.Information.RemoteAddress + " my ip: " + args.Socket.Information.LocalAddress);
-
+            while (busy) { }
+            busy = true;
+            Debug.WriteLine("the connection with " + args.Socket.Information.RemoteAddress + " is being serviced.");
             var reader = new DataReader(args.Socket.InputStream);
             _writer = new DataWriter(args.Socket.OutputStream);
             string data = "";
@@ -135,29 +138,32 @@ namespace RPiRunner2
             while (true)
             {
                 Task<uint> load_task = reader.LoadAsync(1).AsTask();
-                
-                bool isReceived = load_task.Wait(10000);
-                if (!isReceived) {
+
+                bool isReceived = load_task.Wait(5000);
+                if (!isReceived)
+                {
                     Debug.WriteLine("disconnected :-(");
                     error = true;
                     break;
                 }
                 data += reader.ReadString(load_task.Result);
-                
-                if(data.Length > 3 && data.ToUpper().IndexOf("GET") < 0)
+
+                if (data.Length > 3 && data.ToUpper().IndexOf("GET") < 0)
                 {
                     Debug.WriteLine("Illegal message (non HTTP)");
                     error = true;
                     break;
                 }
-                
+
                 if (data.IndexOf("\n") >= 0 || data.IndexOf("\r") >= 0)
                     break;
             }
+            busy = false;
             if (!error)
-                OnDataRecived(data);
+                await OnDataRecived(data);
             else
                 OnError("Disconnected during data transfer.");
+
         }
 
         /// <summary>

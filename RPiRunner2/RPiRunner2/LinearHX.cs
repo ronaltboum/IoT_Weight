@@ -6,11 +6,10 @@ using System.Threading.Tasks;
 using Windows.Devices.Gpio;
 namespace RPiRunner2
 {
-    /// <summary>
-    /// Most of the code is taken from this link https://github.com/bogde/HX711
-    /// it was written in C++ for Arduino. I've adapted the code to our's needs.
-    /// Also made some minor changes to make the interface to be more user-friendly.
-    /// </summary>
+    /**
+    * Most of the code is taken from this link https://github.com/bogde/HX711
+    * it was written in C++ for Arduino. I've adapted the code to our's needs.
+    */
     class LinearHX
     {
         private float offset;
@@ -32,12 +31,6 @@ namespace RPiRunner2
         public GpioPin SerialDataOutput1 { get => SerialDataOutput; set => SerialDataOutput = value; }
         public GpioController Gpio { get => gpio; set => gpio = value; }
 
-        /// <summary>
-        /// Initiallizing a new weight-scale interface.
-        /// </summary>
-        /// <param name="serialDataOutput">The DOUT pin</param>
-        /// <param name="powerDownAndSerialClockInput">The SCK pin</param>
-        /// <param name="gain">the GAIN value for each measurment</param>
         public LinearHX(GpioPin serialDataOutput, GpioPin powerDownAndSerialClockInput, byte gain = 128)
         {
             PowerDownAndSerialClockInput = powerDownAndSerialClockInput;
@@ -52,23 +45,17 @@ namespace RPiRunner2
             set_gain(gain);
         }
 
-        /// <summary>
-        /// Set the parameters of 'scale' and 'offset' for calibrating the scale based on data received through the calibration proccess.
-        /// </summary>
-        /// <param name="rawNull">the value received when weighing nothing</param>
-        /// <param name="rawWeight">the value received when calculation an object with a known weight</param>
-        /// <param name="realWeight">the real known weight of the weighted object</param>
+        /*
+         * Set the parameters of 'scale' and 'offset' for calibrating the scale
+         * @param rawNull the value received when weighing nothing
+         * @param rawWeight the value received when calculation an object with a known weight
+         * @param realWeight the real known weight of the weighted object
+         */
         public void setParameters(float rawNull, float rawWeight, float realWeight)
         {
             this.offset = rawNull;
             this.scale = (rawWeight - rawNull) / realWeight;
         }
-
-        /// <summary>
-        /// Set the parameters of 'scale' and 'offset' for calibrating the scale
-        /// </summary>
-        /// <param name="offset">the offset of the weight-scale</param>
-        /// <param name="scale">the scale.</param>
         public void setParameters(float offset, float scale)
         {
             this.offset = offset;
@@ -79,40 +66,24 @@ namespace RPiRunner2
          * Gets the received data from the scale and transform it into the real weight of the object
          * You can manually specify the values of 'scale' and 'offset' or use the precalculated ones (which you have set by 'setParameters(..)')
          */
-
-        /// <summary>
-        ///  Gets the received data from the scale and transform it into the real weight of the object
-        ///  this method uses the precalculated values of 'scale' and 'offset' (which you have set by 'setParameters(..)')
-        /// </summary>
-        /// <param name="rawData">the weight-scale's output to transform</param>
-        /// <returns>The transformed value</returns>
         public float transform(float rawData)
         {
             return transform(rawData, scale, offset);
         }
-
-        /// <summary>
-        /// Gets the received data from the scale and transform it into the real weight of the object
-        /// </summary>
-        /// <param name="rawData">the weight-scale's output to transform></param>
-        /// <param name="scale">the SCALE value</param>
-        /// <param name="offset">the OFFSET value</param>
-        /// <returns>The transformed value</returns>
         public float transform(float rawData, float scale, float offset)
         {
             return (rawData - offset) / scale;
         }
 
-        /// <summary>
-        ///  waits for the chip to be ready and returns a reading
-        /// </summary>
-        /// <returns>the bits read from the sensor</returns>
+
+        //(from bogde)
+        // waits for the chip to be ready and returns a reading
         public uint read()
         {
             // wait for the chip to become ready
             while (!is_ready())
             {
-                // Will do nothing
+                // Will do nothing on Arduino but prevent resets of ESP8266 (Watchdog Issue)
             }
 
             uint data = 0;
@@ -124,9 +95,10 @@ namespace RPiRunner2
                 PowerDownAndSerialClockInput.Write(GpioPinValue.Low);
                 data <<= 1;
                 data |= (uint)SerialDataOutput.Read();
+               // System.Diagnostics.Debug.Write((data & 0x1).ToString() + ",");
                
             }
-            //System.Diagnostics.Debug.WriteLine("data(bits): " + data.ToString("X"));
+            
             //smear the last bit
             if (((data>>0x17)&0x1) != 0)
             {
@@ -139,25 +111,19 @@ namespace RPiRunner2
                 SerialDataOutput.Write(GpioPinValue.High);
                 SerialDataOutput.Write(GpioPinValue.Low);
             }
-            
+            //if ((int)data != -1 && (int)data != -8388608)
+               // System.Diagnostics.Debug.WriteLine("data(bits): " + data.ToString("X") + ",\t(" + ((int)data).ToString() + ")");
             return (uint)data;
         }
 
-        /// <summary>
-        /// Check if the sensor is ready for reading
-        /// </summary>
-        /// <returns>True iff the sensor is ready</returns>
         public bool is_ready()
         {
             return SerialDataOutput.Read() == GpioPinValue.Low;
         }
 
-        /// <summary>
-        /// set the gain factor; takes effect only after a call to read()
-        /// channel A can be set for a 128 or 64 gain; channel B has a fixed 32 gain
-        /// depending on the parameter, the channel is also set to either A or B
-        /// </summary>
-        /// <param name="gain">can be either 32, 64 or 128</param>
+        // set the gain factor; takes effect only after a call to read()
+        // channel A can be set for a 128 or 64 gain; channel B has a fixed 32 gain
+        // depending on the parameter, the channel is also set to either A or B
         public void set_gain(byte gain = 128)
         {
             switch (gain)
@@ -179,58 +145,37 @@ namespace RPiRunner2
 
         // returns an average reading; times = how many times to read
         // NOTE: reaturns raw data!
-
-        /// <summary>
-        /// returns an average reading.
-        /// This method returns the that was received from the sensor, without any kind of numerical proccessing.
-        /// </summary>
-        /// <param name="times">how many times to read</param>
-        /// <returns>The everage of the readings</returns>
-        public float getRawWeight(byte times = 100)
+        public float getRawWeight(int times = 100)
         {
             long sum = 0;
-            for (byte i = 0; i < times; i++)
+            for (int i = 0; i < times; i++)
             {
                 sum += (int)read();
             }
             return (float)sum / times;
         }
 
-        /// <summary>
-        /// returns an average reading. Also scales the results
-        /// </summary>
-        /// <param name="times">how many times to read</param>
-        /// <returns>The everage of the readings</returns>
-        public float getWeight(byte times = 100)
+        public float getWeight(int times = 100)
         {
             float raw = getRawWeight(times);
             return transform(raw);
         }
-
-        /// <summary>
-        /// returns an average reading. Also scales the results
-        /// </summary>
-        /// <param name="rawWeight">The raw-weight</param>
-        ///  /// <returns>The everage of the readings</returns>
         public float getWeight(float rawWeight)
         {
             return transform(rawWeight);
         }
 
-        /// <summary>
-        ///  puts the chip into power down mode
-        /// </summary>
+        // puts the chip into power down mode
         public void power_down()
         {
-            SerialDataOutput.Write(GpioPinValue.Low);
-            SerialDataOutput.Write(GpioPinValue.High);
+            PowerDownAndSerialClockInput.Write(GpioPinValue.Low);
+            PowerDownAndSerialClockInput.Write(GpioPinValue.High);
         }
-        /// <summary>
-        ///  wakes up the chip after power down mode
-        /// </summary>
+
+        // wakes up the chip after power down mode
         public void power_up()
         {
-            SerialDataOutput.Write(GpioPinValue.Low);
+            PowerDownAndSerialClockInput.Write(GpioPinValue.Low);
         }
     }
 }

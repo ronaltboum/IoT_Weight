@@ -62,39 +62,39 @@ namespace RPiRunner2
             }
         }
 
+        private bool busy = false;
         private async void Listener_ConnectionReceived(StreamSocketListener sender, StreamSocketListenerConnectionReceivedEventArgs args)
         {
             Debug.WriteLine("connection accepted to client " + args.Socket.Information.RemoteAddress);
-
+            while (busy) { }
+            Debug.WriteLine("connection is serviced with " + args.Socket.Information.RemoteAddress);
+            busy = true;
             //We assume here that the first 4 bytes of the message will always contain the message's length.
             var reader = new DataReader(args.Socket.InputStream);
             writer = new DataWriter(args.Socket.OutputStream);
 
-            while (true)
+            uint msize = await reader.LoadAsync(sizeof(uint)); //receiving the message length
+            if (msize < sizeof(uint))
             {
-                uint msize = await reader.LoadAsync(sizeof(uint)); //receiving the message length
-                if (msize < sizeof(uint))
-                {
-                    Debug.WriteLine("disconnected during data transfer. :-(");
-                    return;
-                }
-                uint length = reader.ReadUInt32();
-
-                if (easyDebug)
-                    length = 5;
-
-                uint loaded = await reader.LoadAsync(length);
-                if (loaded < length)
-                {
-                    Debug.WriteLine("disconnected during data transfer. :-(");
-                   // return;
-                }
-
-                string msg = reader.ReadString(loaded);
-
-                OnDataReceived(msg);
-
+                Debug.WriteLine("disconnected during data transfer. :-(");
+                return;
             }
+            uint length = reader.ReadUInt32();
+
+            if (easyDebug)
+                length = 5;
+
+            uint loaded = await reader.LoadAsync(length);
+            if (loaded < length)
+            {
+                Debug.WriteLine("disconnected during data transfer. :-(");
+                // return;
+            }
+
+            string msg = reader.ReadString(loaded);
+
+            OnDataReceived(msg);
+            busy = false;
         }
 
         public async void Send(string message)

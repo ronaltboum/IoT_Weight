@@ -31,13 +31,13 @@ class AzureIoTHub
 
     // Refer to http://aka.ms/azure-iot-hub-vs-cs-2017-wiki for more information on Connected Service for Azure IoT Hub
 
-    public static async Task SendDeviceToCloudMessageAsync()
+    public static async Task SendDeviceToCloudMessageAsync(string msg)
     {
         CreateClient();
 #if WINDOWS_UWP
-        var str = "{\"deviceId\":\"myPi\",\"messageId\":1,\"text\":\"Hello, Cloud from a UWP C# app!\"}";
+        var str = msg;
 #else
-        var str = "{\"deviceId\":\"myPi\",\"messageId\":1,\"text\":\"Hello, Cloud from a C# app!\"}";
+        var str = msg;
 #endif
         var message = new Message(Encoding.ASCII.GetBytes(str));
 
