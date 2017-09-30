@@ -37,7 +37,7 @@ namespace IoTWeight
             string qrCode = Intent.GetStringExtra("qrcode") ?? "QR Code not available";
             Console.WriteLine("In GetIPAddress activity and qrCode = {0}", qrCode);
             //TODO:  DELETE LATER:
-            qrCode = "Testing 1";
+            //qrCode = "Testing 2";
 
             MobileServiceClient client = ToDoActivity.CurrentActivity.CurrentClient;
             raspberryTableRef = client.GetTable<RaspberryTable>();
@@ -47,8 +47,8 @@ namespace IoTWeight
                 //some inserts for debugging:
                 //var record1 = new RaspberryTable
                 //{
-                //    QRCode = "Testing 1",
-                //    IPAddress = "10.0.0.2",
+                //    QRCode = "Testing 2",
+                //    IPAddress = "18.0.0.7",
                 //};
                 //await raspberryTableRef.InsertAsync(record1);
                 //if (8 == 8)
@@ -58,7 +58,12 @@ namespace IoTWeight
                 //TODO:  handle this case
                 if (ipAddressList.Count == 0)
                 {
-                    CreateAndShowDialog("No Raspberries with the scanned QR Code were found in the database. The Raspberry must first be registered in the cloud via the installation process ", "Sorry:");
+                    ProgressBar progress = FindViewById<ProgressBar>(Resource.Id.ProgressCircle);
+                    progress.Visibility = ViewStates.Gone;
+                    
+                    string sorryMessage = "Sorry!\nNo Raspberries with the QR code: " + qrCode + " were found in the database. \nEither the Raspberry was not registered in the cloud via the installation process  , \nor there was an error in the barcode scan. \nIn the later case, please press the back button and try to scan again";
+                    //CreateAndShowDialog("No Raspberries with the QR code: " + qrCode + " were found in the database. \nEither the Raspberry was not registered in the cloud via the installation process  , \nor there was an error in the barcode scan. \nIn the later case, please press the back button and try to scan again", "Sorry:");
+                    FindViewById<TextView>(Resource.Id.Text1).Text = sorryMessage;
                 }
 
                 else
@@ -66,7 +71,7 @@ namespace IoTWeight
                     var address = ipAddressList[0];
                     ipaddress = address.IPAddress;
                     tcps = new TCPSender(); //Creating the socket on the default port, which is 9888.
-                    TalkToRaspberry();
+                    await TalkToRaspberry();  
                 }
 
             }
@@ -78,7 +83,10 @@ namespace IoTWeight
         }
 
 
-        private async void TalkToRaspberry()
+
+       
+        //signature previously had return type void instread of Task.  also,  call to TalkToRaspberry wasn't awaited.
+        private async Task TalkToRaspberry()
         {
             string ip = ipaddress;
             if (!tcps.Connect(ip))
@@ -89,32 +97,29 @@ namespace IoTWeight
                 return;
             }
 
+            System.Diagnostics.Debug.WriteLine("before send scanned");
             DRP result = await sendSCANNED(long.Parse("55665566")); //TODO: replace the string here with the scanning result
+            System.Diagnostics.Debug.WriteLine("after send scanned");
             if (result == null)
             {
-                //in case there no answer from the server
+                //in case there's no answer from the server
                 handleGUI_OnFailure("Connection Timeout");
                 return;
             }
 
             if (result.MessageType == DRPMessageType.DATA)
             {
-                //TODO: Show the scaling result on the screen
-                //tv.Text = result.Data[0].ToString();
                 handleGUI_OnSuccess(result.Data[0].ToString());
                 return;
             }
             else if (result.MessageType == DRPMessageType.IN_USE)
             {
-                //TODO: Show a message for the user that informs him the device is already in use by another user.
-                //tv.Text = "the scale is in use";
                 handleGUI_OnFailure("the scale is in use");
                 return;
             }
             else if (result.MessageType == DRPMessageType.ILLEGAL || result.MessageType == DRPMessageType.HARDWARE_ERROR)
             {
-                //TODO: The scaling could not been done due to error.
-                //tv.Text = "The scaling could not been done due to error.";
+                
                 handleGUI_OnFailure("The scaling could not been done due to error.");
                 return;
             }
@@ -159,6 +164,7 @@ namespace IoTWeight
             DRP msg = new DRP(DRPDevType.APP, ourUserId, 343434, serial, new List<float>(), 0, DRPMessageType.SCANNED);
             //sending the message
             tcps.Send(msg.ToString());
+            //await tcps.Send(msg.ToString());
 
             //waiting for result
             Task<string> rec_str_task = tcps.Receive();
@@ -170,7 +176,7 @@ namespace IoTWeight
             }
             else
             {
-                //in there is no response, returns null
+                //if there is no response, returns null
                 return null;
             }
         }
