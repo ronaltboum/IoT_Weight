@@ -92,8 +92,20 @@ namespace RPiRunner2
         private void NetworkInformation_NetworkStatusChanged(object sender)
         {
             System.Diagnostics.Debug.WriteLine("Net status has changed!");
-            PermanentData.CurrIP = GetLocalIp();
-            System.Diagnostics.Debug.WriteLine("new IP: " + PermanentData.CurrIP);
+            try
+            {
+                string newIP = GetLocalIp();
+                if (!newIP.Trim().Equals(""))
+                {
+                    PermanentData.CurrIP = newIP;
+                    putRecordInDatabase(PermanentData.CurrIP, PermanentData.Serial);
+                    System.Diagnostics.Debug.WriteLine("new IP: " + PermanentData.CurrIP);
+                }
+            }
+            catch
+            {
+                System.Diagnostics.Debug.WriteLine("Could not get IP address, it's fine if there is no internet connection.");
+            }
         }
 
 
