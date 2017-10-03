@@ -165,6 +165,18 @@ namespace RPiRunner2
             return transform(rawWeight);
         }
 
+
+        public async Task<float> getWeightAsync(int times = 100)
+        {
+            float raw = await getRawWeightAsync(times);
+            return transform(raw);
+        }
+
+        public Task<float> getRawWeightAsync(int times = 100)
+        {
+            return Task.Run(() => getRawWeight());
+        }
+
         // puts the chip into power down mode
         public void power_down()
         {

@@ -22,6 +22,7 @@ namespace IoTWeight
         private IMobileServiceTable<weighTable> weighTableRef;
         float enteredHeight = 0;
         string ourUserId = ToDoActivity.CurrentActivity.Currentuserid;
+       
 
         //TODO:  when Raspberry is incorporated:  check case where user first tries to 
         //calculate BMI,  but he has no weighs in the database,  then he goes back and 
@@ -35,7 +36,6 @@ namespace IoTWeight
             base.OnCreate(savedInstanceState);
             // Create your application here
             SetContentView(Resource.Layout.BMIview);
-            //string ourUserId = ToDoActivity.CurrentActivity.Currentuserid;
             MobileServiceClient client = ToDoActivity.CurrentActivity.CurrentClient;
             weighTableRef = client.GetTable<weighTable>();
             UsersTableRef = client.GetTable<UsersTable>();
@@ -62,20 +62,32 @@ namespace IoTWeight
 
             enterHeight.TextChanged += (object sender, Android.Text.TextChangedEventArgs e) => {
 
-                string entered_height = e.Text.ToString();
-                //TODO:  make sure conversion worked:   https://msdn.microsoft.com/en-us/library/0xh24xh4.aspx
-
-                enteredHeight = float.Parse(entered_height);
-                if (enteredHeight <= 0)
+                //https://msdn.microsoft.com/en-us/library/0xh24xh4.aspx
+                string value = e.Text.ToString();
+                System.Globalization.NumberStyles style;
+                System.Globalization.CultureInfo culture;
+                float number;
+                style = System.Globalization.NumberStyles.Number;
+                culture = System.Globalization.CultureInfo.CreateSpecificCulture("en-GB");
+                if (Single.TryParse(value, style, culture, out number))
                 {
-                    //TODO
+                    Console.WriteLine("Converted '{0}' to {1}.", value, number);
+                    string message = "Converted " + value + "to " + number;
+                    //CreateAndShowDialog(message, "debug");
+                    enteredHeight = number;
                 }
 
-
+                else
+                {
+                    Console.WriteLine("Unable to convert '{0}'.", value);
+                    string message = "Unable to convert " + value;
+                    //CreateAndShowDialog(message, "CONVERSION ERROR");
+                    enteredHeight = 0;
+                }
             };
+
             var OKButton = FindViewById<Button>(Resource.Id.OKButton);
             OKButton.Visibility = ViewStates.Gone;
-            //TODO:  try to use DONE event on keyboard instead of this button
             OKButton.Click += async (sender, e) =>
             {
                 if (enteredHeight > 0)
@@ -87,12 +99,14 @@ namespace IoTWeight
                         height = enteredHeight,
                     };
                     await UsersTableRef.InsertAsync(userUpdated);
-                    //TODO:   call calculateBMI function
                     OKButton.Visibility = ViewStates.Gone;
                     heightText.Visibility = ViewStates.Gone;
                     enterHeight.Visibility = ViewStates.Gone;
                     CalculateUserBMI();
-                    //RecomendedBMI_Button.Visibility = ViewStates.Visible;
+                }
+                else
+                {
+                    CreateAndShowDialog("Please insert a decimal number larger than 0", "Input Error");
                 }
             };
 
@@ -113,21 +127,27 @@ namespace IoTWeight
                     heightText.Visibility = ViewStates.Visible;
                     enterHeight.Visibility = ViewStates.Visible;
                     OKButton.Visibility = ViewStates.Visible;
-
-                    //TODO:   ask user to enter height.  
-                    //CreateAndShowDialog("Cannot calculate BMI", "Please enter your height");
                 }
 
                 //user already entered height:
                 else
                 {
+                    ////insert for debuggin
+                    //var userUpdated = new weighTable
+                    //{
+                    //    username = ourUserId,
+                    //    weigh = 72.3f,
+                    //};
+                    //await weighTableRef.InsertAsync(userUpdated);
+                    //return;
+
                     var user = userRecord[0];
                     float height = user.height;
                     //check if there are weighs of this user in the weighTable:
                     var weighRecords = await weighTableRef.Where(item => (item.username == ourUserId)).ToListAsync();
                     if (weighRecords.Count == 0)
                     {
-                        CreateAndShowDialog("Cannot calculate BMI", "No previous weighs were found. Please weigh yourself and try again");
+                        CreateAndShowDialog( "No previous weighs were found. Please weigh yourself and try again", "Cannot calculate BMI");
                         //TODO:   return to main screen after user presses back once
                     }
                     else
@@ -137,12 +157,10 @@ namespace IoTWeight
                         float weight = mostRecendWeigh.weigh;
                         //BMI formula from wikipedia:   BMI = weight in kg / (height in meters)^2
                         //https://en.wikipedia.org/wiki/Body_mass_index
-                        //TODO:  make sure user didn't enter height of zero
                         double heigtSquared = Math.Pow(height, 2);
                         double BMI = weight / heigtSquared;
                         //String.Format("{0:0.00}", 123.4567);
                         string BMIInStringFormat = String.Format("{0:0.00}", BMI);
-                        //string BMIInStringFormat = Convert.ToString(BMI);
                         string BMI_message = "Your most recent weight = " + weight + "\nYour BMI = " + BMIInStringFormat;
                         var BMItext = FindViewById<TextView>(Resource.Id.BMI_TextView);
                         BMItext.Visibility = ViewStates.Visible;

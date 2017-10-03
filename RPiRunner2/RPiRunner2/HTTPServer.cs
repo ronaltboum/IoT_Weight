@@ -93,7 +93,7 @@ namespace RPiRunner2
         /// <summary>
         /// Start listenng to new Connections
         /// </summary>
-        public async void Start()
+        public async Task Start()
         {
             try
             {
@@ -128,7 +128,7 @@ namespace RPiRunner2
         private async void Listener_ConnectionReceived(StreamSocketListener sender, StreamSocketListenerConnectionReceivedEventArgs args)
         {
             Debug.WriteLine("connected to " + args.Socket.Information.RemoteAddress + " my ip: " + args.Socket.Information.LocalAddress);
-            while (busy) { }
+            //while (busy) { }
             busy = true;
             Debug.WriteLine("the connection with " + args.Socket.Information.RemoteAddress + " is being serviced.");
             var reader = new DataReader(args.Socket.InputStream);
@@ -137,16 +137,15 @@ namespace RPiRunner2
             bool error = false;
             while (true)
             {
-                Task<uint> load_task = reader.LoadAsync(1).AsTask();
 
-                bool isReceived = load_task.Wait(5000);
-                if (!isReceived)
+                uint load = await reader.LoadAsync(1).AsTask();
+                if(load < 1)
                 {
-                    Debug.WriteLine("disconnected :-(");
-                    error = true;
-                    break;
+                    Debug.Write("stream ended");
+                    return;
                 }
-                data += reader.ReadString(load_task.Result);
+
+                data += reader.ReadString(load);
 
                 if (data.Length > 3 && data.ToUpper().IndexOf("GET") < 0)
                 {
@@ -164,6 +163,7 @@ namespace RPiRunner2
             else
                 OnError("Disconnected during data transfer.");
 
+            _writer = null;
         }
 
         /// <summary>
@@ -171,18 +171,15 @@ namespace RPiRunner2
         /// If there is no ongoing connections, this function will take no action.
         /// </summary>
         /// <param name="message">The message to send</param>
-        public async void Send(string message)
+        public async Task Send(string message)
         {
             if (_writer != null)
             {
-                //Envia a string em si
                 _writer.WriteString(message);
 
                 try
                 {
-                    //Faz o Envio da mensagem
                     await _writer.StoreAsync();
-                    //Limpa para o proximo envio de mensagem
                     await _writer.FlushAsync();
                 }
                 catch (Exception ex)

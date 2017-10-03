@@ -155,7 +155,6 @@ C:\Temp\Repos\TAU_IoT_Workshop\RPiRunner2\RPiRunner2\bin\ARM\Debug\System.Xml.XD
 C:\Temp\Repos\TAU_IoT_Workshop\RPiRunner2\RPiRunner2\bin\ARM\Debug\System.Xml.XmlDocument.dll
 C:\Temp\Repos\TAU_IoT_Workshop\RPiRunner2\RPiRunner2\bin\ARM\Debug\System.Xml.XmlSerializer.dll
 C:\Temp\Repos\TAU_IoT_Workshop\RPiRunner2\RPiRunner2\bin\ARM\Debug\Validation.dll
-C:\Temp\Repos\TAU_IoT_Workshop\RPiRunner2\RPiRunner2\obj\ARM\Debug\RPiRunner2.csprojResolveAssemblyReference.cache
 C:\Temp\Repos\TAU_IoT_Workshop\RPiRunner2\RPiRunner2\obj\ARM\Debug\App.g.i.cs
 C:\Temp\Repos\TAU_IoT_Workshop\RPiRunner2\RPiRunner2\obj\ARM\Debug\App.g.cs
 C:\Temp\Repos\TAU_IoT_Workshop\RPiRunner2\RPiRunner2\obj\ARM\Debug\MainPage.g.i.cs
@@ -262,3 +261,4 @@ C:\Temp\Repos\TAU_IoT_Workshop\RPiRunner2\RPiRunner2\obj\ARM\Debug\Microsoft.Azu
 C:\Temp\Repos\TAU_IoT_Workshop\RPiRunner2\RPiRunner2\obj\ARM\Debug\Microsoft.Azure.Devices.Shared.UWP.pri.xml
 C:\Temp\Repos\TAU_IoT_Workshop\RPiRunner2\RPiRunner2\obj\ARM\Debug\Microsoft.Azure.Mobile.Client.pri.xml
 C:\Temp\Repos\TAU_IoT_Workshop\RPiRunner2\RPiRunner2\obj\ARM\Debug\ProjectArchitectures.txt
+C:\Temp\Repos\TAU_IoT_Workshop\RPiRunner2\RPiRunner2\obj\ARM\Debug\RPiRunner2.csprojResolveAssemblyReference.cache

@@ -109,16 +109,23 @@
             <li>All Set! The device will calculate the values of SCALE and OFFSET that are suitable for you.</li>
         </ol>
         <form method="get">
-            <input type="submit" name="soffset" value="Set Offset" id="calibrate" />
+            <input type="submit" name="soffset" value="Set Offset" id="calib_offset_mes" />
         </form>
         <form method="get">
             
-            <input type="submit" name="sscale" value="Set Scale" id="calibrate" />
+            <input type="submit" name="sscale" value="Set Scale" id="calib_scale_mes" />
         </form>
         <br />
         <form method="get">
-            Known weight: <input type="text" name="known" placeholder="text" />kg 
+            Known weight: <input type="text" name="known" />kg <br />
             <input type="submit" name="calibrate" value="Calibrate" id="calibrate" />
+        </form>
+        OR <br />
+        If you already know the values of offset and scale in your device, you can write them in the form below.
+        <form method="get">
+            OFFSET: <input type="text" name="man_offset" /><br />
+            SCALE: <input type="text" name="man_scale" /><br />
+            <input type="submit" name="calibrate" value="Calibrate" id="man_calib" />
         </form>
             <span id="calibration_feedback"></span>
 </div>

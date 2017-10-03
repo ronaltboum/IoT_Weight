@@ -31,13 +31,13 @@
     <AppXManifest Include="C:\Temp\Repos\TAU_IoT_Workshop\RPiRunner2\RPiRunner2\bin\ARM\Debug\Core\AppxManifest.xml">
       <PackagePath>AppxManifest.xml</PackagePath>
       <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
-      <Modified>2017-09-24T19:04:50.856</Modified>
+      <Modified>2017-10-03T19:20:38.886</Modified>
     </AppXManifest>
   </ItemGroup>
   <ItemGroup>
     <AppxPackagedFile Include="C:\Temp\Repos\TAU_IoT_Workshop\RPiRunner2\RPiRunner2\bin\ARM\Debug\RPiRunner2.exe">
       <PackagePath>entrypoint\RPiRunner2.exe</PackagePath>
-      <Modified>2017-09-24T19:04:47.955</Modified>
+      <Modified>2017-10-03T19:20:37.835</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\Bar Angel\.nuget\packages\DotNetty.Buffers\0.4.4\lib\netstandard1.3\DotNetty.Buffers.dll">
       <PackagePath>DotNetty.Buffers.dll</PackagePath>
@@ -633,7 +633,7 @@
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Temp\Repos\TAU_IoT_Workshop\RPiRunner2\RPiRunner2\SettingsPage.html">
       <PackagePath>SettingsPage.html</PackagePath>
-      <Modified>2017-09-20T03:02:06.000</Modified>
+      <Modified>2017-10-02T20:45:37.700</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Temp\Repos\TAU_IoT_Workshop\RPiRunner2\RPiRunner2\Properties\Default.rd.xml">
       <PackagePath>Properties\Default.rd.xml</PackagePath>
@@ -684,11 +684,11 @@
     <AppxPackagedFile Include="C:\Temp\Repos\TAU_IoT_Workshop\RPiRunner2\RPiRunner2\bin\ARM\Debug\resources.pri">
       <PackagePath>resources.pri</PackagePath>
       <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
-      <Modified>2017-09-24T18:37:58.475</Modified>
+      <Modified>2017-10-03T11:25:06.646</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Temp\Repos\TAU_IoT_Workshop\RPiRunner2\RPiRunner2\bin\ARM\Debug\Core\RPiRunner2.exe">
       <PackagePath>RPiRunner2.exe</PackagePath>
-      <Modified>2017-09-24T19:04:50.786</Modified>
+      <Modified>2017-10-03T19:20:38.878</Modified>
     </AppxPackagedFile>
   </ItemGroup>
   <ItemGroup>

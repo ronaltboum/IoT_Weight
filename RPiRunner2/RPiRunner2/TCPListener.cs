@@ -16,13 +16,11 @@ namespace RPiRunner2
 
         private StreamSocketListener listener;
 
-        public delegate void DataRecived(string data);
+        public delegate Task DataRecived(string data, DataWriter writer);
         public event DataRecived OnDataReceived;
 
         public delegate void Error(string message);
         public event Error OnError;
-
-        private DataWriter writer;
 
         public int Port { get => port; set => port = value; }
 
@@ -39,7 +37,7 @@ namespace RPiRunner2
             this.easyDebug = false;
         }
 
-        public async void ListenAsync()
+        public async Task ListenAsync()
         {
             try
             {
@@ -66,12 +64,12 @@ namespace RPiRunner2
         private async void Listener_ConnectionReceived(StreamSocketListener sender, StreamSocketListenerConnectionReceivedEventArgs args)
         {
             Debug.WriteLine("connection accepted to client " + args.Socket.Information.RemoteAddress);
-            while (busy) { }
+            // while (busy) { } //TODO: this may block. need to check this.
             Debug.WriteLine("connection is serviced with " + args.Socket.Information.RemoteAddress);
             busy = true;
             //We assume here that the first 4 bytes of the message will always contain the message's length.
             var reader = new DataReader(args.Socket.InputStream);
-            writer = new DataWriter(args.Socket.OutputStream);
+            var writer = new DataWriter(args.Socket.OutputStream);
 
             uint msize = await reader.LoadAsync(sizeof(uint)); //receiving the message length
             if (msize < sizeof(uint))
@@ -93,11 +91,12 @@ namespace RPiRunner2
 
             string msg = reader.ReadString(loaded);
 
-            OnDataReceived(msg);
+            await OnDataReceived(msg, writer);
+
             busy = false;
         }
 
-        public async void Send(string message)
+        public async Task Send(string message, DataWriter writer)
         {
             string send = message;
             if (writer != null)
@@ -116,15 +115,5 @@ namespace RPiRunner2
             }
         }
 
-       /* public virtual void OnDataReceived(string data)
-        {
-            //echoing the data
-            Send(data);
-        }
-        public virtual void OnError(string data)
-        {
-            Send("Internal Server Error: " + data);
-        }
-        */
     }
 }

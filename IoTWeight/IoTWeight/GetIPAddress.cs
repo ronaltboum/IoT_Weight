@@ -36,8 +36,6 @@ namespace IoTWeight
 
             string qrCode = Intent.GetStringExtra("qrcode") ?? "QR Code not available";
             Console.WriteLine("In GetIPAddress activity and qrCode = {0}", qrCode);
-            //TODO:  DELETE LATER:
-            qrCode = "121212";
 
             MobileServiceClient client = ToDoActivity.CurrentActivity.CurrentClient;
             raspberryTableRef = client.GetTable<RaspberryTable>();
@@ -47,8 +45,8 @@ namespace IoTWeight
                 //some inserts for debugging:
                 //var record1 = new RaspberryTable
                 //{
-                //    QRCode = "Testing 1",
-                //    IPAddress = "10.0.0.2",
+                //    QRCode = "Testing 2",
+                //    IPAddress = "18.0.0.7",
                 //};
                 //await raspberryTableRef.InsertAsync(record1);
                 //if (8 == 8)
@@ -58,7 +56,12 @@ namespace IoTWeight
                 //TODO:  handle this case
                 if (ipAddressList.Count == 0)
                 {
-                    CreateAndShowDialog("No Raspberries with the scanned QR Code were found in the database. The Raspberry must first be registered in the cloud via the installation process ", "Sorry:");
+                    ProgressBar progress = FindViewById<ProgressBar>(Resource.Id.ProgressCircle);
+                    progress.Visibility = ViewStates.Gone;
+                    
+                    string sorryMessage = "Sorry!\nNo Raspberries with the QR code: " + qrCode + " were found in the database. \nEither the Raspberry was not registered in the cloud via the installation process  , \nor there was an error in the barcode scan. \nIn the later case, please press the back button and try to scan again";
+                    //CreateAndShowDialog("No Raspberries with the QR code: " + qrCode + " were found in the database. \nEither the Raspberry was not registered in the cloud via the installation process  , \nor there was an error in the barcode scan. \nIn the later case, please press the back button and try to scan again", "Sorry:");
+                    FindViewById<TextView>(Resource.Id.Text1).Text = sorryMessage;
                 }
 
                 else
@@ -66,7 +69,7 @@ namespace IoTWeight
                     var address = ipAddressList[0];
                     ipaddress = address.IPAddress;
                     tcps = new TCPSender(); //Creating the socket on the default port, which is 9888.
-                    TalkToRaspberry();
+                    await TalkToRaspberry();  
                 }
 
             }
@@ -78,10 +81,13 @@ namespace IoTWeight
         }
 
 
-        private async void TalkToRaspberry()
+
+       
+        //signature previously had return type void instread of Task.  also,  call to TalkToRaspberry wasn't awaited.
+        private async Task TalkToRaspberry()
         {
             string ip = ipaddress;
-            if (!tcps.Connect(ip))
+            if (!await tcps.Connect(ip))
             {
                 //TODO:   display message to user
                 System.Diagnostics.Debug.WriteLine("Connection failed.");
@@ -89,32 +95,29 @@ namespace IoTWeight
                 return;
             }
 
-            DRP result = await sendSCANNED(long.Parse("55665566")); //TODO: replace the string here with the scanning result
+            System.Diagnostics.Debug.WriteLine("before send scanned");
+            DRP result = await sendSCANNED(); //TODO: check what happend if there is no answer
+            System.Diagnostics.Debug.WriteLine("after send scanned");
             if (result == null)
             {
-                //in case there no answer from the server
+                //in case there's no answer from the server
                 handleGUI_OnFailure("Connection Timeout");
                 return;
             }
 
             if (result.MessageType == DRPMessageType.DATA)
             {
-                //TODO: Show the scaling result on the screen
-                //tv.Text = result.Data[0].ToString();
                 handleGUI_OnSuccess(result.Data[0].ToString());
                 return;
             }
             else if (result.MessageType == DRPMessageType.IN_USE)
             {
-                //TODO: Show a message for the user that informs him the device is already in use by another user.
-                //tv.Text = "the scale is in use";
                 handleGUI_OnFailure("the scale is in use");
                 return;
             }
             else if (result.MessageType == DRPMessageType.ILLEGAL || result.MessageType == DRPMessageType.HARDWARE_ERROR)
             {
-                //TODO: The scaling could not been done due to error.
-                //tv.Text = "The scaling could not been done due to error.";
+                
                 handleGUI_OnFailure("The scaling could not been done due to error.");
                 return;
             }
@@ -152,35 +155,27 @@ namespace IoTWeight
         }
 
         //sending a message of type SCANNED to the RBPi and waiting to the result
-        private async Task<DRP> sendSCANNED(long serial, int timeout = 10000)
+        private async Task<DRP> sendSCANNED()
         {
 
-            //DRP msg = new DRP(DRPDevType.APP, "a_monkey", 343434, serial, new List<float>(), 0, DRPMessageType.SCANNED); //TODO: what is the username? what is the serial?
-            DRP msg = new DRP(DRPDevType.APP, ourUserId, 343434, serial, new List<float>(), 0, DRPMessageType.SCANNED);
-            //sending the message
-            tcps.Send(msg.ToString());
+            //TODO: what is the username? what is the serial?
+            DRP msg = new DRP(DRPDevType.APP, ourUserId, 343434, 434343, new List<float>(), 0, DRPMessageType.SCANNED);
 
-            //waiting for result
-            Task<string> rec_str_task = tcps.Receive();
-            if (rec_str_task.Wait(timeout))
+            //sending the message
+            await tcps.Send(msg.ToString());
+            string ans = await tcps.Receive();
+
+            try
             {
-                string rec_str = rec_str_task.Result;
-                DRP rec = DRP.deserializeDRP(rec_str); //TODO: do not assume for DRP, needs to be checked!
-                return rec; //returns the RBPi's response
+                DRP rec = DRP.deserializeDRP(ans);
+                return rec;
             }
-            else
+            catch
             {
-                //in there is no response, returns null
+                System.Diagnostics.Debug.WriteLine("deserializion failed: " + ans);
                 return null;
             }
-        }
-
-        private string findIpFromSerial(string serial)
-        {
-            //TODO: I've hardcoded my RPi ip here. In the final version we need to look for the ip in the DB
-            //return "192.168.1.104";
-            //Ron's laptop ip:
-            return "10.0.0.2";
+            
         }
     }
 }

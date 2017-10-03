@@ -32,14 +32,15 @@ namespace RPiRunner2
         public static float Offset { get => offset; set => offset = value; }
         public static float Scale { get => scale; set => scale = value; }
 
-        public static async void LoadFromMemory(string file)
+        public static async Task LoadFromMemoryAsync(string file)
         {
             PermData data;
+            string dataRead = "default";
             try
             {
                 StorageFolder storageFolder = ApplicationData.Current.LocalFolder;
                 StorageFile dataFile = await storageFolder.GetFileAsync(file);
-                string dataRead = await FileIO.ReadTextAsync(dataFile);
+                dataRead = await FileIO.ReadTextAsync(dataFile);
                 data = JsonConvert.DeserializeObject<PermData>(dataRead);
             }
             catch(FileNotFoundException e)
@@ -55,9 +56,9 @@ namespace RPiRunner2
             scale = data.scale;
             offset = data.offset;
 
-            System.Diagnostics.Debug.WriteLine("read from memory: " + data);
+            System.Diagnostics.Debug.WriteLine("read from memory: " + dataRead);
         }
-        public static async void WriteToMemory(string file)
+        public static async Task WriteToMemoryAsync(string file)
         {
             PermData pd = new PermData();
             pd.devname = devname;
@@ -74,13 +75,13 @@ namespace RPiRunner2
             System.Diagnostics.Debug.WriteLine("written to memory: " + data);
         }
 
-        public static void WriteToMemory()
+        public static async Task WriteToMemoryAsync()
         {
-            WriteToMemory(DEFAULT_FILE);
+            await WriteToMemoryAsync(DEFAULT_FILE);
         }
-        public static void LoadFromMemory()
+        public static async Task LoadFromMemoryAsync()
         {
-            LoadFromMemory(DEFAULT_FILE);
+            await LoadFromMemoryAsync(DEFAULT_FILE);
         }
 
         private class PermData

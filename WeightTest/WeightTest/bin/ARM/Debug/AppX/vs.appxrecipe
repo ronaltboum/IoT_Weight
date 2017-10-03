@@ -19,7 +19,7 @@
     <DeployOptionalPackages>false</DeployOptionalPackages>
     <WindowsSdkPath>C:\Program Files %28x86%29\Windows Kits\10\</WindowsSdkPath>
     <LayoutDir>C:\Temp\Repos\TAU_IoT_Workshop\WeightTest\WeightTest\bin\ARM\Debug\AppX</LayoutDir>
-    <RegisteredManifestChecksum>A02545DE3D17879C07CE744F61E936890D0099F775DEF518C32B203905ADA47D</RegisteredManifestChecksum>
+    <RegisteredManifestChecksum>F67DDE26AE605034A098C8649559DF73C7ECA8B0FE4F3AEC2610CA3EC9651E80</RegisteredManifestChecksum>
     <RegisteredPackageMoniker>9e50c707-fcf6-4978-9657-f9b9d9386e7e_1.0.0.0_arm__07cwxjfqmw6jc</RegisteredPackageMoniker>
     <RegisteredUserModeAppID>9e50c707-fcf6-4978-9657-f9b9d9386e7e_07cwxjfqmw6jc!App</RegisteredUserModeAppID>
     <RegisteredPackageID>9e50c707-fcf6-4978-9657-f9b9d9386e7e</RegisteredPackageID>
@@ -31,13 +31,13 @@
     <AppXManifest Include="C:\Temp\Repos\TAU_IoT_Workshop\WeightTest\WeightTest\bin\ARM\Debug\Core\AppxManifest.xml">
       <PackagePath>AppxManifest.xml</PackagePath>
       <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
-      <Modified>2017-09-20T03:02:06.000</Modified>
+      <Modified>2017-10-02T11:03:40.988</Modified>
     </AppXManifest>
   </ItemGroup>
   <ItemGroup>
     <AppxPackagedFile Include="C:\Temp\Repos\TAU_IoT_Workshop\WeightTest\WeightTest\bin\ARM\Debug\WeightTest.exe">
       <PackagePath>entrypoint\WeightTest.exe</PackagePath>
-      <Modified>2017-09-20T03:02:06.000</Modified>
+      <Modified>2017-10-02T11:03:37.584</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\Bar Angel\.nuget\packages\Microsoft.CSharp\4.0.1\lib\netcore50\Microsoft.CSharp.dll">
       <PackagePath>Microsoft.CSharp.dll</PackagePath>
@@ -531,7 +531,7 @@
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Temp\Repos\TAU_IoT_Workshop\WeightTest\WeightTest\bin\ARM\Debug\WeightTest.xr.xml">
       <PackagePath>WeightTest.xr.xml</PackagePath>
-      <Modified>2017-09-20T03:02:06.000</Modified>
+      <Modified>2017-10-02T07:05:51.996</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Program Files %28x86%29\Windows Kits\10\UnionMetadata\10.0.15063.0\Windows.winmd">
       <PackagePath>WinMetadata\Windows.winmd</PackagePath>
@@ -540,11 +540,11 @@
     <AppxPackagedFile Include="C:\Temp\Repos\TAU_IoT_Workshop\WeightTest\WeightTest\bin\ARM\Debug\resources.pri">
       <PackagePath>resources.pri</PackagePath>
       <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
-      <Modified>2017-09-20T03:02:06.000</Modified>
+      <Modified>2017-10-02T11:03:40.408</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Temp\Repos\TAU_IoT_Workshop\WeightTest\WeightTest\bin\ARM\Debug\Core\WeightTest.exe">
       <PackagePath>WeightTest.exe</PackagePath>
-      <Modified>2017-09-20T03:02:06.000</Modified>
+      <Modified>2017-10-02T11:03:40.974</Modified>
     </AppxPackagedFile>
   </ItemGroup>
   <ItemGroup>

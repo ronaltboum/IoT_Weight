@@ -54,7 +54,6 @@ namespace IoTWeight
                 var maxValue = DateTimeAxis.ToDouble(endDate);
 
                 plotModel = new PlotModel { Title = "Weigh History" };
-                //TODO:    different views in case month, 3 months, 6 months - DateTime axis IntervalLength is different
                 plotModel.Axes.Add(new DateTimeAxis
                 {
                     Position = AxisPosition.Bottom,
@@ -82,7 +81,9 @@ namespace IoTWeight
 
             string ourUserId = ToDoActivity.CurrentActivity.Currentuserid;
             //Console.WriteLine("sid is: {0}", ourUserId);
-            //ourUserId = "debug id";
+            //Bar's sid:    sid:f5ccac253e6e9ce70bd96a3b9a0b59d2
+            //string BarSID = "sid:f5ccac253e6e9ce70bd96a3b9a0b59d2";
+            //ourUserId = BarSID;
 
 
             MobileServiceClient client = ToDoActivity.CurrentActivity.CurrentClient;
@@ -101,34 +102,65 @@ namespace IoTWeight
                 //var newweightablerecord = new weighTable
                 //{
                 //    username = ourUserId,
-                //    weigh = 250f
+                //    weigh = 62.3f
                 //};
                 //var newweightablerecord1 = new weighTable
                 //{
                 //    username = ourUserId,
-                //    weigh = 96.1f
+                //    weigh = 62.1f
                 //};
                 //var newweightablerecord2 = new weighTable
                 //{
                 //    username = ourUserId,
-                //    weigh = 96.7f
+                //    weigh = 61.6f
                 //};
                 //var newweightablerecord3 = new weighTable
                 //{
                 //    username = ourUserId,
-                //    weigh = 97.2f
+                //    weigh = 61.2f
                 //};
                 //var newweightablerecord4 = new weighTable
                 //{
                 //    username = ourUserId,
-                //    weigh = 97.4f
+                //    weigh = 60.8f
                 //};
-                ////await weighTableRef.InsertAsync(newweightablerecord);
+                //var newweightablerecord5 = new weighTable
+                //{
+                //    username = ourUserId,
+                //    weigh = 60.5f
+                //};
+                //var newweightablerecord6 = new weighTable
+                //{
+                //    username = ourUserId,
+                //    weigh = 60.1f
+                //};
+                //var newweightablerecord7 = new weighTable
+                //{
+                //    username = ourUserId,
+                //    weigh = 59.7f
+                //};
+                //var newweightablerecord8 = new weighTable
+                //{
+                //    username = ourUserId,
+                //    weigh = 59.2f
+                //};
+                //var newweightablerecord9 = new weighTable
+                //{
+                //    username = ourUserId,
+                //    weigh = 58.6f
+                //};
+                //await weighTableRef.InsertAsync(newweightablerecord);
                 //await weighTableRef.InsertAsync(newweightablerecord1);
                 //await weighTableRef.InsertAsync(newweightablerecord2);
                 //await weighTableRef.InsertAsync(newweightablerecord3);
                 //await weighTableRef.InsertAsync(newweightablerecord4);
+                //await weighTableRef.InsertAsync(newweightablerecord5);
+                //await weighTableRef.InsertAsync(newweightablerecord6);
+                //await weighTableRef.InsertAsync(newweightablerecord7);
+                //await weighTableRef.InsertAsync(newweightablerecord8);
+                //await weighTableRef.InsertAsync(newweightablerecord9);
 
+                
 
                 var list9 = await weighTableRef.Where(item => (item.username == ourUserId) && (item.createdAt >= earliestDate)).ToListAsync();
                 if (list9.Count == 0)
@@ -171,24 +203,10 @@ namespace IoTWeight
                     }
                     else
                     {
-                        //debug:  don't include 311, 805 results:
-                        if (currW > 300)
-                            continue;
-                        else
-                        {
-                            if (currW < 93)
-                            {
-                                debuggDate = date1.AddDays(-i);
-                                i = i + 10;
-                            }
-                            else
-                            {
-                                debuggDate = date1.AddDays(-i);
-                                i = i + 5;
-                            }
-                            series1.Points.Add(new DataPoint(DateTimeAxis.ToDouble(debuggDate), currW));
-                        }
-
+                         //shift dates to debugg graph
+                         debuggDate = date1.AddDays(-i);
+                         i = i + 15;
+                         series1.Points.Add(new DataPoint(DateTimeAxis.ToDouble(debuggDate), currW));
                     }
 
                 }
@@ -244,8 +262,28 @@ namespace IoTWeight
                 return -30;
             else if (timePeriod == "Last3Months")
                 return -90;
-            else
+            else if (timePeriod == "Last6Months")
                 return -180;
+            else
+            {
+                // TryParse returns true if the conversion succeeded
+                // and stores the result in j.
+                int j;
+                if (Int32.TryParse(timePeriod, out j))
+                {
+                    Console.WriteLine(j);
+                    int sub = (-1) * j;
+                    return sub;
+                }
+
+                else
+                {
+                    //should never happen
+                    Console.WriteLine("String user input days could not be parsed back to an int.");
+                    return 0;
+                }
+               
+            }
         }
 
 

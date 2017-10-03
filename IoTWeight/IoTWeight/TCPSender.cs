@@ -7,7 +7,8 @@ using Android.Widget;
 using Android.OS;
 using System.Net.Sockets;
 using System.Net;
-using System.Threading;
+using System.Threading.Tasks;
+//using System.Threading;
 
 namespace IoTWeight
 {
@@ -44,11 +45,11 @@ namespace IoTWeight
             tcp = new TcpClient();
         }
 
-        public virtual bool Connect(string host)
+        public virtual async Task<bool> Connect(string host)
         {
             try
             {
-                tcp.Client.Connect(host, port);
+                await tcp.Client.ConnectAsync(host, port);
                 nets = tcp.GetStream();
                 return true;
             }
@@ -59,7 +60,9 @@ namespace IoTWeight
             }
         }
 
-        public virtual void Send(string msg)
+
+
+        public virtual async Task Send(string msg)
         {
             byte[] msgAsBytes = Encoding.ASCII.GetBytes(msg); //convert the message into an array of bytes
             byte[] len = BitConverter.GetBytes(msg.Length); //the message length in little-endian
@@ -72,11 +75,11 @@ namespace IoTWeight
             Buffer.BlockCopy(len4, 0, buf, 0, sizeof(uint));
             Buffer.BlockCopy(msgAsBytes, 0, buf, sizeof(uint), msgAsBytes.Length);
 
-            nets.WriteAsync(buf, 0, buf.Length); //send the data
-            nets.FlushAsync();
+            await nets.WriteAsync(buf, 0, buf.Length); //send the data
+            await nets.FlushAsync();
         }
 
-        public async virtual System.Threading.Tasks.Task<string> Receive()
+        public async virtual Task<string> Receive()
         {
             byte[] bmsize = new byte[sizeof(uint)];
             byte[] bmsg;
@@ -90,7 +93,7 @@ namespace IoTWeight
 
 
             bmsg = new byte[msize];
-            nets.Read(bmsg, 0, msize); //read the message
+            await nets.ReadAsync(bmsg, 0, msize); //read the message
 
             msg = Encoding.ASCII.GetString(bmsg); //convert it to string
 

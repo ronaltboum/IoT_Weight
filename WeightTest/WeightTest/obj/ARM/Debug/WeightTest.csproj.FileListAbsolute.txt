@@ -132,6 +132,7 @@ C:\Temp\Repos\TAU_IoT_Workshop\WeightTest\WeightTest\obj\ARM\Debug\MainPage.xaml
 C:\Temp\Repos\TAU_IoT_Workshop\WeightTest\WeightTest\obj\ARM\Debug\App.xbf
 C:\Temp\Repos\TAU_IoT_Workshop\WeightTest\WeightTest\obj\ARM\Debug\MainPage.xbf
 C:\Temp\Repos\TAU_IoT_Workshop\WeightTest\WeightTest\obj\ARM\Debug\XamlSaveStateFile.xml
+C:\Temp\Repos\TAU_IoT_Workshop\WeightTest\WeightTest\obj\ARM\Debug\WeightTest.csproj.CoreCompileInputs.cache
 C:\Temp\Repos\TAU_IoT_Workshop\WeightTest\WeightTest\obj\ARM\Debug\WeightTest.exe
 C:\Temp\Repos\TAU_IoT_Workshop\WeightTest\WeightTest\obj\ARM\Debug\WeightTest.pdb
 C:\Temp\Repos\TAU_IoT_Workshop\WeightTest\WeightTest\obj\ARM\Debug\ResourceHandlingTask.state
@@ -209,4 +210,3 @@ C:\Temp\Repos\TAU_IoT_Workshop\WeightTest\WeightTest\obj\ARM\Debug\qualifiers.tx
 C:\Temp\Repos\TAU_IoT_Workshop\WeightTest\WeightTest\obj\ARM\Debug\qualifiers.txt.intermediate
 C:\Temp\Repos\TAU_IoT_Workshop\WeightTest\WeightTest\obj\ARM\Debug\MultipleQualifiersPerDimensionFound.txt
 C:\Temp\Repos\TAU_IoT_Workshop\WeightTest\WeightTest\obj\ARM\Debug\ProjectArchitectures.txt
-C:\Temp\Repos\TAU_IoT_Workshop\WeightTest\WeightTest\obj\ARM\Debug\WeightTest.csproj.CoreCompileInputs.cache
