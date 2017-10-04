@@ -38,7 +38,7 @@ namespace IoTWeight
             if (result != null)
             {
                 System.Diagnostics.Debug.WriteLine("Scanned Barcode: " + result.Text);
-                //Toast.MakeText(ApplicationContext, "Scanned Barcode: " + result.Text, ToastLength.Long).Show();
+                Toast.MakeText(ApplicationContext, "Scanned Barcode: " + result.Text, ToastLength.Long).Show();
                 QRtextView.Text = "";
 
                 string qrcode = result.Text;

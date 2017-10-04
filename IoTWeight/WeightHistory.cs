@@ -102,52 +102,52 @@ namespace IoTWeight
                 //var newweightablerecord = new weighTable
                 //{
                 //    username = ourUserId,
-                //    weigh = 62.3f
+                //    weigh = 96.9f
                 //};
                 //var newweightablerecord1 = new weighTable
                 //{
                 //    username = ourUserId,
-                //    weigh = 62.1f
+                //    weigh = 96.1f
                 //};
                 //var newweightablerecord2 = new weighTable
                 //{
                 //    username = ourUserId,
-                //    weigh = 61.6f
+                //    weigh = 95.6f
                 //};
                 //var newweightablerecord3 = new weighTable
                 //{
                 //    username = ourUserId,
-                //    weigh = 61.2f
+                //    weigh = 95.4f
                 //};
                 //var newweightablerecord4 = new weighTable
                 //{
                 //    username = ourUserId,
-                //    weigh = 60.8f
+                //    weigh = 95.1f
                 //};
                 //var newweightablerecord5 = new weighTable
                 //{
                 //    username = ourUserId,
-                //    weigh = 60.5f
+                //    weigh = 94.8f
                 //};
                 //var newweightablerecord6 = new weighTable
                 //{
                 //    username = ourUserId,
-                //    weigh = 60.1f
+                //    weigh = 94.6f
                 //};
                 //var newweightablerecord7 = new weighTable
                 //{
                 //    username = ourUserId,
-                //    weigh = 59.7f
+                //    weigh = 94.2f
                 //};
                 //var newweightablerecord8 = new weighTable
                 //{
                 //    username = ourUserId,
-                //    weigh = 59.2f
+                //    weigh = 93.7f
                 //};
                 //var newweightablerecord9 = new weighTable
                 //{
                 //    username = ourUserId,
-                //    weigh = 58.6f
+                //    weigh = 93.3f
                 //};
                 //await weighTableRef.InsertAsync(newweightablerecord);
                 //await weighTableRef.InsertAsync(newweightablerecord1);
@@ -160,7 +160,8 @@ namespace IoTWeight
                 //await weighTableRef.InsertAsync(newweightablerecord8);
                 //await weighTableRef.InsertAsync(newweightablerecord9);
 
-                
+                //return;
+
 
                 var list9 = await weighTableRef.Where(item => (item.username == ourUserId) && (item.createdAt >= earliestDate)).ToListAsync();
                 if (list9.Count == 0)
@@ -203,10 +204,13 @@ namespace IoTWeight
                     }
                     else
                     {
-                         //shift dates to debugg graph
-                         debuggDate = date1.AddDays(-i);
-                         i = i + 15;
-                         series1.Points.Add(new DataPoint(DateTimeAxis.ToDouble(debuggDate), currW));
+
+                            //shift dates to debugg graph
+                            debuggDate = date1.AddDays(-i);
+                            i = i + 15;
+                            series1.Points.Add(new DataPoint(DateTimeAxis.ToDouble(debuggDate), currW));
+                        
+                         
                     }
 
                 }

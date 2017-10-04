@@ -24,6 +24,10 @@ namespace IoTWeight
             SetContentView(Resource.Layout.LogInWelcome);
 
             // Create your application here
+
+            string userName = Intent.GetStringExtra("userName") ?? "Username not available";
+            FindViewById<TextView>(Resource.Id.welcomeText).Text = "Hello " + userName + "!";
+
             Button getStatsButton = FindViewById<Button>(Resource.Id.GetStats);
             getStatsButton.SetBackgroundColor(Android.Graphics.Color.SteelBlue);
             Button startWeighButton = FindViewById<Button>(Resource.Id.StartWeigh);

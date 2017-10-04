@@ -63,8 +63,8 @@ namespace IoTWeight
 		public partial class Id
 		{
 			
-			// aapt resource value: 0x7f07001f
-			public const int BMI = 2131165215;
+			// aapt resource value: 0x7f070020
+			public const int BMI = 2131165216;
 			
 			// aapt resource value: 0x7f070009
 			public const int BMI_TextView = 2131165193;
@@ -78,8 +78,8 @@ namespace IoTWeight
 			// aapt resource value: 0x7f070025
 			public const int Date = 2131165221;
 			
-			// aapt resource value: 0x7f07001d
-			public const int GetStats = 2131165213;
+			// aapt resource value: 0x7f07001e
+			public const int GetStats = 2131165214;
 			
 			// aapt resource value: 0x7f070000
 			public const int LinearLayout1 = 2131165184;
@@ -93,8 +93,8 @@ namespace IoTWeight
 			// aapt resource value: 0x7f070023
 			public const int QRresult = 2131165219;
 			
-			// aapt resource value: 0x7f07001e
-			public const int StartWeigh = 2131165214;
+			// aapt resource value: 0x7f07001f
+			public const int StartWeigh = 2131165215;
 			
 			// aapt resource value: 0x7f070018
 			public const int Text1 = 2131165208;
@@ -165,9 +165,6 @@ namespace IoTWeight
 			// aapt resource value: 0x7f070011
 			public const int radioButtonOther = 2131165201;
 			
-			// aapt resource value: 0x7f070020
-			public const int radioGroup1 = 2131165216;
-			
 			// aapt resource value: 0x7f070013
 			public const int radioGroupDisplayFormat = 2131165203;
 			
@@ -185,6 +182,9 @@ namespace IoTWeight
 			
 			// aapt resource value: 0x7f070001
 			public const int textViewTitle = 2131165185;
+			
+			// aapt resource value: 0x7f07001d
+			public const int welcomeText = 2131165213;
 			
 			static Id()
 			{
