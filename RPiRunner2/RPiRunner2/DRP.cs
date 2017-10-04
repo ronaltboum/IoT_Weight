@@ -1,4 +1,9 @@
-﻿using System;
+﻿/*
+ * NEW CHANGES!!
+ * 04.10.17
+ */
+
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -17,9 +22,9 @@ namespace RPiRunner2
         public const string PROTOCOL = "$DRP";
         private DRPDevType devType;
         private string userName;
-        private long sourceID;
-        private long destID;
-        private IList<float> data;
+        private string servID;
+        private string servName;
+        private float data;
         private ulong token;
         private DRPMessageType messageType;
         private DateTime date;
@@ -27,26 +32,26 @@ namespace RPiRunner2
         /* Setters & Getters */
         public DRPDevType DevType { get => devType; set => devType = value; }
         public string UserName { get => userName; set => userName = value; }
-        public long DestID { get => destID; set => destID = value; }
-        public long SourceID { get => sourceID; set => sourceID = value; }
+        public string ServID { get => servID; set => servID = value; }
+        public string ServName { get => servName; set => servName = value; }
         public ulong Token { get => token; set => token = value; }
         public DRPMessageType MessageType { get => messageType; set => messageType = value; }
         public DateTime Date { get => date; set => date = value; }
-        public IList<float> Data { get => data; }
+        public float Data { get => data; set => data = value; }
 
         /* Setters & Getters for JSON */
         [JsonProperty(PropertyName = "Protocol")]
         private string JProtocol { get => PROTOCOL; }
         [JsonProperty(PropertyName = "DevType")]
         private string JDevType { get => stringer(devType); set => devType = parseDevType(value); }
-        [JsonProperty(PropertyName = "sourceID")]
-        private string JSourceUD { get => sourceID.ToString("X"); set => sourceID = long.Parse(value, NumberStyles.HexNumber); }
-        [JsonProperty(PropertyName = "destID")]
-        private string JDestID { get => destID.ToString("X"); set => destID = long.Parse(value, NumberStyles.HexNumber); }
+        [JsonProperty(PropertyName = "ServID")]
+        private string JSourceUD { get => ServID; set => ServID = value; }
+        [JsonProperty(PropertyName = "servName")]
+        private string JDestID { get => servName; set => servName = value; }
         [JsonProperty(PropertyName = "Username")]
         private string JUserName { get => userName; set => userName = value; }
         [JsonProperty(PropertyName = "Data")]
-        private string JData { get => JsonConvert.SerializeObject(data); set => data = JsonConvert.DeserializeObject<IList<float>>(value); }
+        private string JData { get => data.ToString(); set => data = float.Parse(value); }
         [JsonProperty(PropertyName = "Token")]
         private string JToken { get => token.ToString("X"); set => token = ulong.Parse(value, NumberStyles.HexNumber); }
         [JsonProperty(PropertyName = "MsgType")]
@@ -61,23 +66,23 @@ namespace RPiRunner2
         //Empty constructor is needed for deserialize JSON
         private DRP() { }
 
-        public DRP(DRPDevType devType, string userName, long sourceID, long destID, IList<float> data, ulong token, DRPMessageType messageType, DateTime date)
+        public DRP(DRPDevType devType, string userName, string servID, string servName, float data, ulong token, DRPMessageType messageType, DateTime date)
         {
             this.devType = devType;
             this.userName = userName;
-            this.sourceID = sourceID;
-            this.destID = destID;
+            this.servID = servID;
+            this.servName = servName;
             this.data = data;
             this.token = token;
             this.messageType = messageType;
             this.date = date;
         }
-        public DRP(DRPDevType devType, string userName, long sourceID, long destID, IList<float> data, ulong token, DRPMessageType messageType)
+        public DRP(DRPDevType devType, string userName, string servID, string servName, float data, ulong token, DRPMessageType messageType)
         {
             this.devType = devType;
             this.userName = userName;
-            this.sourceID = sourceID;
-            this.destID = destID;
+            this.servID = servID;
+            this.servName = servName;
             this.data = data;
             this.token = token;
             this.messageType = messageType;
@@ -152,9 +157,9 @@ namespace RPiRunner2
             DRP compto = obj as DRP;
             if (this.devType != compto.devType)
                 return false;
-            if (this.sourceID != compto.sourceID)
+            if (this.servID != compto.servID)
                 return false;
-            if (this.destID != compto.destID)
+            if (this.servName != compto.ServName)
                 return false;
             if (!JsonConvert.SerializeObject(data).Equals(JsonConvert.SerializeObject(compto.data)))
                 return false;

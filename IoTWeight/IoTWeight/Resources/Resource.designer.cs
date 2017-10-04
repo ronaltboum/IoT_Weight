@@ -26,6 +26,9 @@ namespace IoTWeight
 		
 		public static void UpdateIdValues()
 		{
+			global::ZXing.Mobile.Resource.Id.contentFrame = global::IoTWeight.Resource.Id.contentFrame;
+			global::ZXing.Mobile.Resource.Layout.zxingscanneractivitylayout = global::IoTWeight.Resource.Layout.zxingscanneractivitylayout;
+			global::ZXing.Mobile.Resource.Layout.zxingscannerfragmentlayout = global::IoTWeight.Resource.Layout.zxingscannerfragmentlayout;
 		}
 		
 		public partial class Attribute
@@ -114,6 +117,9 @@ namespace IoTWeight
 			// aapt resource value: 0x7f070017
 			public const int chooseTime = 2131165207;
 			
+			// aapt resource value: 0x7f070027
+			public const int contentFrame = 2131165223;
+			
 			// aapt resource value: 0x7f07001a
 			public const int currentWeigh = 2131165210;
 			
@@ -135,8 +141,8 @@ namespace IoTWeight
 			// aapt resource value: 0x7f070005
 			public const int listViewToDo = 2131165189;
 			
-			// aapt resource value: 0x7f070027
-			public const int menu_refresh = 2131165223;
+			// aapt resource value: 0x7f070028
+			public const int menu_refresh = 2131165224;
 			
 			// aapt resource value: 0x7f07001b
 			public const int plot_view = 2131165211;
@@ -225,6 +231,12 @@ namespace IoTWeight
 			
 			// aapt resource value: 0x7f03000a
 			public const int Row_List_To_Do = 2130903050;
+			
+			// aapt resource value: 0x7f03000b
+			public const int zxingscanneractivitylayout = 2130903051;
+			
+			// aapt resource value: 0x7f03000c
+			public const int zxingscannerfragmentlayout = 2130903052;
 			
 			static Layout()
 			{

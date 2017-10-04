@@ -24,6 +24,8 @@ namespace RPiRunner2
         private static string currIP;
         private static float offset;
         private static float scale;
+        private static string username;
+        private static string password;
 
         public static string Devname { get => devname; set => devname = value; }
         public static string Serial { get => serial; set => serial = value; }
@@ -31,6 +33,13 @@ namespace RPiRunner2
         public static string CurrIP { get => currIP; set => currIP = value; }
         public static float Offset { get => offset; set => offset = value; }
         public static float Scale { get => scale; set => scale = value; }
+        public static string Username { get => username; set => username = value; }
+        public static string Password { get => password; set => password = value; }
+
+        public static string auth()
+        {
+            return username + ":" + password;
+        }
 
         public static async Task LoadFromMemoryAsync(string file)
         {
@@ -55,6 +64,8 @@ namespace RPiRunner2
             currIP = lastseenIP;
             scale = data.scale;
             offset = data.offset;
+            username = data.username;
+            password = data.password;
 
             System.Diagnostics.Debug.WriteLine("read from memory: " + dataRead);
         }
@@ -66,6 +77,8 @@ namespace RPiRunner2
             pd.lastseenIP = currIP;
             pd.offset = offset;
             pd.scale = scale;
+            pd.username = username;
+            pd.password = password;
             string data = JsonConvert.SerializeObject(pd);
 
             StorageFolder storageFolder = ApplicationData.Current.LocalFolder;
@@ -91,6 +104,8 @@ namespace RPiRunner2
             public string lastseenIP = NULL_SYMBOL; 
             public float offset = BEST_OFFSET;
             public float scale = BEST_SCALE;
+            public string username = "admin";
+            public string password = "admin";
         }
     }  
 }

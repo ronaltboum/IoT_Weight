@@ -17,6 +17,8 @@ using Windows.Devices.Gpio;
 using Newtonsoft.Json;
 using Microsoft.WindowsAzure.MobileServices;
 using Windows.Networking.Connectivity;
+using System.Text.RegularExpressions;
+using System.Text;
 
 // The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=402352&clcid=0x409
 
@@ -167,6 +169,29 @@ namespace RPiRunner2
             }
             return queryFields;
         }
+        public bool authenticate(string[] headers)
+        {
+            bool auth = false;
+            string[] temp;
+            string basic;
+            foreach (string header in headers)
+            {
+                if (header.ToLower().IndexOf("authorization") >= 0)
+                {
+                     temp = header.Split(' ');
+                    basic= temp[temp.Length - 1].Trim();
+
+                    byte[] decbasic = Convert.FromBase64String(basic);
+                    string decodedString = Encoding.UTF8.GetString(decbasic);
+
+                    if (decodedString.Equals(PermanentData.auth()))
+                    {
+                        auth = true;
+                    }
+                }
+            }
+            return auth;
+        }
 
         float nullweight;
         float knownWeight;
@@ -176,18 +201,29 @@ namespace RPiRunner2
         /// </summary>
         /// <param name="data">The first row of the HTTP request query.</param>
         /// <param name="sender">the HTTPServer object that handles the current connection.</param>
-        public async Task http_OnDataRecived(string data)
+        public async Task http_OnDataRecived(string data, Windows.Storage.Streams.DataWriter writer)
         {
             System.Diagnostics.Debug.WriteLine(data);
-            Dictionary<string, string> fields = getQuery(data);
-
+            string[] headers = data.Split('\n');
+            Dictionary<string, string> fields = getQuery(headers[0]);
+            
+            if (!authenticate(headers))
+            {
+                System.Diagnostics.Debug.WriteLine("@@Unauthorized");
+                await http.Send(CreateHTTP.Code401_Unauthorized(), writer);
+                return;
+            }
             
             string html = await HTTPServer.getHTMLAsync(PAGE);
 
+            html = HTTPServer.HTMLInputFill(html, "text", "name", PermanentData.Devname);
+            html = HTTPServer.HTMLInputFill(html, "text", "serial", PermanentData.Serial);
+            html = HTTPServer.HTMLInputFill(html, "text", "man_offset", PermanentData.Offset.ToString());
+            html = HTTPServer.HTMLInputFill(html, "text", "man_scale", PermanentData.Scale.ToString());
             //some browsers might ask for the page's icon.
             if (data.IndexOf("favicon.ico") >= 0)
             {
-                await http.Send(CreateHTTP.Code204_NoContent());
+                await http.Send(CreateHTTP.Code204_NoContent(), writer);
                 return;
             }
             if (fields.Keys.Contains("chname"))
@@ -196,6 +232,26 @@ namespace RPiRunner2
                 PermanentData.Devname = fields["name"];
                 html = HTTPServer.HTMLRewrite(html, "span", "name_feedback", "Your device's name was changed to  " + PermanentData.Devname);
             }
+            if (fields.Keys.Contains("chpass"))
+            {
+                string currpass = fields["curr_pass"];
+                string newpass = fields["password"];
+                string confirm = fields["confirm"];
+
+                if (!newpass.Equals(confirm))
+                {
+                    html = HTTPServer.HTMLRewrite(html, "span", "chpass_feedback", "Passwords do not match");
+                }
+                else if (!currpass.Equals(PermanentData.Password))
+                {
+                    html = HTTPServer.HTMLRewrite(html, "span", "chpass_feedback", "Password incorrect");
+                }
+                else
+                {
+                    PermanentData.Password = newpass;
+                    html = HTTPServer.HTMLRewrite(html, "span", "chpass_feedback", "Your password has changed successfully");
+                }
+            }
             if (fields.Keys.Contains("register"))
             {
                 string serial = fields["serial"];
@@ -203,19 +259,27 @@ namespace RPiRunner2
                 await putRecordInDatabase(ip, serial);
                 PermanentData.Serial = serial;
                 PermanentData.CurrIP = ip;
+                html = HTTPServer.HTMLRewrite(html, "span", "serial_feedback", "Your device's serial is now  " + PermanentData.Serial);
             }
             Task<float> hardwtask = null;
-            if (fields.Keys.Contains("calib_offset_mes") || fields.Keys.Contains("calib_scale_mes"))
+            if (fields.Keys.Contains("soffset") || fields.Keys.Contains("sscale"))
             {
                 hardwtask = uhl.getRawWeightAsync((int)(WEIGH_AVG * CALIB_FACTOR));
             }
             if (fields.Keys.Contains("calibrate"))
             {
-                knownWeight = float.Parse(fields["known"]);
-                uhl.setParameters(nullweight, rawWeight, knownWeight);
-                html = HTTPServer.HTMLRewrite(html, "span", "calibration_feedback", "OK! the device's parameters are:<br />OFFSET: " + uhl.Offset + "<br />SCALE: " + uhl.Scale);
-                PermanentData.Scale = uhl.Scale;
-                PermanentData.Offset = uhl.Offset;
+                try
+                {
+                    knownWeight = float.Parse(fields["known"]);
+                    uhl.setParameters(nullweight, rawWeight, knownWeight);
+                    html = HTTPServer.HTMLRewrite(html, "span", "calibration_feedback", "OK! the device's parameters are:<br />OFFSET: " + uhl.Offset + "<br />SCALE: " + uhl.Scale);
+                    PermanentData.Scale = uhl.Scale;
+                    PermanentData.Offset = uhl.Offset;
+                }
+                catch
+                {
+                    html = HTTPServer.HTMLRewrite(html, "span", "calibration_feedback", "Operation failed.");
+                }
             }
             if (fields.Keys.Contains("man_calib"))
             {
@@ -227,19 +291,27 @@ namespace RPiRunner2
                 PermanentData.Offset = uhl.Offset;
             }
 
-            string response =  CreateHTTP.Code200_Ok(html);
-            Task sendTask = http.Send(response);
+            string response = CreateHTTP.Code200_Ok(html);
+
             Task writeTask = PermanentData.WriteToMemoryAsync();
+
+            html = HTTPServer.HTMLInputFill(html, "text", "name", PermanentData.Devname);
+            html = HTTPServer.HTMLInputFill(html, "text", "serial", PermanentData.Serial);
+            html = HTTPServer.HTMLInputFill(html, "text", "man_offset", PermanentData.Offset.ToString());
+            html = HTTPServer.HTMLInputFill(html, "text", "man_scale", PermanentData.Scale.ToString());
+
+            Task sendTask = http.Send(response, writer);
+            
 
             if(hardwtask != null)
             {
-                if (fields.Keys.Contains("calib_offset_mes"))
+                if (fields.Keys.Contains("soffset"))
                 {
                     nullweight = await hardwtask;
                     System.Diagnostics.Debug.WriteLine("nullweight: " + nullweight);
                     html = HTTPServer.HTMLRewrite(html, "span", "calibration_feedback", "The sensor returned value: " + nullweight);
                 }
-                if (fields.Keys.Contains("calib_scale_mes"))
+                if (fields.Keys.Contains("sscale"))
                 {
                     rawWeight = await hardwtask;
                     System.Diagnostics.Debug.WriteLine("rawWeight: " + rawWeight);
@@ -338,7 +410,7 @@ namespace RPiRunner2
             /* taking care of illegal messages */
             if (msg.DevType == DRPDevType.RBPI)
             {
-                DRP response = new DRP(DRPDevType.RBPI, "", msg.DestID, msg.SourceID, new List<float>(), 0, DRPMessageType.ILLEGAL);
+                DRP response = new DRP(DRPDevType.RBPI, "",PermanentData.Serial, PermanentData.Devname,0, 0, DRPMessageType.ILLEGAL);
                 await tcp.Send(response.ToString(), writer);
                 return;
             }
@@ -346,7 +418,7 @@ namespace RPiRunner2
 
             if (msg.MessageType == DRPMessageType.DATA || msg.MessageType == DRPMessageType.HARDWARE_ERROR || msg.MessageType == DRPMessageType.IN_USE)
             {
-                DRP response = new DRP(DRPDevType.RBPI, "", msg.DestID, msg.SourceID, new List<float>(), 0, DRPMessageType.ILLEGAL);
+                DRP response = new DRP(DRPDevType.RBPI, "",PermanentData.Serial, PermanentData.Devname, 0, 0, DRPMessageType.ILLEGAL);
                 await tcp.Send(response.ToString(), writer);
                 return;
             }
@@ -354,7 +426,7 @@ namespace RPiRunner2
             /* taking care of SCANNED messages */
             if (msg.MessageType == DRPMessageType.SCANNED)
             {
-                TempProfile profile = new TempProfile(msg.UserName, msg.Token, msg.SourceID);
+                TempProfile profile = new TempProfile(msg.UserName, msg.Token, 0);
                 if(uhl.currentServedUser() != null && profile.Appid == uhl.currentServedUser().Appid)
                 {
                     //Ignore duplicates
@@ -368,7 +440,7 @@ namespace RPiRunner2
                     try
                     {
                         float w = await uhl.getWeightAsync(WEIGH_AVG);
-                        DRP response = new DRP(DRPDevType.RBPI, msg.UserName, msg.DestID, msg.SourceID, new List<float>() { w }, 0, DRPMessageType.DATA);
+                        DRP response = new DRP(DRPDevType.RBPI, msg.UserName, PermanentData.Serial, PermanentData.Devname,  w , 0, DRPMessageType.DATA);
                         await tcp.Send(response.ToString(), writer);
                         System.Diagnostics.Debug.WriteLine("message sent: " + response.ToString());
 
@@ -386,7 +458,7 @@ namespace RPiRunner2
                     }
                     catch
                     {
-                        DRP response = new DRP(DRPDevType.RBPI, msg.UserName, msg.DestID, msg.SourceID, new List<float>(), 0, DRPMessageType.HARDWARE_ERROR);
+                        DRP response = new DRP(DRPDevType.RBPI, msg.UserName, PermanentData.Serial, PermanentData.Devname, 0, 0, DRPMessageType.HARDWARE_ERROR);
                         await tcp.Send(response.ToString(), writer);
                         System.Diagnostics.Debug.WriteLine("message sent: " + response.ToString());
                         uhl.FinishUser();
@@ -397,14 +469,14 @@ namespace RPiRunner2
                 else
                 {
                     //if somwone already uses the weight
-                    DRP response = new DRP(DRPDevType.RBPI, msg.UserName, msg.DestID, msg.SourceID, new List<float>() { }, 0, DRPMessageType.IN_USE);
+                    DRP response = new DRP(DRPDevType.RBPI, msg.UserName, PermanentData.Serial, PermanentData.Devname, 0, 0, DRPMessageType.IN_USE);
                     await tcp.Send(response.ToString(), writer);
                     System.Diagnostics.Debug.WriteLine("message sent: " + response.ToString());
                 }
             }
             else if (msg.MessageType == DRPMessageType.ILLEGAL)
             {
-                DRP response = new DRP(DRPDevType.RBPI, "", msg.DestID, msg.SourceID, new List<float>(), 0, DRPMessageType.ACK);
+                DRP response = new DRP(DRPDevType.RBPI, "", PermanentData.Serial, PermanentData.Devname, 0, 0, DRPMessageType.ACK);
                 await tcp.Send(response.ToString(), writer);
                 System.Diagnostics.Debug.WriteLine("message sent: " + response.ToString());
             }

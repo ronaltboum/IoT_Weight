@@ -1,3 +1,8 @@
+﻿/*
+ * NEW CHANGES!!
+ * 04.10.17
+ */
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,323 +19,46 @@ namespace IoTWeight
     [JsonObject(MemberSerialization.OptIn)]
     class DRP
     {
-        //private const string pROTOCOL = "$DRP";
         public const string PROTOCOL = "$DRP";
         private DRPDevType devType;
         private string userName;
-        private long sourceID;
-        private long destID;
-        private IList<float> data;
+        private string servID;
+        private string servName;
+        private float data;
         private ulong token;
         private DRPMessageType messageType;
         private DateTime date;
 
-        //public static string PROTOCOL
-        //{
-        //    get
-        //    {
-        //        return pROTOCOL;
-        //    }
-        //}
-
-        internal DRPDevType DevType
-        {
-            get
-            {
-                return devType;
-            }
-
-            set
-            {
-                devType = value;
-            }
-        }
-
-        public string UserName
-        {
-            get
-            {
-                return userName;
-            }
-
-            set
-            {
-                userName = value;
-            }
-        }
-
-        public long SourceID
-        {
-            get
-            {
-                return sourceID;
-            }
-
-            set
-            {
-                sourceID = value;
-            }
-        }
-
-        public long DestID
-        {
-            get
-            {
-                return destID;
-            }
-
-            set
-            {
-                destID = value;
-            }
-        }
-
-        public IList<float> Data
-        {
-            get
-            {
-                return data;
-            }
-        }
-
-        public ulong Token
-        {
-            get
-            {
-                return token;
-            }
-
-            set
-            {
-                token = value;
-            }
-        }
-
-        internal DRPMessageType MessageType
-        {
-            get
-            {
-                return messageType;
-            }
-
-            set
-            {
-                messageType = value;
-            }
-        }
-
-        public DateTime Date
-        {
-            get
-            {
-                return date;
-            }
-
-            set
-            {
-                date = value;
-            }
-        }
-
-
-
-        ///* Setters & Getters */
-        //public DRPDevType DevType { get => devType; set => devType = value; }
-        //public string UserName { get => userName; set => userName = value; }
-        //public long DestID { get => destID; set => destID = value; }
-        //public long SourceID { get => sourceID; set => sourceID = value; }
-        //public ulong Token { get => token; set => token = value; }
-        //public DRPMessageType MessageType { get => messageType; set => messageType = value; }
-        //public DateTime Date { get => date; set => date = value; }
-        //public IList<float> Data { get => data; }
+        /* Setters & Getters */
+        public DRPDevType DevType { get => devType; set => devType = value; }
+        public string UserName { get => userName; set => userName = value; }
+        public string ServID { get => servID; set => servID = value; }
+        public string ServName { get => servName; set => servName = value; }
+        public ulong Token { get => token; set => token = value; }
+        public DRPMessageType MessageType { get => messageType; set => messageType = value; }
+        public DateTime Date { get => date; set => date = value; }
+        public float Data { get => data; set => data = value; }
 
         /* Setters & Getters for JSON */
-        //[JsonProperty(PropertyName = "Protocol")]
-        //private string JProtocol
-        //{
-        //    get => PROTOCOL; }
-
-        //[JsonProperty(PropertyName = "height")]
-        //public float height { get; set; }
-
-
-
-
         [JsonProperty(PropertyName = "Protocol")]
-        public string JProtocol
-        {
-            get
-            {
-                return PROTOCOL;
-            }
-        }
-
-
-
+        private string JProtocol { get => PROTOCOL; }
         [JsonProperty(PropertyName = "DevType")]
-        public string JDevType
-        {
-            get
-            {
-                return stringer(devType);
-            }
-
-            set
-            {
-                devType = parseDevType(value);
-            }
-        }
-
-
-
-
-        //    [JsonProperty(PropertyName = "DevType")]
-        //    private string JDevType
-        //{
-        //    get =>stringer(devType); set => devType = parseDevType(value); }
-        //    [JsonProperty(PropertyName = "sourceID")]
-        //    private string JSourceUD
-        //{
-        //    get => sourceID.ToString("X"); set => sourceID = long.Parse(value, NumberStyles.HexNumber); }
-        [JsonProperty(PropertyName = "sourceID")]
-        public string JSourceUD
-        {
-            get
-            {
-                return sourceID.ToString("X");
-            }
-
-            set
-            {
-                sourceID = long.Parse(value, NumberStyles.HexNumber);
-            }
-        }
-
-
-
-        //    [JsonProperty(PropertyName = "destID")]
-        //    private string JDestID
-        //{
-        //    get => destID.ToString("X"); set => destID = long.Parse(value, NumberStyles.HexNumber); }
-        [JsonProperty(PropertyName = "destID")]
-        public string JDestID
-        {
-            get
-            {
-                return destID.ToString("X");
-            }
-
-            set
-            {
-                destID = long.Parse(value, NumberStyles.HexNumber);
-            }
-        }
-
-
-
-
-
-
-        //    [JsonProperty(PropertyName = "Username")]
-        //    private string JUserName
-        //{
-        //    get => userName; set => userName = value; }
+        private string JDevType { get => stringer(devType); set => devType = parseDevType(value); }
+        [JsonProperty(PropertyName = "ServID")]
+        private string JSourceUD { get => ServID; set => ServID = value; }
+        [JsonProperty(PropertyName = "servName")]
+        private string JDestID { get => servName; set => servName = value; }
         [JsonProperty(PropertyName = "Username")]
-        public string JUserName
-        {
-            get
-            {
-                return userName;
-            }
-
-            set
-            {
-                userName = value;
-            }
-        }
-
-
-
-
-        //    [JsonProperty(PropertyName = "Data")]
-        //    private string JData
-        //{
-        //    get => JsonConvert.SerializeObject(data); set => data = JsonConvert.DeserializeObject<IList<float>>(value); }
-
+        private string JUserName { get => userName; set => userName = value; }
         [JsonProperty(PropertyName = "Data")]
-        public string JData
-        {
-            get
-            {
-                return JsonConvert.SerializeObject(data);
-            }
-
-            set
-            {
-                data = JsonConvert.DeserializeObject<IList<float>>(value);
-            }
-        }
-
-
-
-        //    [JsonProperty(PropertyName = "Token")]
-        //    private string JToken
-        //{
-        //    get => token.ToString("X"); set => token = ulong.Parse(value, NumberStyles.HexNumber); }
+        private string JData { get => data.ToString(); set => data = float.Parse(value); }
         [JsonProperty(PropertyName = "Token")]
-        public string JToken
-        {
-            get
-            {
-                return token.ToString("X");
-            }
-
-            set
-            {
-                token = ulong.Parse(value, NumberStyles.HexNumber);
-            }
-        }
-
-
-
-
-        //    [JsonProperty(PropertyName = "MsgType")]
-        //    private string JMessageType
-        //{
-        //    get => ((int)messageType).ToString(); set => messageType = (DRPMessageType)int.Parse(value); } //TODO Change to number.
+        private string JToken { get => token.ToString("X"); set => token = ulong.Parse(value, NumberStyles.HexNumber); }
         [JsonProperty(PropertyName = "MsgType")]
-        public string JMessageType
-        {
-            get
-            {
-                return ((int)messageType).ToString(); ;
-            }
-
-            set
-            {
-                messageType = (DRPMessageType)int.Parse(value);    //TODO Change to number
-            }
-        }
-
-
-
-        //    [JsonProperty(PropertyName = "Date")]
-        //    private string JDate
-        //{
-        //    get => date.Ticks.ToString(); set => date = DateTime.MinValue + TimeSpan.FromTicks(long.Parse(value)); }
+        private string JMessageType { get => ((int)messageType).ToString(); set => messageType = (DRPMessageType)int.Parse(value); } //TODO Change to number.
         [JsonProperty(PropertyName = "Date")]
-        public string JDate
-        {
-            get
-            {
-                return date.Ticks.ToString(); ;
-            }
+        private string JDate { get => date.Ticks.ToString(); set => date = DateTime.MinValue + TimeSpan.FromTicks(long.Parse(value)); }
 
-            set
-            {
-                date = DateTime.MinValue + TimeSpan.FromTicks(long.Parse(value));
-            }
-        }
 
 
         /** constructors **/
@@ -338,23 +66,23 @@ namespace IoTWeight
         //Empty constructor is needed for deserialize JSON
         private DRP() { }
 
-        public DRP(DRPDevType devType, string userName, long sourceID, long destID, IList<float> data, ulong token, DRPMessageType messageType, DateTime date)
+        public DRP(DRPDevType devType, string userName, string servID, string servName, float data, ulong token, DRPMessageType messageType, DateTime date)
         {
             this.devType = devType;
             this.userName = userName;
-            this.sourceID = sourceID;
-            this.destID = destID;
+            this.servID = servID;
+            this.servName = servName;
             this.data = data;
             this.token = token;
             this.messageType = messageType;
             this.date = date;
         }
-        public DRP(DRPDevType devType, string userName, long sourceID, long destID, IList<float> data, ulong token, DRPMessageType messageType)
+        public DRP(DRPDevType devType, string userName, string servID, string servName, float data, ulong token, DRPMessageType messageType)
         {
             this.devType = devType;
             this.userName = userName;
-            this.sourceID = sourceID;
-            this.destID = destID;
+            this.servID = servID;
+            this.servName = servName;
             this.data = data;
             this.token = token;
             this.messageType = messageType;
@@ -364,6 +92,8 @@ namespace IoTWeight
         /**
          * Deserializing DRP message
          * @param mepMessage the string to deserialize
+         * EXAMPLE:
+         * {"$DRP":{"DevType":"RBPI","MACAddr":"123456789ABC","IPAddr":"C0A80101","Callback":"RES","Addressee":"123456789ABC","Date": "28/07/2017 19:02"}}
          **/
 
         public static DRP deserializeDRP(string drpMessage)
@@ -427,9 +157,9 @@ namespace IoTWeight
             DRP compto = obj as DRP;
             if (this.devType != compto.devType)
                 return false;
-            if (this.sourceID != compto.sourceID)
+            if (this.servID != compto.servID)
                 return false;
-            if (this.destID != compto.destID)
+            if (this.servName != compto.ServName)
                 return false;
             if (!JsonConvert.SerializeObject(data).Equals(JsonConvert.SerializeObject(compto.data)))
                 return false;
@@ -439,5 +169,5 @@ namespace IoTWeight
         }
     }
     enum DRPDevType { RBPI, APP }
-    enum DRPMessageType { SCANNED, DATA, ACK, IN_USE, HARDWARE_ERROR, ILLEGAL }
+    enum DRPMessageType { SCANNED, DATA, ACK, IN_USE, HARDWARE_ERROR, ILLEGAL  }
 }

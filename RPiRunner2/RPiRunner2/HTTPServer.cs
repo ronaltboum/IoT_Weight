@@ -24,9 +24,8 @@ namespace RPiRunner2
         public DateTime Last_login { get => last_login; set => last_login = value; }
 
         private StreamSocketListener listener;
-        private DataWriter _writer;
 
-        public delegate Task DataRecived(string data);
+        public delegate Task DataRecived(string data, DataWriter writer);
         public event DataRecived OnDataRecived;
 
         public delegate void Error(string message);
@@ -89,6 +88,15 @@ namespace RPiRunner2
 
             return html.Replace(str, repstr);
         }
+        public static string HTMLInputFill(string html, string type, string name, string content)
+        {
+            Regex regex = new Regex("<input\\s.*type=\"" + type + "\"\\s.*name=\"" + name + "\"[\\s>\\/][^>]*>");
+            Match m = regex.Match(html);
+            string str = m.Value;
+            string repstr = str.Replace("input", "input value=\"" + content + "\"");
+
+            return html.Replace(str, repstr);
+        }
 
         /// <summary>
         /// Start listenng to new Connections
@@ -132,7 +140,7 @@ namespace RPiRunner2
             busy = true;
             Debug.WriteLine("the connection with " + args.Socket.Information.RemoteAddress + " is being serviced.");
             var reader = new DataReader(args.Socket.InputStream);
-            _writer = new DataWriter(args.Socket.OutputStream);
+            var writer = new DataWriter(args.Socket.OutputStream);
             string data = "";
             bool error = false;
             while (true)
@@ -154,16 +162,15 @@ namespace RPiRunner2
                     break;
                 }
 
-                if (data.IndexOf("\n") >= 0 || data.IndexOf("\r") >= 0)
+                if (data.IndexOf("\r\n\r\n") >= 0 || data.IndexOf("\n\n") >= 0 || data.IndexOf("\r\r") >= 0)
                     break;
             }
             busy = false;
             if (!error)
-                await OnDataRecived(data);
+                await OnDataRecived(data, writer);
             else
                 OnError("Disconnected during data transfer.");
 
-            _writer = null;
         }
 
         /// <summary>
@@ -171,16 +178,16 @@ namespace RPiRunner2
         /// If there is no ongoing connections, this function will take no action.
         /// </summary>
         /// <param name="message">The message to send</param>
-        public async Task Send(string message)
+        public async Task Send(string message, DataWriter writer)
         {
-            if (_writer != null)
+            if (writer != null)
             {
-                _writer.WriteString(message);
+                writer.WriteString(message);
 
                 try
                 {
-                    await _writer.StoreAsync();
-                    await _writer.FlushAsync();
+                    await writer.StoreAsync();
+                    await writer.FlushAsync();
                 }
                 catch (Exception ex)
                 {

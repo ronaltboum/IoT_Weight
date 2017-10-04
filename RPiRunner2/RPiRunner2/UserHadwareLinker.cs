@@ -37,7 +37,7 @@ namespace RPiRunner2
 
         public bool CheckOrigin(DRP drp)
         {
-            return drp.SourceID == currentServedUser().Appid && drp.Token == currentServedUser().Token && drp.UserName.Equals(currentServedUser().Username);
+            return drp.Token == currentServedUser().Token && drp.UserName.Equals(currentServedUser().Username);
         }
     }
     class TempProfile

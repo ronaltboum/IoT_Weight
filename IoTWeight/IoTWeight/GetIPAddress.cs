@@ -107,7 +107,7 @@ namespace IoTWeight
 
             if (result.MessageType == DRPMessageType.DATA)
             {
-                handleGUI_OnSuccess(result.Data[0].ToString());
+                handleGUI_OnSuccess(result.Data.ToString());
                 return;
             }
             else if (result.MessageType == DRPMessageType.IN_USE)
@@ -159,7 +159,7 @@ namespace IoTWeight
         {
 
             //TODO: what is the username? what is the serial?
-            DRP msg = new DRP(DRPDevType.APP, ourUserId, 343434, 434343, new List<float>(), 0, DRPMessageType.SCANNED);
+            DRP msg = new DRP(DRPDevType.APP, ourUserId, "111", "don't care", 0, 0, DRPMessageType.SCANNED);
 
             //sending the message
             await tcps.Send(msg.ToString());
