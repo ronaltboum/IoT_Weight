@@ -264,17 +264,31 @@ namespace RPiRunner2
             Task<float> hardwtask = null;
             if (fields.Keys.Contains("soffset") || fields.Keys.Contains("sscale"))
             {
-                hardwtask = uhl.getRawWeightAsync((int)(WEIGH_AVG * CALIB_FACTOR));
+                if (uhl != null)
+                {
+                    hardwtask = uhl.getRawWeightAsync((int)(WEIGH_AVG * CALIB_FACTOR));
+                }
+                else
+                {
+                    html = HTTPServer.HTMLRewrite(html, "span", "calibration_feedback", "Error: Your device does not have the sufficient hardware requerments.<br/>Operation did not complete.");
+                }
             }
             if (fields.Keys.Contains("calibrate"))
             {
                 try
                 {
-                    knownWeight = float.Parse(fields["known"]);
-                    uhl.setParameters(nullweight, rawWeight, knownWeight);
-                    html = HTTPServer.HTMLRewrite(html, "span", "calibration_feedback", "OK! the device's parameters are:<br />OFFSET: " + uhl.Offset + "<br />SCALE: " + uhl.Scale);
-                    PermanentData.Scale = uhl.Scale;
-                    PermanentData.Offset = uhl.Offset;
+                    if (uhl != null)
+                    {
+                        knownWeight = float.Parse(fields["known"]);
+                        uhl.setParameters(nullweight, rawWeight, knownWeight);
+                        html = HTTPServer.HTMLRewrite(html, "span", "calibration_feedback", "OK! the device's parameters are:<br />OFFSET: " + uhl.Offset + "<br />SCALE: " + uhl.Scale);
+                        PermanentData.Scale = uhl.Scale;
+                        PermanentData.Offset = uhl.Offset;
+                    }
+                    else
+                    {
+                        html = HTTPServer.HTMLRewrite(html, "span", "calibration_feedback", "Error: Your device does not have the sufficient hardware requerments.<br/>Operation did not complete.");
+                    }
                 }
                 catch
                 {
@@ -283,12 +297,19 @@ namespace RPiRunner2
             }
             if (fields.Keys.Contains("man_calib"))
             {
-                float offset = float.Parse(fields["man_offset"]);
-                float scale = float.Parse(fields["man_scale"]);
-                uhl.setParameters(offset, scale);
-                html = HTTPServer.HTMLRewrite(html, "span", "calibration_feedback", "OK! the device's parameters are:<br />OFFSET: " + uhl.Offset + "<br />SCALE: " + uhl.Scale);
-                PermanentData.Scale = uhl.Scale;
-                PermanentData.Offset = uhl.Offset;
+                if (uhl != null)
+                {
+                    float offset = float.Parse(fields["man_offset"]);
+                    float scale = float.Parse(fields["man_scale"]);
+                    uhl.setParameters(offset, scale);
+                    html = HTTPServer.HTMLRewrite(html, "span", "calibration_feedback", "OK! the device's parameters are:<br />OFFSET: " + uhl.Offset + "<br />SCALE: " + uhl.Scale);
+                    PermanentData.Scale = uhl.Scale;
+                    PermanentData.Offset = uhl.Offset;
+                }
+                else
+                {
+                    html = HTTPServer.HTMLRewrite(html, "span", "calibration_feedback", "Error: Your device does not have the sufficient hardware requerments.<br/>Operation did not complete.");
+                }
             }
 
             string response = CreateHTTP.Code200_Ok(html);
@@ -426,13 +447,20 @@ namespace RPiRunner2
             /* taking care of SCANNED messages */
             if (msg.MessageType == DRPMessageType.SCANNED)
             {
-                TempProfile profile = new TempProfile(msg.UserName, msg.Token, 0);
-                if(uhl.currentServedUser() != null && profile.Appid == uhl.currentServedUser().Appid)
+                if(uhl == null)
                 {
+                    DRP response = new DRP(DRPDevType.RBPI, msg.UserName, PermanentData.Serial, PermanentData.Devname, 0, 0, DRPMessageType.HARDWARE_ERROR);
+                    await tcp.Send(response.ToString(), writer);
+                    System.Diagnostics.Debug.WriteLine("message sent: " + response.ToString());
+                    return;
+                }
+                TempProfile profile = new TempProfile(msg.UserName, msg.Token, 0);
+               // if(uhl.currentServedUser() != null && profile.Appid == uhl.currentServedUser().Appid)
+               // {
                     //Ignore duplicates
                    // System.Diagnostics.Debug.WriteLine("IGNORE!");
                     //return;
-                }
+               // }
                 if (uhl.currentServedUser() == null)
                 {
                     //if no user uses the weight

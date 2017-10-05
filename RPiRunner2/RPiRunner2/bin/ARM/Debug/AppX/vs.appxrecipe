@@ -31,13 +31,13 @@
     <AppXManifest Include="C:\Temp\Repos\TAU_IoT_Workshop\RPiRunner2\RPiRunner2\bin\ARM\Debug\Core\AppxManifest.xml">
       <PackagePath>AppxManifest.xml</PackagePath>
       <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
-      <Modified>2017-10-04T11:58:04.967</Modified>
+      <Modified>2017-10-05T09:30:54.058</Modified>
     </AppXManifest>
   </ItemGroup>
   <ItemGroup>
     <AppxPackagedFile Include="C:\Temp\Repos\TAU_IoT_Workshop\RPiRunner2\RPiRunner2\bin\ARM\Debug\RPiRunner2.exe">
       <PackagePath>entrypoint\RPiRunner2.exe</PackagePath>
-      <Modified>2017-10-04T11:58:02.831</Modified>
+      <Modified>2017-10-05T09:30:45.872</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\Bar Angel\.nuget\packages\DotNetty.Buffers\0.4.4\lib\netstandard1.3\DotNetty.Buffers.dll">
       <PackagePath>DotNetty.Buffers.dll</PackagePath>
@@ -684,11 +684,11 @@
     <AppxPackagedFile Include="C:\Temp\Repos\TAU_IoT_Workshop\RPiRunner2\RPiRunner2\bin\ARM\Debug\resources.pri">
       <PackagePath>resources.pri</PackagePath>
       <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
-      <Modified>2017-10-03T11:25:06.646</Modified>
+      <Modified>2017-10-05T09:30:51.883</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Temp\Repos\TAU_IoT_Workshop\RPiRunner2\RPiRunner2\bin\ARM\Debug\Core\RPiRunner2.exe">
       <PackagePath>RPiRunner2.exe</PackagePath>
-      <Modified>2017-10-04T11:58:04.954</Modified>
+      <Modified>2017-10-05T09:30:54.021</Modified>
     </AppxPackagedFile>
   </ItemGroup>
   <ItemGroup>

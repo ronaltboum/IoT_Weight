@@ -8,7 +8,7 @@
     <RemoteDebugEnabled>true</RemoteDebugEnabled>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
-    <RemoteDebugEnabled>true</RemoteDebugEnabled>
+    <RemoteDebugEnabled>false</RemoteDebugEnabled>
     <AuthenticationMode>Universal</AuthenticationMode>
     <RemoteDebugMachine>169.254.27.116</RemoteDebugMachine>
   </PropertyGroup>

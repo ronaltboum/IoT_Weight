@@ -4,15 +4,15 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
   <Button
-      android:id="@+id/buttonLoginUser"
-      android:layout_width="wrap_content"
-      android:layout_height="wrap_content"
-      android:onClick="LoginUser"
-      android:text="@string/login_button_text" />
-  <RadioGroup
-      android:layout_width="match_parent"
-      android:layout_height="wrap_content"
-      android:id="@+id/radioGroup1"
-      android:minWidth="25px"
-      android:minHeight="25px" />
+     android:id="@+id/buttonLoginUser"
+     android:layout_width="wrap_content"
+     android:layout_height="wrap_content"
+     android:onClick="LoginUser"
+     android:text="@string/login_button_text" />
+  <Button
+    android:id="@+id/buttonLoginDiffrentUser"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:onClick="LoginUser"
+    android:text="@string/login_diff_button_text" />
 </LinearLayout>

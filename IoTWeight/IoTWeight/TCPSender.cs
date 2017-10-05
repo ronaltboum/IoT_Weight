@@ -71,7 +71,7 @@ namespace IoTWeight
             Buffer.BlockCopy(len, 0, len4, sizeof(uint) - len.Length, len.Length); //copy len->len4
             Array.Reverse(len4); //convert to big-endian
 
-            byte[] buf = new byte[msgAsBytes.Length + sizeof(uint)]; //the hole data to send
+            byte[] buf = new byte[msgAsBytes.Length + sizeof(uint)]; //the whole data to send
             Buffer.BlockCopy(len4, 0, buf, 0, sizeof(uint));
             Buffer.BlockCopy(msgAsBytes, 0, buf, sizeof(uint), msgAsBytes.Length);
 
@@ -87,7 +87,8 @@ namespace IoTWeight
             int msize;
             string msg;
 
-            nets.Read(bmsize, 0, sizeof(uint)); //reading first 4 bytes (which contains the size of the message)
+            //nets.Read(bmsize, 0, sizeof(uint)); //reading first 4 bytes (which contains the size of the message)
+            await nets.ReadAsync(bmsize, 0, sizeof(uint)); //reading first 4 bytes (which contains the size of the message)
             Array.Reverse(bmsize); //change from big endian to little endian
             msize = BitConverter.ToInt32(bmsize, 0);
 

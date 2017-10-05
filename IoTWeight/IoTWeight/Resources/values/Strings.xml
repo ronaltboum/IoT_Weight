@@ -8,4 +8,5 @@
     <string name="checkbox_text">Item Text</string>
     <string name="login_button_text">Sign in</string>
     <string name="openCamera">Open Camera</string>
+  <string name="login_diff_button_text">Log in as a different user</string>
 </resources>

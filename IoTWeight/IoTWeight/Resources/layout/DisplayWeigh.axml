@@ -4,21 +4,29 @@
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:padding="10dip">
-  <TextView
-      android:id="@+id/Text1"
-      android:layout_width="fill_parent"
-      android:layout_height="wrap_content"
-      android:text="Getting weigh from Raspberry. Please Wait..."
-      android:paddingBottom="20dip" />
-  <ProgressBar
-      android:id="@+id/ProgressCircle"
-      android:layout_width="wrap_content"
-      android:layout_height="wrap_content"
-      android:layout_centerHorizontal="true"
-      style="@android:style/Widget.ProgressBar.Inverse" />
-  <TextView
-      android:textAppearance="?android:attr/textAppearanceLarge"
-      android:layout_width="match_parent"
-      android:layout_height="wrap_content"
-      android:id="@+id/currentWeigh" />
+    <TextView
+        android:id="@+id/tv_servname"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="{{scale's name}}"
+        android:visibility="invisible"
+        android:textSize="35px"
+        android:paddingBottom="20dip" />
+    <TextView
+        android:id="@+id/Text1"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="Getting weigh from Raspberry. Please Wait..."
+        android:paddingBottom="20dip" />
+    <ProgressBar
+        android:id="@+id/ProgressCircle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        style="@android:style/Widget.ProgressBar.Inverse" />
+    <TextView
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/currentWeigh" />
 </LinearLayout>

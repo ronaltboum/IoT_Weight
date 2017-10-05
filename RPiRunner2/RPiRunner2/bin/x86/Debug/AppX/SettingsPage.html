@@ -56,6 +56,11 @@
             cursor: pointer;
             font-weight:bold;
         }
+        span.dynamic{
+            color:orangered;
+            font-weight:bold;
+            font-style:italic;
+        }
     </style>
 </head>
 <body bgcolor="">
@@ -65,35 +70,35 @@
         <h2>Give your Weight-Scale a Name</h2>
         <form method="get">
             The name will be presented before anyone how wants to weigh.<br />
-            <input type="text" name="name" placeholder="name" /><input type="submit" name="chname" value="Change Name (chname)" />
+            <input type="text" name="name" /><input type="submit" name="chname" value="Change Name" />
         </form>
-        <span id="name_feedback"></span>
+        <span class="dynamic" id="name_feedback"></span>
     </div>
     <div>
         <h2>Change Your Password</h2>
         <form method="get">
             For protection we recommend to change the default password to access these settings.<br />
-            Current password: <input type="password" name="curr_pass" placeholder="curr_pass" /><br />
-            New Password: <input type="password" name="password" placeholder="password" /><br />
-            Confirm Password: <input type="password" name="confirm"  placeholder="confirm"/><br />
-            <input type="submit" name="chpass" value="Change Password (chpass)" />
+            Current password: <input type="password" name="curr_pass" /><br />
+            New Password: <input type="password" name="password" /><br />
+            Confirm Password: <input type="password" name="confirm"/><br />
+            <input type="submit" name="chpass" value="Change Password" />
         </form>
-        <span id="chpass_feedback"></span>
+        <span class="dynamic" id="chpass_feedback"></span>
     </div>
     <div>
         <h2>Register Your Device to the Cloud</h2>
         <form method="get">
             insert the weight serial no. that you received with your scale<br />
-            serial: <input type="text" name="serial" placeholder="serial" /><input type="submit" name="register" value="Register (register)" />
+            serial: <input type="text" name="serial" /><input type="submit" name="register" value="Register" />
         </form>
-        <span id="serial_feedback"></span>
+        <span class="dynamic" id="serial_feedback"></span>
     </div>
     <div>
         <h2>Check your hardware</h2>
         <form method="get">
-            <input type="submit" name="check_hw" value="Click here to perform a quick hardware checking. (check_hw)" />
+            <input type="submit" name="check_hw" value="Click here to perform a quick hardware checking." />
         </form>
-        <span id="check_hw_feedback"></span>
+        <span class="dynamic" id="check_hw_feedback"></span>
     </div>
     <div>
         <h2>Calibrate Your Scale</h2>
@@ -125,14 +130,14 @@
         <form method="get">
             OFFSET: <input type="text" name="man_offset" /><br />
             SCALE: <input type="text" name="man_scale" /><br />
-            <input type="submit" name="calibrate" value="Calibrate" id="man_calib" />
+            <input type="submit" name="man_calib" value="Calibrate" id="man_calib" />
         </form>
-            <span id="calibration_feedback"></span>
+            <span class="dynamic" id="calibration_feedback"></span>
 </div>
     <div>
         <h2>Log out</h2>
         <form method="get">
-            <input type="submit" name="logout" value="Click here to log out (logout)" />
+            <input type="submit" name="logout" value="Click here to log out" />
         </form>
     </div>
 </body>
