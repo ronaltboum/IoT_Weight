@@ -110,7 +110,7 @@ namespace IoTWeight
         {
             DatePickerFragment frag = DatePickerFragment.NewInstance(delegate (DateTime time)
             {
-                _dateDisplay.Text = "The weight on day " + time.ToLongDateString() + " will be deleted!";
+                _dateDisplay.Text = "All weighs on day " + time.ToLongDateString() + " will be deleted!";
                 datePicked = time.AddDays(1);
 
                 //CreateAndShowDialog("Date Picked = " + time, "");
