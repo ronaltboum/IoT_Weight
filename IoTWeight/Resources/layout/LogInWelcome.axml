@@ -30,4 +30,22 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="18.0dp"
         android:id="@+id/BMI" />
+    <Button
+        android:text="Update Your Profile"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="18.0dp"
+        android:id="@+id/update" />
+  <Button
+      android:text="Insert weights for Debugging"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_marginTop="18.0dp"
+      android:id="@+id/debuggButton" />
+  <Button
+       android:text="Log out"
+       android:layout_width="match_parent"
+       android:layout_height="wrap_content"
+       android:layout_marginTop="18.0dp"
+       android:id="@+id/ButtonLogout" />
 </LinearLayout>

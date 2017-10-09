@@ -18,7 +18,8 @@ using Microsoft.WindowsAzure.MobileServices;
 using IoTWeight;
 using Android.Content;
 using Java.Util;
-using Java.Net;
+//using Java.Net;
+using Android.Webkit;
 using Newtonsoft.Json.Linq;
 
 
@@ -83,11 +84,14 @@ namespace IoTWeight
 
 
         private MobileServiceUser user;
-        private async Task<string> Authenticate()
+        private async Task<string> Authenticate(bool forcePassword = false)
         {
             string myName = "failed";
             try
             {
+
+                if (forcePassword)
+                    CookieManager.Instance.RemoveAllCookie();
 
                 user = await client.LoginAsync(this,
                     MobileServiceAuthenticationProvider.Facebook);
@@ -139,8 +143,33 @@ namespace IoTWeight
 
             Button logInButton = FindViewById<Button>(Resource.Id.buttonLoginUser);
             logInButton.Visibility = ViewStates.Gone;
+            Button logInAsDifferentUserButton = FindViewById<Button>(Resource.Id.buttonLoginDiffrentUser);
+            logInAsDifferentUserButton.Visibility = ViewStates.Gone;
 
             string userName = await Authenticate();
+            if (userName != "failed")
+            {
+                var intent = new Intent(this, typeof(LogInActivity));
+                intent.PutExtra("userName", userName);
+                StartActivity(intent);
+            }
+            else
+            {
+                CreateAndShowDialog("Unable to authenticate.", "Sorry");
+            }
+        }
+
+
+        [Java.Interop.Export()]
+        public async void LoginUserAsDifferentUser(View view)
+        {
+
+            Button logInButton = FindViewById<Button>(Resource.Id.buttonLoginUser);
+            logInButton.Visibility = ViewStates.Gone;
+            Button logInAsDifferentUserButton = FindViewById<Button>(Resource.Id.buttonLoginDiffrentUser);
+            logInAsDifferentUserButton.Visibility = ViewStates.Gone;
+
+            string userName = await Authenticate(true);
             if (userName != "failed")
             {
                 var intent = new Intent(this, typeof(LogInActivity));

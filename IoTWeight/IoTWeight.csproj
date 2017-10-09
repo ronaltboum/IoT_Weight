@@ -118,10 +118,14 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CalculateBMI.cs" />
+    <Compile Include="DatePickerFragment.cs" />
+    <Compile Include="DeleteWeighs.cs" />
     <Compile Include="DRP.cs" />
     <Compile Include="GetIPAddress.cs" />
     <Compile Include="GetStatsChooseDisplay.cs" />
+    <Compile Include="InsertWeightsForDebugg.cs" />
     <Compile Include="LogInActivity.cs" />
+    <Compile Include="PickDateToDelete.cs" />
     <Compile Include="QRScan.cs" />
     <Compile Include="RaspberryTable.cs" />
     <Compile Include="Resources\Resource.designer.cs" />
@@ -131,6 +135,8 @@
     <Compile Include="ToDoActivityBeforeUsername.cs" />
     <Compile Include="ToDoItem.cs" />
     <Compile Include="ToDoItemAdapter.cs" />
+    <Compile Include="UpdateHeight.cs" />
+    <Compile Include="UpdateProfile.cs" />
     <Compile Include="UsersTable.cs" />
     <Compile Include="WeighDatePair.cs" />
     <Compile Include="WeighDatePairAdapter.cs" />
@@ -168,6 +174,21 @@
       <SubType>Designer</SubType>
     </AndroidResource>
     <AndroidResource Include="Resources\layout\row.axml">
+      <SubType>Designer</SubType>
+    </AndroidResource>
+    <AndroidResource Include="Resources\layout\updateProfile.axml">
+      <SubType>Designer</SubType>
+    </AndroidResource>
+    <AndroidResource Include="Resources\layout\deleteWeighs.axml">
+      <SubType>Designer</SubType>
+    </AndroidResource>
+    <AndroidResource Include="Resources\layout\PickDate.axml">
+      <SubType>Designer</SubType>
+    </AndroidResource>
+    <AndroidResource Include="Resources\layout\InsertWeights.axml">
+      <SubType>Designer</SubType>
+    </AndroidResource>
+    <AndroidResource Include="Resources\layout\heightView.axml">
       <SubType>Designer</SubType>
     </AndroidResource>
   </ItemGroup>

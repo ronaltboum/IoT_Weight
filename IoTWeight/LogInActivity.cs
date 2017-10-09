@@ -10,6 +10,7 @@ using Android.Runtime;
 using Android.Views;
 using Android.Widget;
 using Microsoft.WindowsAzure.MobileServices;
+using Android.Webkit;
 
 namespace IoTWeight
 {
@@ -34,7 +35,21 @@ namespace IoTWeight
             startWeighButton.SetBackgroundColor(Android.Graphics.Color.LightSkyBlue);
             Button BMIButton = FindViewById<Button>(Resource.Id.BMI);
             BMIButton.SetBackgroundColor(Android.Graphics.Color.LightBlue);
+            Button updateButton = FindViewById<Button>(Resource.Id.update);
 
+            Button LogoutButton = FindViewById<Button>(Resource.Id.ButtonLogout);
+            LogoutButton.Visibility = ViewStates.Gone;
+
+            Button debuggButton = FindViewById<Button>(Resource.Id.debuggButton);
+            debuggButton.Visibility = ViewStates.Gone;
+
+            debuggButton.Click += (sender, e) =>
+            {
+                var intent = new Intent(this, typeof(InsertWeightsForDebugg));
+                StartActivity(intent);
+            };
+
+            
             getStatsButton.Click += (sender, e) =>
             {
                 var intent = new Intent(this, typeof(GetStatsChooseDisplay));
@@ -54,21 +69,48 @@ namespace IoTWeight
                 StartActivity(intent);
             };
 
+           
+            updateButton.Click += delegate
+            {
+                var activity2 = new Intent(this, typeof(UpdateProfile));
+                activity2.PutExtra("userName", userName);
+                StartActivity(activity2);
+            };
 
-            //button.Click += delegate {
-            //    var activity2 = new Intent(this, typeof(Activity2));
-            //    activity2.PutExtra("MyData", "Data from Activity1");
-            //    StartActivity(activity2);
-            //};
+            LogoutButton.Click += async (sender, e) =>
+            {
+                MobileServiceClient client = ToDoActivity.CurrentActivity.CurrentClient;
+                MobileServiceUser user = new MobileServiceUser(ToDoActivity.CurrentActivity.Currentuserid);
+                try
+                {
+                    if (user != null)
+                    {
+                        CookieManager.Instance.RemoveAllCookie();
+                        await client.LogoutAsync();
+                        //CreateAndShowDialog(string.Format("You are now logged out - {0}", user.UserId), "Logged out!");
+                    }
+                    user = null;
+                    
+                }
+                catch (Exception ex)
+                {
+                    CreateAndShowDialog(ex.Message, "Logout failed");
+                }
 
-
-
-
+                var intent = new Intent(this, typeof(ToDoActivity));
+                intent.AddFlags(ActivityFlags.ClearTop);
+                StartActivity(intent);
+            };
 
         }
-
-
-
-
+        void CreateAndShowDialog(string message, string title)
+        {
+            var builder = new AlertDialog.Builder(this);
+            builder.SetMessage(message);
+            builder.SetTitle(title);
+            builder.SetNeutralButton("OK", (sender, args) => {
+            });
+            builder.Create().Show();
+        }
     }
 }

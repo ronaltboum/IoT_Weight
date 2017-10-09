@@ -9,4 +9,10 @@
      android:layout_height="wrap_content"
      android:onClick="LoginUser"
      android:text="@string/login_button_text" />
+  <Button
+    android:id="@+id/buttonLoginDiffrentUser"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:onClick="LoginUserAsDifferentUser"
+    android:text="@string/login_diff_button_text" />
 </LinearLayout>
