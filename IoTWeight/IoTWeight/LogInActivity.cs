@@ -66,9 +66,11 @@ namespace IoTWeight
                     {
                         CookieManager.Instance.RemoveAllCookie();
                         await client.LogoutAsync();
-                        CreateAndShowDialog(string.Format("You are now logged out - {0}", user.UserId), "Logged out!");
+                        //CreateAndShowDialog(string.Format("You are now logged out - {0}", user.UserId), "Logged out!");    
                     }
                     user = null;
+                    var intent = new Intent(this, typeof(ToDoActivity));
+                    StartActivity(intent);
                 }
                 catch (Exception ex)
                 {
@@ -77,8 +79,7 @@ namespace IoTWeight
 
 
 
-                var intent = new Intent(this, typeof(ToDoActivity));
-                StartActivity(intent);
+                
             };
         }
         void CreateAndShowDialog(string message, string title)

@@ -6,7 +6,7 @@ namespace OverloadTester
     class Program
     {
         private static int TIMES = 20; //The number of connection requests to send
-        private static string IP = "192.168.1.113"; //the IP of the raspberry
+        private static string IP = "192.168.1.104"; //the IP of the raspberry
         static void Main(string[] args)
         {
             Task.Run(() => MainAsync(args));
@@ -55,7 +55,7 @@ namespace OverloadTester
         public static async Task testSendOne()
         {
             TCPSender tcps = new TCPSender();
-            DRP msg = new DRP(DRPDevType.APP, "testX", 0, 0, new List<float>(), 0, DRPMessageType.SCANNED);
+            DRP msg = new DRP(DRPDevType.APP, "testX", "", "", 0, 0, DRPMessageType.SCANNED);
             DRP results;
             
             results = await sr1(tcps, IP, msg);
@@ -74,7 +74,7 @@ namespace OverloadTester
             //sending, waiting for result, then send again
             for (int i = 0; i < TIMES; i++)
             {
-                msg[i] = new DRP(DRPDevType.APP, "serial test" + i, 0, 0, new List<float>(), 0, DRPMessageType.SCANNED);
+                msg[i] = new DRP(DRPDevType.APP, "testX", "", "", 0, 0, DRPMessageType.SCANNED);
                 senders[i] = new TCPSender();
                 results[i] = await sr1(senders[i] ,IP, msg[i]);
                 Console.WriteLine("msg " + i + " sent");
@@ -97,7 +97,7 @@ namespace OverloadTester
             //sending, waiting for result, then send again
             for (int i = 0; i < TIMES; i++)
             {
-                msg[i] = new DRP(DRPDevType.APP, "parallel test" + i, 0, 0, new List<float>(), 0, DRPMessageType.SCANNED);
+                msg[i] = new DRP(DRPDevType.APP, "testX", "", "", 0, 0, DRPMessageType.SCANNED);
                 senders[i] = new TCPSender();
                 tasks[i] = sr1(senders[i],IP, msg[i]);
                 Console.WriteLine("msg " + i + " sent");

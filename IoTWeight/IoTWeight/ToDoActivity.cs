@@ -18,9 +18,9 @@ using Microsoft.WindowsAzure.MobileServices;
 using IoTWeight;
 using Android.Content;
 using Java.Util;
-using Java.Net;
+//using Java.Net;
 using Newtonsoft.Json.Linq;
-
+using Android.Webkit;
 
 namespace IoTWeight
 {
@@ -83,23 +83,21 @@ namespace IoTWeight
 
 
         private MobileServiceUser user;
-        private async Task<string> Authenticate()
+        private async Task<string> Authenticate(bool forcePassword = false)
         {
             string myName = "failed";
             try
             {
-
+                if(forcePassword)
+                    CookieManager.Instance.RemoveAllCookie();
                 user = await client.LoginAsync(this,
                     MobileServiceAuthenticationProvider.Facebook);
-                //CreateAndShowDialog(string.Format("you are now logged in - {0}",
-                //user.UserId), "Logged in!");
                 Console.WriteLine("user's sid = {0}", user.UserId);
                 Currentuserid = user.UserId;
 
                 //get username from Facebook:
                 var response = await client.InvokeApiAsync<JToken>("getExtraDetails", HttpMethod.Get, null);
                 Console.WriteLine("JToken response = {0}" , response);
-                //string myName = "Logged in successfully but cannot get user name from Facebook Graph API";
                 if (response != null)
                 {
                     if (response["facebook"] != null)
@@ -108,7 +106,6 @@ namespace IoTWeight
                         if (userId != null)
                         {
                             JToken name = response["facebook"]["claims"]["name"];
-                            //JToken name = response["facebook"]["claims"]["wow"];
                             if (name != null)
                             {
                                 if ((string)name != null)
@@ -119,9 +116,6 @@ namespace IoTWeight
                     }
                 }
 
-                //response = null;
-                //JToken abc = response["bla"]["claims"]["woohoo"];
-                //myName = (string)abc;
                 Console.WriteLine("myName = " + myName);
 
             }
@@ -140,7 +134,7 @@ namespace IoTWeight
             Button logInButton = FindViewById<Button>(Resource.Id.buttonLoginUser);
             logInButton.Visibility = ViewStates.Gone;
 
-            string userName = await Authenticate();
+            string userName = await Authenticate(true);
             if (userName != "failed")
             {
                 var intent = new Intent(this, typeof(LogInActivity));
@@ -152,49 +146,6 @@ namespace IoTWeight
                 CreateAndShowDialog("Unable to authenticate.", "Sorry");
             }
         }
-
-
-
-
-        ////Below are the 2 methods Authenticate and LoginUser without username that worked
-        //// Define a authenticated user.
-        //private MobileServiceUser user;
-        //private async Task<bool> Authenticate()
-        //{
-        //    var success = false;
-        //    try
-        //    {
-
-        //        user = await client.LoginAsync(this,
-        //            MobileServiceAuthenticationProvider.Facebook);
-        //        CreateAndShowDialog(string.Format("you are now logged in - {0}",
-        //            user.UserId), "Logged in!");
-        //        Currentuserid = user.UserId;
-
-        //        success = true;
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        CreateAndShowDialog(ex, "Authentication failed");
-        //    }
-        //    return success;
-        //}
-
-        //[Java.Interop.Export()]
-        //public async void LoginUser(View view)
-        //{
-        //    // Load data only after authentication succeeds.
-        //    if (await Authenticate())
-        //    {
-        //        //Hide the button after authentication succeeds.
-        //        FindViewById<Button>(Resource.Id.buttonLoginUser).Visibility = ViewStates.Gone;
-
-        //        var intent = new Intent(this, typeof(LogInActivity));
-        //        //intent.PutExtra("client", client);
-        //        StartActivity(intent);
-        //    }
-        //}
-
 
         private void CreateAndShowDialog(Exception exception, String title)
         {

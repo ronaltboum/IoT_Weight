@@ -82,11 +82,17 @@ namespace RPiRunner2
             if (easyDebug)
                 length = 5;
 
-            uint loaded = await reader.LoadAsync(length);
+            var loadTask = reader.LoadAsync(length).AsTask();
+            if(await Task.WhenAny(loadTask, Task.Delay(10000)) != loadTask)
+            {
+                Debug.WriteLine("loader did not return (perhaps the size is incorrect?) :-(");
+                return;
+            }
+            uint loaded = loadTask.Result;
             if (loaded < length)
             {
                 Debug.WriteLine("disconnected during data transfer. :-(");
-                // return;
+                return;
             }
 
             string msg = reader.ReadString(loaded);

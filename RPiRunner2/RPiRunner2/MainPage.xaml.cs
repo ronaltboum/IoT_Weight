@@ -64,6 +64,7 @@ namespace RPiRunner2
         public async Task MainPageAsync()
         {
 
+            //Initializing GPIO 
             gpioController = GpioController.GetDefault();
             if (gpioController != null)
             {
@@ -76,20 +77,23 @@ namespace RPiRunner2
             {
                 System.Diagnostics.Debug.WriteLine("WARNING: Your machine does not support GPIO!");
             }
+
+            //Initializing socket listener
             tcp = new TCPListener(SOCKET_PORT, easyDebug);
             tcp.OnDataReceived += socket_onDataReceived;
             tcp.OnError += socket_onError;
             Task SocketListenTask = tcp.ListenAsync();
             System.Diagnostics.Debug.WriteLine("socket created");
 
+            //Initializing web server
             this.http = new HTTPServer(WEB_PORT);
             http.OnDataRecived += http_OnDataRecived;
             http.OnError += http_OnError;
             Task httpTask = http.Start();
             System.Diagnostics.Debug.WriteLine("web server created");
 
+            //loading permanent data from memory
             Task loadTask = PermanentData.LoadFromMemoryAsync();
-
             await loadTask;
 
             Task putRecordTask = null;
@@ -169,6 +173,12 @@ namespace RPiRunner2
             }
             return queryFields;
         }
+
+        /// <summary>
+        /// Receives an HTTP request and check if it contains login details and if these details are correct
+        /// </summary>
+        /// <param name="headers">HTTP request splitted to rows</param>
+        /// <returns>True if login details are exist and correct</returns>
         public bool authenticate(string[] headers)
         {
             bool auth = false;
@@ -226,61 +236,85 @@ namespace RPiRunner2
                 await http.Send(CreateHTTP.Code204_NoContent(), writer);
                 return;
             }
-            if (fields.Keys.Contains("chname"))
-            {
-                System.Diagnostics.Debug.WriteLine("got: " + fields["name"]);
-                PermanentData.Devname = fields["name"];
-                html = HTTPServer.HTMLRewrite(html, "span", "name_feedback", "Your device's name was changed to  " + PermanentData.Devname);
-            }
-            if (fields.Keys.Contains("chpass"))
-            {
-                string currpass = fields["curr_pass"];
-                string newpass = fields["password"];
-                string confirm = fields["confirm"];
-
-                if (!newpass.Equals(confirm))
-                {
-                    html = HTTPServer.HTMLRewrite(html, "span", "chpass_feedback", "Passwords do not match");
-                }
-                else if (!currpass.Equals(PermanentData.Password))
-                {
-                    html = HTTPServer.HTMLRewrite(html, "span", "chpass_feedback", "Password incorrect");
-                }
-                else
-                {
-                    PermanentData.Password = newpass;
-                    html = HTTPServer.HTMLRewrite(html, "span", "chpass_feedback", "Your password has changed successfully");
-                }
-            }
-            if (fields.Keys.Contains("register"))
-            {
-                string serial = fields["serial"];
-                string ip = GetLocalIp();
-                await putRecordInDatabase(ip, serial);
-                PermanentData.Serial = serial;
-                PermanentData.CurrIP = ip;
-                html = HTTPServer.HTMLRewrite(html, "span", "serial_feedback", "Your device's serial is now  " + PermanentData.Serial);
-            }
             Task<float> hardwtask = null;
-            if (fields.Keys.Contains("soffset") || fields.Keys.Contains("sscale"))
+            try
             {
-                if (uhl != null)
+                if (fields.Keys.Contains("chname"))
                 {
-                    hardwtask = uhl.getRawWeightAsync((int)(WEIGH_AVG * CALIB_FACTOR));
+                    System.Diagnostics.Debug.WriteLine("got: " + fields["name"]);
+                    PermanentData.Devname = fields["name"];
+                    html = HTTPServer.HTMLRewrite(html, "span", "name_feedback", "Your device's name was changed to  " + PermanentData.Devname);
                 }
-                else
+                if (fields.Keys.Contains("chpass"))
                 {
-                    html = HTTPServer.HTMLRewrite(html, "span", "calibration_feedback", "Error: Your device does not have the sufficient hardware requerments.<br/>Operation did not complete.");
+                    string currpass = fields["curr_pass"];
+                    string newpass = fields["password"];
+                    string confirm = fields["confirm"];
+
+                    if (!newpass.Equals(confirm))
+                    {
+                        html = HTTPServer.HTMLRewrite(html, "span", "chpass_feedback", "Passwords do not match");
+                    }
+                    else if (!currpass.Equals(PermanentData.Password))
+                    {
+                        html = HTTPServer.HTMLRewrite(html, "span", "chpass_feedback", "Password incorrect");
+                    }
+                    else
+                    {
+                        PermanentData.Password = newpass;
+                        html = HTTPServer.HTMLRewrite(html, "span", "chpass_feedback", "Your password has changed successfully");
+                    }
                 }
-            }
-            if (fields.Keys.Contains("calibrate"))
-            {
-                try
+                if (fields.Keys.Contains("register"))
+                {
+                    string serial = fields["serial"];
+                    string ip = GetLocalIp();
+                    await putRecordInDatabase(ip, serial);
+                    PermanentData.Serial = serial;
+                    PermanentData.CurrIP = ip;
+                    html = HTTPServer.HTMLRewrite(html, "span", "serial_feedback", "Your device's serial is now  " + PermanentData.Serial);
+                }
+                
+                if (fields.Keys.Contains("soffset") || fields.Keys.Contains("sscale"))
                 {
                     if (uhl != null)
                     {
-                        knownWeight = float.Parse(fields["known"]);
-                        uhl.setParameters(nullweight, rawWeight, knownWeight);
+                        hardwtask = uhl.getRawWeightAsync((int)(WEIGH_AVG * CALIB_FACTOR));
+                    }
+                    else
+                    {
+                        html = HTTPServer.HTMLRewrite(html, "span", "calibration_feedback", "Error: Your device does not have the sufficient hardware requerments.<br/>Operation did not complete.");
+                    }
+                }
+                if (fields.Keys.Contains("calibrate"))
+                {
+                    try
+                    {
+                        if (uhl != null)
+                        {
+                            knownWeight = float.Parse(fields["known"]);
+                            uhl.setParameters(nullweight, rawWeight, knownWeight);
+                            html = HTTPServer.HTMLRewrite(html, "span", "calibration_feedback", "OK! the device's parameters are:<br />OFFSET: " + uhl.Offset + "<br />SCALE: " + uhl.Scale);
+                            PermanentData.Scale = uhl.Scale;
+                            PermanentData.Offset = uhl.Offset;
+                        }
+                        else
+                        {
+                            html = HTTPServer.HTMLRewrite(html, "span", "calibration_feedback", "Error: Your device does not have the sufficient hardware requerments.<br/>Operation did not complete.");
+                        }
+                    }
+                    catch
+                    {
+                        html = HTTPServer.HTMLRewrite(html, "span", "calibration_feedback", "Operation failed.");
+                    }
+                }
+                if (fields.Keys.Contains("man_calib"))
+                {
+                    if (uhl != null)
+                    {
+                        float offset = float.Parse(fields["man_offset"]);
+                        float scale = float.Parse(fields["man_scale"]);
+                        uhl.setParameters(offset, scale);
                         html = HTTPServer.HTMLRewrite(html, "span", "calibration_feedback", "OK! the device's parameters are:<br />OFFSET: " + uhl.Offset + "<br />SCALE: " + uhl.Scale);
                         PermanentData.Scale = uhl.Scale;
                         PermanentData.Offset = uhl.Offset;
@@ -290,26 +324,9 @@ namespace RPiRunner2
                         html = HTTPServer.HTMLRewrite(html, "span", "calibration_feedback", "Error: Your device does not have the sufficient hardware requerments.<br/>Operation did not complete.");
                     }
                 }
-                catch
-                {
-                    html = HTTPServer.HTMLRewrite(html, "span", "calibration_feedback", "Operation failed.");
-                }
-            }
-            if (fields.Keys.Contains("man_calib"))
+            }catch(Exception e)
             {
-                if (uhl != null)
-                {
-                    float offset = float.Parse(fields["man_offset"]);
-                    float scale = float.Parse(fields["man_scale"]);
-                    uhl.setParameters(offset, scale);
-                    html = HTTPServer.HTMLRewrite(html, "span", "calibration_feedback", "OK! the device's parameters are:<br />OFFSET: " + uhl.Offset + "<br />SCALE: " + uhl.Scale);
-                    PermanentData.Scale = uhl.Scale;
-                    PermanentData.Offset = uhl.Offset;
-                }
-                else
-                {
-                    html = HTTPServer.HTMLRewrite(html, "span", "calibration_feedback", "Error: Your device does not have the sufficient hardware requerments.<br/>Operation did not complete.");
-                }
+                System.Diagnostics.Debug.WriteLine(e.Message);
             }
 
             string response = CreateHTTP.Code200_Ok(html);
