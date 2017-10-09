@@ -33,6 +33,7 @@ namespace IoTWeight
         private IMobileServiceTable<weighTable> weighTableRef;
         private IMobileServiceTable<UsersTable> UsersTableRef;
 
+        //[EnableQuery(PageSize = 1000)]
         protected override async void OnCreate(Bundle savedInstanceState)
         {
             base.OnCreate(savedInstanceState);
@@ -98,72 +99,11 @@ namespace IoTWeight
                 //weighTable :      username               weigh       createdAt
                 //UsersTable:       UniqueUsername         height       gender      age    
 
-                ////some inserts for debugging:
-                //var newweightablerecord = new weighTable
-                //{
-                //    username = ourUserId,
-                //    weigh = 96.9f
-                //};
-                //var newweightablerecord1 = new weighTable
-                //{
-                //    username = ourUserId,
-                //    weigh = 96.1f
-                //};
-                //var newweightablerecord2 = new weighTable
-                //{
-                //    username = ourUserId,
-                //    weigh = 95.6f
-                //};
-                //var newweightablerecord3 = new weighTable
-                //{
-                //    username = ourUserId,
-                //    weigh = 95.4f
-                //};
-                //var newweightablerecord4 = new weighTable
-                //{
-                //    username = ourUserId,
-                //    weigh = 95.1f
-                //};
-                //var newweightablerecord5 = new weighTable
-                //{
-                //    username = ourUserId,
-                //    weigh = 94.8f
-                //};
-                //var newweightablerecord6 = new weighTable
-                //{
-                //    username = ourUserId,
-                //    weigh = 94.6f
-                //};
-                //var newweightablerecord7 = new weighTable
-                //{
-                //    username = ourUserId,
-                //    weigh = 94.2f
-                //};
-                //var newweightablerecord8 = new weighTable
-                //{
-                //    username = ourUserId,
-                //    weigh = 93.7f
-                //};
-                //var newweightablerecord9 = new weighTable
-                //{
-                //    username = ourUserId,
-                //    weigh = 93.3f
-                //};
-                //await weighTableRef.InsertAsync(newweightablerecord);
-                //await weighTableRef.InsertAsync(newweightablerecord1);
-                //await weighTableRef.InsertAsync(newweightablerecord2);
-                //await weighTableRef.InsertAsync(newweightablerecord3);
-                //await weighTableRef.InsertAsync(newweightablerecord4);
-                //await weighTableRef.InsertAsync(newweightablerecord5);
-                //await weighTableRef.InsertAsync(newweightablerecord6);
-                //await weighTableRef.InsertAsync(newweightablerecord7);
-                //await weighTableRef.InsertAsync(newweightablerecord8);
-                //await weighTableRef.InsertAsync(newweightablerecord9);
 
-                //return;
+                //var list9 = await weighTableRef.Where(item => (item.username == ourUserId) && (item.createdAt >= earliestDate)).ToListAsync();
+                var list9 = await weighTableRef.Take(500).Where(item => (item.username == ourUserId) && (item.createdAt >= earliestDate)).ToListAsync();
+                
 
-
-                var list9 = await weighTableRef.Where(item => (item.username == ourUserId) && (item.createdAt >= earliestDate)).ToListAsync();
                 if (list9.Count == 0)
                 {
                     CreateAndShowDialog("Please Weigh yourself and try again", "No Previous Weighs Found in the requested time period");
@@ -183,16 +123,7 @@ namespace IoTWeight
                     //string dateSring = Convert.ToString(date1);
                     //Console.WriteLine(date1.ToString());
                     //dateSring = Convert.ToString(debuggDate);
-                    //if (currW < 93)
-                    //{
-                    //    debuggDate = date1.AddDays(-i);
-                    //    i = i + 10;
-                    //}
-                    //else
-                    //{
-                    //    debuggDate = date1.AddDays(-i);
-                    //    i = i + 5;
-                    //}
+                    
                     dateSring = Convert.ToString(date1);
                     if (displayFormat == "List")
                     {
@@ -207,10 +138,8 @@ namespace IoTWeight
 
                             //shift dates to debugg graph
                             debuggDate = date1.AddDays(-i);
-                            i = i + 15;
-                            series1.Points.Add(new DataPoint(DateTimeAxis.ToDouble(debuggDate), currW));
-                        
-                         
+                            i = i + 1;
+                            series1.Points.Add(new DataPoint(DateTimeAxis.ToDouble(debuggDate), currW)); 
                     }
 
                 }
@@ -258,6 +187,9 @@ namespace IoTWeight
 
             //this.ListAdapter = new ArrayAdapter<float>(this, Android.Resource.Layout.SimpleListItem1, lastWeights);
         }
+
+        
+
 
 
         protected int extractTimePeriod()
