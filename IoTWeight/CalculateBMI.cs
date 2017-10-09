@@ -194,7 +194,7 @@ namespace IoTWeight
             builder.Create().Show();
         }
 
-
+        //TODO: return Task,  and use with await.  try catch in ok button
         private async void CalculateUserBMI()
         {
             try

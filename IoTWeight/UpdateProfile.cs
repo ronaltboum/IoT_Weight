@@ -28,7 +28,8 @@ namespace IoTWeight
 
             deleteButton.Click += (sender, e) =>
             {
-                var intent = new Intent(this, typeof(PickDateToDelete));
+                //var intent = new Intent(this, typeof(PickDateToDelete));
+                var intent = new Intent(this, typeof(PickDateToDeleteVer2));
                 StartActivity(intent);
             };
 
