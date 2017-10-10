@@ -23,7 +23,7 @@
         android:textAppearance="?android:attr/textAppearanceSmall"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/textView4"
+        android:id="@+id/tv_login_msg"
         style="@style/DefText" />
     <Button
         android:id="@+id/buttonLoginUser"
@@ -35,4 +35,12 @@
         android:onClick="LoginUserAsDifferentUser"
         android:text="@string/login_diff_button_text"
         style="@style/SpreadButton" />
+  <ProgressBar
+      android:id="@+id/LoginProgressCircle"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:gravity="center"
+      android:visibility="invisible"
+     android:layout_margin="20.0dp" 
+      style="@android:style/Widget.ProgressBar.Inverse" />
 </LinearLayout>

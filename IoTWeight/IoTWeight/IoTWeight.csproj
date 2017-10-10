@@ -130,7 +130,6 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TCPSender.cs" />
     <Compile Include="ToDoActivity.cs" />
-    <Compile Include="ToDoActivityBeforeUsername.cs" />
     <Compile Include="ToDoItem.cs" />
     <Compile Include="ToDoItemAdapter.cs" />
     <Compile Include="UpdateHeight.cs" />
