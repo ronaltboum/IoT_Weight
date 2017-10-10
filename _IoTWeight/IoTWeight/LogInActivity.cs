@@ -30,15 +30,18 @@ namespace IoTWeight
             FindViewById<TextView>(Resource.Id.welcomeText).Text = "Hello " + userName + "!";
 
             Button getStatsButton = FindViewById<Button>(Resource.Id.GetStats);
+            getStatsButton.SetBackgroundColor(Android.Graphics.Color.SteelBlue);
             Button startWeighButton = FindViewById<Button>(Resource.Id.StartWeigh);
+            startWeighButton.SetBackgroundColor(Android.Graphics.Color.LightSkyBlue);
             Button BMIButton = FindViewById<Button>(Resource.Id.BMI);
+            BMIButton.SetBackgroundColor(Android.Graphics.Color.LightBlue);
             Button updateButton = FindViewById<Button>(Resource.Id.update);
 
             Button LogoutButton = FindViewById<Button>(Resource.Id.ButtonLogout);
-            //LogoutButton.Visibility = ViewStates.Gone;
+            LogoutButton.Visibility = ViewStates.Gone;
 
             Button debuggButton = FindViewById<Button>(Resource.Id.debuggButton);
-            //debuggButton.Visibility = ViewStates.Gone;
+            debuggButton.Visibility = ViewStates.Gone;
 
             debuggButton.Click += (sender, e) =>
             {

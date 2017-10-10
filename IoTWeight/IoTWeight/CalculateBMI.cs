@@ -10,6 +10,7 @@ using Android.Runtime;
 using Android.Views;
 using Android.Widget;
 using Microsoft.WindowsAzure.MobileServices;
+using System.Threading.Tasks;
 using Java.Util;
 using Java.Net;
 
@@ -98,11 +99,18 @@ namespace IoTWeight
                         UniqueUsername = ourUserId,
                         height = enteredHeight,
                     };
-                    await UsersTableRef.InsertAsync(userUpdated);
-                    OKButton.Visibility = ViewStates.Gone;
-                    heightText.Visibility = ViewStates.Gone;
-                    enterHeight.Visibility = ViewStates.Gone;
-                    CalculateUserBMI();
+                    try
+                    {
+                        await UsersTableRef.InsertAsync(userUpdated);
+                        OKButton.Visibility = ViewStates.Gone;
+                        heightText.Visibility = ViewStates.Gone;
+                        enterHeight.Visibility = ViewStates.Gone;
+                        await CalculateUserBMI();
+                    }
+                    catch (Exception ex)
+                    {
+                        CreateAndShowDialog(ex, "Error");
+                    }
                 }
                 else
                 {
@@ -110,37 +118,21 @@ namespace IoTWeight
                 }
             };
 
+
+
             try
             {
-                //ourUserId = "debug test1";
                 var userRecord = await UsersTableRef.Where(item => (item.UniqueUsername == ourUserId)).ToListAsync();
-                //some inserts for debug:
-                //var userUpdated = new UsersTable
-                //{
-                //    UniqueUsername = ourUserId,
-                //    height = 1.75f,
-                //};
-                //await UsersTableRef.InsertAsync(userUpdated);
-
                 if (userRecord.Count == 0)
                 {
                     heightText.Visibility = ViewStates.Visible;
                     enterHeight.Visibility = ViewStates.Visible;
                     OKButton.Visibility = ViewStates.Visible;
                 }
-
                 //user already entered height:
                 else
                 {
-                    ////insert for debuggin
-                    //var userUpdated = new weighTable
-                    //{
-                    //    username = ourUserId,
-                    //    weigh = 72.3f,
-                    //};
-                    //await weighTableRef.InsertAsync(userUpdated);
-                    //return;
-
+                   
                     var user = userRecord[0];
                     float height = user.height;
                     //check if there are weighs of this user in the weighTable:
@@ -170,7 +162,7 @@ namespace IoTWeight
                         //Intent i = new Intent(Main_Menu.this, NextActivity.class);
                         //finish();  //Kill the activity from which you will go to next activity 
                         //startActivity(i);
-    }
+                    }
                 }
 
             }
@@ -194,8 +186,8 @@ namespace IoTWeight
             builder.Create().Show();
         }
 
-
-        private async void CalculateUserBMI()
+       
+        private async Task CalculateUserBMI()
         {
             try
             {
@@ -234,30 +226,14 @@ namespace IoTWeight
 
         private void CalculateBMICategory(double BMI)
         {
-            //if (user == null)
-            //{
-            //    CreateAndShowDialog("Cannot calculate the RecommendedBMI", "Error");
-            //    return;
-            //}
-            //float userAge = user.age;
             string BMI_Category = "";
-
-            //case where all details are updated:
-            //TODO:  different for ages 2-20
-            //if (userAge <= 0)
-            //{
-            //    //TODO 
-            //}
-
             if (BMI < 15)
             {
                 BMI_Category = "Very Severely Underweight";
-
             }
             else if (BMI <= 16)
             {
                 BMI_Category = "Severely Underweight";
-
             }
             else if (BMI <= 18.5)
             {

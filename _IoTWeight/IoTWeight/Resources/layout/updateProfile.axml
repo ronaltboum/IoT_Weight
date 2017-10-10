@@ -1,20 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
-              style="@style/DefLayout">
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
     <TextView
         android:text=""
         android:textAppearance="?android:attr/textAppearanceLarge"
-        style="@style/DefText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:id="@+id/welcomeText" />
     <Button
         android:text="Delete Previous Weighs"
-        style="@style/DefButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:id="@+id/DeleteWeighs"
         android:layout_marginTop="18.0dp" />
   <Button
       android:text="Update Height"
-      style="@style/DefButton"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
       android:id="@+id/updateHeight"
       android:layout_marginTop="18.0dp" />
 </LinearLayout>

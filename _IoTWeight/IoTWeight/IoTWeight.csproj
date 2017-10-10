@@ -17,7 +17,7 @@
     <AssemblyName>IoTWeight</AssemblyName>
     <AndroidManifest>Properties\AndroidManifest.xml</AndroidManifest>
     <AndroidUseLatestPlatformSdk>true</AndroidUseLatestPlatformSdk>
-    <TargetFrameworkVersion>v6.0</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v7.1</TargetFrameworkVersion>
     <AndroidSupportedAbis>armeabi,armeabi-v7a,x86</AndroidSupportedAbis>
     <AndroidStoreUncompressedFileExtensions />
     <MandroidI18n />
@@ -126,7 +126,6 @@
     <Compile Include="InsertWeightsForDebugg.cs" />
     <Compile Include="LogInActivity.cs" />
     <Compile Include="PickDateToDelete.cs" />
-    <Compile Include="PickDateToDeleteVer2.cs" />
     <Compile Include="QRScan.cs" />
     <Compile Include="RaspberryTable.cs" />
     <Compile Include="Resources\Resource.designer.cs" />
@@ -190,9 +189,6 @@
       <SubType>Designer</SubType>
     </AndroidResource>
     <AndroidResource Include="Resources\layout\heightView.axml">
-      <SubType>Designer</SubType>
-    </AndroidResource>
-    <AndroidResource Include="Resources\layout\PickDateViewVer2.axml">
       <SubType>Designer</SubType>
     </AndroidResource>
   </ItemGroup>

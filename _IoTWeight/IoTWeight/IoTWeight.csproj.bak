@@ -126,7 +126,6 @@
     <Compile Include="InsertWeightsForDebugg.cs" />
     <Compile Include="LogInActivity.cs" />
     <Compile Include="PickDateToDelete.cs" />
-    <Compile Include="PickDateToDeleteVer2.cs" />
     <Compile Include="QRScan.cs" />
     <Compile Include="RaspberryTable.cs" />
     <Compile Include="Resources\Resource.designer.cs" />
@@ -190,9 +189,6 @@
       <SubType>Designer</SubType>
     </AndroidResource>
     <AndroidResource Include="Resources\layout\heightView.axml">
-      <SubType>Designer</SubType>
-    </AndroidResource>
-    <AndroidResource Include="Resources\layout\PickDateViewVer2.axml">
       <SubType>Designer</SubType>
     </AndroidResource>
   </ItemGroup>

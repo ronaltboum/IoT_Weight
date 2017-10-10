@@ -33,6 +33,7 @@ namespace IoTWeight
         protected override async void OnCreate(Bundle savedInstanceState)
         {
             base.OnCreate(savedInstanceState);
+            // Create your application here
             SetContentView(Resource.Layout.heightView);
             MobileServiceClient client = ToDoActivity.CurrentActivity.CurrentClient;
             UsersTableRef = client.GetTable<UsersTable>();
@@ -40,7 +41,8 @@ namespace IoTWeight
             enterHeight = FindViewById<EditText>(Resource.Id.enterHeight);
             enterHeight.Visibility = ViewStates.Gone;
             heightText = FindViewById<TextView>(Resource.Id.heightText);
-            
+            //heightText.Visibility = ViewStates.Gone;
+
             updateMyHeight = FindViewById<Button>(Resource.Id.updateButton);
             updateMyHeight.SetBackgroundColor(Android.Graphics.Color.LightBlue);
             updateMyHeight.Visibility = ViewStates.Gone;
@@ -58,6 +60,7 @@ namespace IoTWeight
                 {
                     Console.WriteLine("Converted '{0}' to {1}.", value, number);
                     string message = "Converted " + value + "to " + number;
+                    //CreateAndShowDialog(message, "debug");
                     enteredHeight = number;
                 }
 
@@ -65,6 +68,7 @@ namespace IoTWeight
                 {
                     Console.WriteLine("Unable to convert '{0}'.", value);
                     string message = "Unable to convert " + value;
+                    //CreateAndShowDialog(message, "CONVERSION ERROR");
                     enteredHeight = 0;
                 }
             };
@@ -85,26 +89,20 @@ namespace IoTWeight
                 
                 if (enteredHeight > 0)
                 {
-                    try
+                    OKButton.Visibility = ViewStates.Gone;
+                    heightText.Visibility = ViewStates.Gone;
+                    enterHeight.Visibility = ViewStates.Gone;
+                    //enter user's info to UsersTable
+                    var userUpdated = new UsersTable
                     {
-                        OKButton.Visibility = ViewStates.Gone;
-                        heightText.Visibility = ViewStates.Gone;
-                        enterHeight.Visibility = ViewStates.Gone;
-                        //enter user's info to UsersTable
-                        var userUpdated = new UsersTable
-                        {
-                            UniqueUsername = ourUserId,
-                            height = enteredHeight,
-                        };
-                        await UsersTableRef.InsertAsync(userUpdated);
-                        heightText.Text = "Height Inserted to Database Successfully";
-                        heightText.Visibility = ViewStates.Visible;
-                        finishActivity.Visibility = ViewStates.Visible;
-                    }
-                    catch (Exception ex)
-                    {
-                        CreateAndShowDialog(ex, "Error");
-                    }
+                        UniqueUsername = ourUserId,
+                        height = enteredHeight,
+                    };
+                    //TODO:  need try-catch here ?
+                    await UsersTableRef.InsertAsync(userUpdated);
+                    heightText.Text = "Height Inserted to Database Successfully";
+                    heightText.Visibility = ViewStates.Visible;
+                    finishActivity.Visibility = ViewStates.Visible;
 
                 }
                 else
@@ -117,25 +115,19 @@ namespace IoTWeight
             OKupdateButton.Visibility = ViewStates.Gone;
             OKupdateButton.Click += async (sender, e) =>
             {
-                
                 if (enteredHeight > 0 && ourUser != null)
                 {
-                    try
-                    {
-                        OKupdateButton.Visibility = ViewStates.Gone;
-                        ourUser.height = enteredHeight;
-                        heightText.Visibility = ViewStates.Gone;
-                        enterHeight.Visibility = ViewStates.Gone;
-                        await UsersTableRef.UpdateAsync(ourUser);
-                     
-                        heightText.Text = "Height Updated Successfully";
-                        heightText.Visibility = ViewStates.Visible;
-                        finishActivity.Visibility = ViewStates.Visible;
-                    }
-                    catch (Exception ex)
-                    {
-                        CreateAndShowDialog(ex, "Error");
-                    }
+                    //TODO:  need try-catch here ?
+                    OKupdateButton.Visibility = ViewStates.Gone;
+                    ourUser.height = enteredHeight;
+                    heightText.Visibility = ViewStates.Gone;
+                    enterHeight.Visibility = ViewStates.Gone;
+                    await UsersTableRef.UpdateAsync(ourUser);
+                    //CreateAndShowDialogAdvanced("", "Updated Successfully ?  Try-Catch");
+                    //Finish();
+                    heightText.Text = "Height Updated Successfully";
+                    heightText.Visibility = ViewStates.Visible;
+                    finishActivity.Visibility = ViewStates.Visible;
                 }
                 else
                 {
@@ -151,14 +143,8 @@ namespace IoTWeight
             };
 
 
-            try
-            {
-                ourUser = await fetchHeightAsync();
-            }
-            catch (Exception ex)
-            {
-                CreateAndShowDialog(ex, "Error");
-            }
+            //TODO:  should this be surrounded with try catch ?
+            ourUser = await fetchHeightAsync();
 
         }
 

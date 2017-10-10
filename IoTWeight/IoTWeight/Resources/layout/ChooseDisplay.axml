@@ -1,13 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    style="@style/DefLayout">
     <TextView
         android:text="Choose Time Period:"
         android:textAppearance="?android:attr/textAppearanceMedium"
-        android:layout_width="match_parent"
-        android:layout_height="50.0dp"
+        style="@style/DefText"
         android:id="@+id/textView1" />
     <RadioGroup
         android:minWidth="25px"
@@ -40,8 +38,7 @@
     <TextView
         android:text="Choose Display Format:"
         android:textAppearance="?android:attr/textAppearanceMedium"
-        android:layout_width="match_parent"
-        android:layout_height="51.0dp"
+        style="@style/DefText"
         android:id="@+id/textView2"
         android:layout_marginTop="20.0dp" />
     <RadioGroup
@@ -64,19 +61,15 @@
     <TextView
         android:text="Please Enter The Desired Time Period in Years as a decimal number: "
         android:textAppearance="?android:attr/textAppearanceLarge"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        style="@style/DefText"
         android:id="@+id/displayUserTime" />
     <EditText
         android:inputType="numberDecimal"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        style="@style/DefText"
         android:id="@+id/chooseTime"
         android:layout_marginRight="0.0dp" />
     <Button
         android:text="OK"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/OKButton"
-        android:layout_marginRight="0.0dp" />
+        style="@style/DefButton"
+        android:id="@+id/OKButton" />
 </LinearLayout>
