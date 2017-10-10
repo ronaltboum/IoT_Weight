@@ -42,7 +42,6 @@ namespace IoTWeight
             heightText = FindViewById<TextView>(Resource.Id.heightText);
             
             updateMyHeight = FindViewById<Button>(Resource.Id.updateButton);
-            updateMyHeight.SetBackgroundColor(Android.Graphics.Color.LightBlue);
             updateMyHeight.Visibility = ViewStates.Gone;
 
             enterHeight.TextChanged += (object sender, Android.Text.TextChangedEventArgs e) => {
