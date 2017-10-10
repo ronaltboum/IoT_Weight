@@ -32,7 +32,6 @@ namespace IoTWeight
             SetContentView(Resource.Layout.PickDateViewVer2);
 
             MobileServiceClient client = ToDoActivity.CurrentActivity.CurrentClient;
-            //TODO: should add try-catch?
             weighTableRef = client.GetTable<weighTable>();
 
             _dateDisplay = FindViewById<TextView>(Resource.Id.date_display);
@@ -61,14 +60,15 @@ namespace IoTWeight
                     switch (job)
                     {
                         case DeleteJob.Single:
-                            queryResult = await weighTableRef.Where(item => (item.username == ourUserId) && (item.createdAt <= datePicked) && (item.createdAt >= datePicked.AddDays(-1) ) ).ToListAsync();
+                            queryResult = await weighTableRef.Take(500).Where(item => (item.username == ourUserId) && (item.createdAt <= datePicked) && (item.createdAt >= datePicked.AddDays(-1) ) ).ToListAsync();
+                            //var list9 = await weighTableRef.Take(500).Where(item => (item.username == ourUserId) && (item.createdAt >= earliestDate)).ToListAsync();
                             Console.WriteLine("datePicked = " + datePicked + ", datePicked-1 = " + datePicked.AddDays(-1), "");
                             break;
                         case DeleteJob.All:
-                            queryResult = await weighTableRef.Where(item => (item.username == ourUserId)).ToListAsync();
+                            queryResult = await weighTableRef.Take(500).Where(item => (item.username == ourUserId)).ToListAsync();
                             break;
                         case DeleteJob.PriorToDate:
-                            queryResult = await weighTableRef.Where(item => (item.username == ourUserId) && (item.createdAt <= datePicked)).ToListAsync();
+                            queryResult = await weighTableRef.Take(500).Where(item => (item.username == ourUserId) && (item.createdAt <= datePicked)).ToListAsync();
                             break;
                         default:
                             queryResult = new List<weighTable>();
@@ -118,9 +118,10 @@ namespace IoTWeight
                 _dateSelectButton.Visibility = ViewStates.Gone;
                 _remAllButton.Visibility = ViewStates.Gone;
                 _remSingleButton.Visibility = ViewStates.Gone;
+                job = DeleteJob.Single;
                 FindViewById<Button>(Resource.Id.OKbutton).Visibility = ViewStates.Visible;
                 FindViewById<Button>(Resource.Id.CancelButton).Visibility = ViewStates.Visible;
-                job = DeleteJob.Single;
+                
             });
             frag.Show(FragmentManager, DatePickerFragment.TAG);
         }
@@ -134,9 +135,10 @@ namespace IoTWeight
                 _dateSelectButton.Visibility = ViewStates.Gone;
                 _remAllButton.Visibility = ViewStates.Gone;
                 _remSingleButton.Visibility = ViewStates.Gone;
+                job = DeleteJob.PriorToDate;
                 FindViewById<Button>(Resource.Id.OKbutton).Visibility = ViewStates.Visible;
                 FindViewById<Button>(Resource.Id.CancelButton).Visibility = ViewStates.Visible;
-                job = DeleteJob.PriorToDate;
+                
             });
             frag.Show(FragmentManager, DatePickerFragment.TAG);
         }
@@ -145,12 +147,10 @@ namespace IoTWeight
         {
             try
             {
-                //MobileServiceClient client = ToDoActivity.CurrentActivity.CurrentClient;
-                //weighTableRef = client.GetTable<weighTable>();
                 var toBeDeleted = queryResult;
                 if (toBeDeleted.Count == 0)
                 {
-                    FindViewById<TextView>(Resource.Id.date_display).Text = "Cannot Delete.\nNo weights were found prior to the specified date";
+                    FindViewById<TextView>(Resource.Id.date_display).Text = "Cannot Delete.\nNo weights were found in the requested time period";
                 }
                 else
                 {

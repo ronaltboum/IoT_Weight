@@ -33,7 +33,6 @@ namespace IoTWeight
         protected override async void OnCreate(Bundle savedInstanceState)
         {
             base.OnCreate(savedInstanceState);
-            // Create your application here
             SetContentView(Resource.Layout.heightView);
             MobileServiceClient client = ToDoActivity.CurrentActivity.CurrentClient;
             UsersTableRef = client.GetTable<UsersTable>();
@@ -41,8 +40,7 @@ namespace IoTWeight
             enterHeight = FindViewById<EditText>(Resource.Id.enterHeight);
             enterHeight.Visibility = ViewStates.Gone;
             heightText = FindViewById<TextView>(Resource.Id.heightText);
-            //heightText.Visibility = ViewStates.Gone;
-
+            
             updateMyHeight = FindViewById<Button>(Resource.Id.updateButton);
             updateMyHeight.SetBackgroundColor(Android.Graphics.Color.LightBlue);
             updateMyHeight.Visibility = ViewStates.Gone;
@@ -60,7 +58,6 @@ namespace IoTWeight
                 {
                     Console.WriteLine("Converted '{0}' to {1}.", value, number);
                     string message = "Converted " + value + "to " + number;
-                    //CreateAndShowDialog(message, "debug");
                     enteredHeight = number;
                 }
 
@@ -68,7 +65,6 @@ namespace IoTWeight
                 {
                     Console.WriteLine("Unable to convert '{0}'.", value);
                     string message = "Unable to convert " + value;
-                    //CreateAndShowDialog(message, "CONVERSION ERROR");
                     enteredHeight = 0;
                 }
             };
@@ -155,8 +151,14 @@ namespace IoTWeight
             };
 
 
-            //TODO:  should this be surrounded with try catch ?
-            ourUser = await fetchHeightAsync();
+            try
+            {
+                ourUser = await fetchHeightAsync();
+            }
+            catch (Exception ex)
+            {
+                CreateAndShowDialog(ex, "Error");
+            }
 
         }
 
