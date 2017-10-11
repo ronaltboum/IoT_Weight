@@ -100,6 +100,8 @@ namespace IoTWeight
                 var intent = new Intent(this, typeof(ToDoActivity));
                 intent.AddFlags(ActivityFlags.ClearTop);
                 StartActivity(intent);
+                //Console.WriteLine("In LogOut after StartActivity");
+                Finish();    
             };
 
         }

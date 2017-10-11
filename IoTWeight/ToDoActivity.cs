@@ -152,7 +152,10 @@ namespace IoTWeight
                 var intent = new Intent(this, typeof(LogInActivity));
                 intent.PutExtra("userName", userName);
                 StartActivity(intent);
+                Console.WriteLine("In LogInUser after StartActivity");
+                Finish();
             }
+            //TODO:  google Finish after StartActivity. 
             else
             {
                 CreateAndShowDialog("Unable to authenticate.", "Sorry");
@@ -175,7 +178,10 @@ namespace IoTWeight
                 var intent = new Intent(this, typeof(LogInActivity));
                 intent.PutExtra("userName", userName);
                 StartActivity(intent);
+                Console.WriteLine("In LoginUserAsDifferentUser after StartActivity");
+                Finish();
             }
+            //TODO:  google Finish after StartActivity.
             else
             {
                 CreateAndShowDialog("Unable to authenticate.", "Sorry");

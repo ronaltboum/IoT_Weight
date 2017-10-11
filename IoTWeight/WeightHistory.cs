@@ -33,7 +33,7 @@ namespace IoTWeight
         private IMobileServiceTable<weighTable> weighTableRef;
         private IMobileServiceTable<UsersTable> UsersTableRef;
 
-        //[EnableQuery(PageSize = 1000)]
+        
         protected override async void OnCreate(Bundle savedInstanceState)
         {
             base.OnCreate(savedInstanceState);
