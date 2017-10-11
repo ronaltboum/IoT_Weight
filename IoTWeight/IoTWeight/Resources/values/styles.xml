@@ -11,11 +11,7 @@
     <item name="android:textColor">#fffdfffd</item>
   </style>
 
-  <style name="DefListview" parent="DefLayout">
-    <item name="android:background">#ff00dd55</item>
-    <item name="android:layout_margin">20.0dp</item>
-    <item name="android:textSize">20px</item>
-  </style>
+  
   
    <style name="DefLayout" parent="AppTheme">
     <item name="android:background">#ffffffdd</item>

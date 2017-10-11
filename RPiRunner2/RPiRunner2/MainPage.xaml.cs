@@ -324,7 +324,24 @@ namespace RPiRunner2
                         html = HTTPServer.HTMLRewrite(html, "span", "calibration_feedback", "Error: Your device does not have the sufficient hardware requerments.<br/>Operation did not complete.");
                     }
                 }
-            }catch(Exception e)
+                if (fields.Keys.Contains("best_calib"))
+                {
+                    if (uhl != null)
+                    {
+                        float offset = PermanentData.BEST_OFFSET;
+                        float scale = PermanentData.BEST_SCALE;
+                        uhl.setParameters(offset, scale);
+                        html = HTTPServer.HTMLRewrite(html, "span", "calibration_feedback", "OK! the device's parameters are:<br />OFFSET: " + uhl.Offset + "<br />SCALE: " + uhl.Scale);
+                        PermanentData.Scale = uhl.Scale;
+                        PermanentData.Offset = uhl.Offset;
+                    }
+                    else
+                    {
+                        html = HTTPServer.HTMLRewrite(html, "span", "calibration_feedback", "Error: Your device does not have the sufficient hardware requerments.<br/>Operation did not complete.");
+                    }
+                }
+            }
+            catch(Exception e)
             {
                 System.Diagnostics.Debug.WriteLine(e.Message);
             }
@@ -472,21 +489,15 @@ namespace RPiRunner2
                     return;
                 }
                 TempProfile profile = new TempProfile(msg.UserName, msg.Token, 0);
-               // if(uhl.currentServedUser() != null && profile.Appid == uhl.currentServedUser().Appid)
-               // {
-                    //Ignore duplicates
-                   // System.Diagnostics.Debug.WriteLine("IGNORE!");
-                    //return;
-               // }
                 if (uhl.currentServedUser() == null)
                 {
                     //if no user uses the weight
                     uhl.StartUser(profile);
                     try
                     {
-                        float w = await uhl.getWeightAsync(WEIGH_AVG);
+                        float w = uhl.getWeight(WEIGH_AVG);
                         DRP response = new DRP(DRPDevType.RBPI, msg.UserName, PermanentData.Serial, PermanentData.Devname,  w , 0, DRPMessageType.DATA);
-                        await tcp.Send(response.ToString(), writer);
+                        Task sendTask = tcp.Send(response.ToString(), writer);
                         System.Diagnostics.Debug.WriteLine("message sent: " + response.ToString());
 
                         //sending to cloud
@@ -495,10 +506,12 @@ namespace RPiRunner2
                         jsend.Add("weigh", w.ToString());
                         //jsend.Add("createdAt", DateTime.Now.ToString());
 
-                        string sendToCloud = JsonConvert.SerializeObject(jsend);
-                        await AzureIoTHub.SendDeviceToCloudMessageAsync(sendToCloud);
+                        //string sendToCloud = JsonConvert.SerializeObject(jsend);
+                        //Task cloudTask = AzureIoTHub.SendDeviceToCloudMessageAsync(sendToCloud);
 
+                        await sendTask;
                         uhl.FinishUser();
+                       // await cloudTask;
                         return;
                     }
                     catch
