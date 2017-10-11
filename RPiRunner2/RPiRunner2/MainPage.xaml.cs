@@ -19,6 +19,7 @@ using Microsoft.WindowsAzure.MobileServices;
 using Windows.Networking.Connectivity;
 using System.Text.RegularExpressions;
 using System.Text;
+using System.Net;
 
 // The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=402352&clcid=0x409
 
@@ -35,6 +36,9 @@ namespace RPiRunner2
 
         public const int WEIGH_AVG = 1000;
         public const float CALIB_FACTOR = 1.75f;
+
+        public const int MAX_PASS_LENGTH = 12;
+        public const int MIN_PASS_LENGTH = 4;
 
         const byte DOUT_PIN = 26;
         const byte SLK_PIN = 19;
@@ -242,14 +246,14 @@ namespace RPiRunner2
                 if (fields.Keys.Contains("chname"))
                 {
                     System.Diagnostics.Debug.WriteLine("got: " + fields["name"]);
-                    PermanentData.Devname = fields["name"];
+                    PermanentData.Devname = WebUtility.UrlDecode(fields["name"]);
                     html = HTTPServer.HTMLRewrite(html, "span", "name_feedback", "Your device's name was changed to  " + PermanentData.Devname);
                 }
                 if (fields.Keys.Contains("chpass"))
                 {
-                    string currpass = fields["curr_pass"];
-                    string newpass = fields["password"];
-                    string confirm = fields["confirm"];
+                    string currpass = WebUtility.UrlDecode(fields["curr_pass"]);
+                    string newpass = WebUtility.UrlDecode(fields["password"]);
+                    string confirm = WebUtility.UrlDecode(fields["confirm"]);
 
                     if (!newpass.Equals(confirm))
                     {
@@ -259,6 +263,10 @@ namespace RPiRunner2
                     {
                         html = HTTPServer.HTMLRewrite(html, "span", "chpass_feedback", "Password incorrect");
                     }
+                    else if (HTTPServer.passwordValidation(newpass, MIN_PASS_LENGTH, MAX_PASS_LENGTH) < 0)
+                    {
+                        html = HTTPServer.HTMLRewrite(html, "span", "chpass_feedback", "Password invalid<br/>The password should contain only letters and numbers and underscore ('_')<br/>Password must be 4-12 digits long.");
+                    }
                     else
                     {
                         PermanentData.Password = newpass;
@@ -267,12 +275,19 @@ namespace RPiRunner2
                 }
                 if (fields.Keys.Contains("register"))
                 {
-                    string serial = fields["serial"];
-                    string ip = GetLocalIp();
-                    await putRecordInDatabase(ip, serial);
-                    PermanentData.Serial = serial;
-                    PermanentData.CurrIP = ip;
-                    html = HTTPServer.HTMLRewrite(html, "span", "serial_feedback", "Your device's serial is now  " + PermanentData.Serial);
+                    string serial = WebUtility.UrlDecode(fields["serial"]);
+                    if (HTTPServer.passwordValidation(serial) < 0)
+                    {
+                        html = HTTPServer.HTMLRewrite(html, "span", "serial_feedback", "Serial invalid<br/>The Serial should contain only letters and numbers and underscore ('_')");
+                    }
+                    else
+                    {
+                        string ip = GetLocalIp();
+                        await putRecordInDatabase(ip, serial);
+                        PermanentData.Serial = serial;
+                        PermanentData.CurrIP = ip;
+                        html = HTTPServer.HTMLRewrite(html, "span", "serial_feedback", "Your device's serial is now  " + PermanentData.Serial);
+                    }
                 }
                 
                 if (fields.Keys.Contains("soffset") || fields.Keys.Contains("sscale"))
@@ -548,6 +563,7 @@ namespace RPiRunner2
             }
 
         }
+
         public void socket_onError(string message)
         {
             System.Diagnostics.Debug.WriteLine("There was an error in socket: " + message);

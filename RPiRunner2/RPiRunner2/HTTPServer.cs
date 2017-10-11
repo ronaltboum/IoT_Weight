@@ -68,6 +68,7 @@ namespace RPiRunner2
             this.password = password;
         }
 
+
         /// <summary>
         /// Retrives the HTML Document
         /// </summary>
@@ -78,6 +79,16 @@ namespace RPiRunner2
             StorageFile sampleFile = await storageFolder.GetFileAsync(page);
             string text = await FileIO.ReadTextAsync(sampleFile);
             return text;
+        }
+        public static int passwordValidation(string pass, int minlength = 0, int maxlength = int.MaxValue)
+        {
+            if (pass.Length > maxlength || pass.Length < minlength)
+                return -2;
+            Regex regex = new Regex("[A-Za-z0-9_]+");
+            if (regex.IsMatch(pass))
+                return 0;
+            else
+                return -1;
         }
         public static string HTMLRewrite(string html, string tag, string id, string content)
         {

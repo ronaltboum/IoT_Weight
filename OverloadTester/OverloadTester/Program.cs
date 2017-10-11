@@ -17,7 +17,7 @@ namespace OverloadTester
         static async Task MainAsync(string[] args)
         {
             Console.WriteLine("Tester Started.");
-
+            Console.WriteLine(System.Net.WebUtility.UrlDecode("Bar%20Angel"));
             //Test I - send a single message
             Console.ForegroundColor = ConsoleColor.Cyan;
             Console.WriteLine("Test I Started.");
@@ -36,7 +36,7 @@ namespace OverloadTester
             //Test IV - Like test III, but every message will be resend until received a proper answer
             Console.ForegroundColor = ConsoleColor.Magenta;
             Console.WriteLine("Test IV Started.");
-            await testSendAndResend();
+            //await testSendAndResend();
 
             Console.ForegroundColor = ConsoleColor.White;
             Console.WriteLine("DONE!");
