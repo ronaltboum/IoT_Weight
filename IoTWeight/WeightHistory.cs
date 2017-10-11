@@ -109,7 +109,7 @@ namespace IoTWeight
                     CreateAndShowDialog("Please Weigh yourself and try again", "No Previous Weighs Found in the requested time period");
                 }
 
-                int i = 0;
+                int i = 1;   int q = 0;   int z = 0;
                 DateTime debuggDate;
                 string dateSring;
                 foreach (weighTable weight in list9)
@@ -136,10 +136,14 @@ namespace IoTWeight
                     else
                     {
 
-                            //shift dates to debugg graph
-                            debuggDate = date1.AddDays(-i);
-                            i = i + 1;
-                            series1.Points.Add(new DataPoint(DateTimeAxis.ToDouble(debuggDate), currW)); 
+                        //shift dates to debugg graph
+                        debuggDate = date1.AddDays(-i);
+                        //z = z + 1;
+                        //q = q + 2;
+                        //i = i + q -z;
+                        i = i + 2;
+                           
+                        series1.Points.Add(new DataPoint(DateTimeAxis.ToDouble(debuggDate), currW)); 
                     }
 
                 }

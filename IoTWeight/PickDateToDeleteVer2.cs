@@ -24,6 +24,9 @@ namespace IoTWeight
         Button _remAllButton;
         private IMobileServiceTable<weighTable> weighTableRef;
         string ourUserId = ToDoActivity.CurrentActivity.Currentuserid;
+        //Bar's sid:    sid:f5ccac253e6e9ce70bd96a3b9a0b59d2
+        //string ourUserId = "sid:f5ccac253e6e9ce70bd96a3b9a0b59d2";
+        //ourUserId = BarSID; 
         DateTime datePicked;
         DeleteJob job;
         protected override void OnCreate(Bundle bundle)

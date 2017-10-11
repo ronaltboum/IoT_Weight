@@ -51,11 +51,18 @@ namespace IoTWeight
                 FindViewById<TextView>(Resource.Id.Text1).Text = "Deleting weigh from database. This might take a few seconds.\n Please Wait...";
                 FindViewById<TextView>(Resource.Id.currentWeigh).Text = "";
 
-                Console.WriteLine("SLEEPING before deleting !!!!!!!!!!!!!!!!!!!");
-                await Task.Delay(5000);
+                Console.WriteLine("SLEEPING before deleting in order to allow weight to get to cloud through Stream Analytics !!!!!!!!!!!!!!!!!!!");
 
-                await deleteWeigh();
-                FindViewById<Button>(Resource.Id.WeighAgainButton).Visibility = ViewStates.Visible;
+                try
+                {
+                    await Task.Delay(5000);  //do not delete this.  it's necessary so that weight can get to the cloud
+                    await deleteWeigh();
+                    FindViewById<Button>(Resource.Id.WeighAgainButton).Visibility = ViewStates.Visible;
+                }
+                catch (Exception ex)
+                {
+                    CreateAndShowDialog(ex, "Error");
+                }
 
             };
 
@@ -121,7 +128,6 @@ namespace IoTWeight
             string ip = ipaddress;
             if (!await tcps.Connect(ip))
             {
-                //TODO:   display message to user
                 System.Diagnostics.Debug.WriteLine("Connection failed.");
                 handleGUI_OnFailure("Connection failed.");
                 return;
@@ -193,22 +199,18 @@ namespace IoTWeight
         //sending a message of type SCANNED to the RBPi and waiting to the result
         private async Task<DRP> sendSCANNED()
         {
-
-            //TODO: what is the username? what is the serial?
             DRP msg = new DRP(DRPDevType.APP, ourUserId, "111", "don't care", 0, 0, DRPMessageType.SCANNED);
-
-            //sending the message
-            await tcps.Send(msg.ToString());
-            string ans = await tcps.Receive();
-
             try
             {
+                //sending the message
+                await tcps.Send(msg.ToString());
+                string ans = await tcps.Receive();
                 DRP rec = DRP.deserializeDRP(ans);
                 return rec;
             }
-            catch
+            catch (Exception e)
             {
-                System.Diagnostics.Debug.WriteLine("deserializion failed: " + ans);
+                System.Diagnostics.Debug.WriteLine("Exception caught in SendScanned : " + e.Message);
                 return null;
             }
 
@@ -246,6 +248,7 @@ namespace IoTWeight
                     await weighTableRef.DeleteAsync(toDelete);
                     FindViewById<TextView>(Resource.Id.Text1).Text = "Deleted Successfully !";
                 }
+
             }
             catch (Exception e)
             {

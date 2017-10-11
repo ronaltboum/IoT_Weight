@@ -10,6 +10,7 @@ using System.Net;
 using System.Threading.Tasks;
 //using System.Threading;
 
+
 namespace IoTWeight
 {
     class TCPSender
@@ -64,6 +65,7 @@ namespace IoTWeight
 
         public virtual async Task Send(string msg)
         {
+            
             byte[] msgAsBytes = Encoding.ASCII.GetBytes(msg); //convert the message into an array of bytes
             byte[] len = BitConverter.GetBytes(msg.Length); //the message length in little-endian
             byte[] len4 = new byte[sizeof(uint)]; //will contain the length in exactly 4 bytes
@@ -77,28 +79,31 @@ namespace IoTWeight
 
             await nets.WriteAsync(buf, 0, buf.Length); //send the data
             await nets.FlushAsync();
+            
         }
 
         public async virtual Task<string> Receive()
         {
             byte[] bmsize = new byte[sizeof(uint)];
             byte[] bmsg;
-
             int msize;
             string msg;
-
             //nets.Read(bmsize, 0, sizeof(uint)); //reading first 4 bytes (which contains the size of the message)
             await nets.ReadAsync(bmsize, 0, sizeof(uint)); //reading first 4 bytes (which contains the size of the message)
+
             Array.Reverse(bmsize); //change from big endian to little endian
             msize = BitConverter.ToInt32(bmsize, 0);
-
-
             bmsg = new byte[msize];
+
             await nets.ReadAsync(bmsg, 0, msize); //read the message
 
             msg = Encoding.ASCII.GetString(bmsg); //convert it to string
 
-            return msg;
+            //TODO:  delete later !!!!!!!!!!!!!!!
+            //object o2 = null;
+            //int i2 = (int)o2;   // Error  
+                
+            return msg;   
         }
     }
 }

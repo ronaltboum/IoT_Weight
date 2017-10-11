@@ -103,6 +103,8 @@ namespace IoTWeight
             };
 
         }
+
+        //TODO:  check this
         void CreateAndShowDialog(string message, string title)
         {
             var builder = new AlertDialog.Builder(this);
