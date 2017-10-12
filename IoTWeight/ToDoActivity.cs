@@ -140,11 +140,16 @@ namespace IoTWeight
         [Java.Interop.Export()]
         public async void LoginUser(View view)
         {
+            TextView loginTv = FindViewById<TextView>(Resource.Id.tv_login_msg);
+            ProgressBar loginProg = FindViewById<ProgressBar>(Resource.Id.LoginProgressCircle);
 
             Button logInButton = FindViewById<Button>(Resource.Id.buttonLoginUser);
             logInButton.Visibility = ViewStates.Gone;
             Button logInAsDifferentUserButton = FindViewById<Button>(Resource.Id.buttonLoginDiffrentUser);
             logInAsDifferentUserButton.Visibility = ViewStates.Gone;
+
+            loginProg.Visibility = ViewStates.Visible;
+            loginTv.Text = "Authenticating. Please wait...";
 
             string userName = await Authenticate();
             if (userName != "failed")
