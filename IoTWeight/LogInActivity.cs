@@ -36,7 +36,7 @@ namespace IoTWeight
             Button LogoutButton = FindViewById<Button>(Resource.Id.ButtonLogout);
      
             Button debuggButton = FindViewById<Button>(Resource.Id.debuggButton);
-            //debuggButton.Visibility = ViewStates.Gone;
+            debuggButton.Visibility = ViewStates.Gone;
 
             debuggButton.Click += (sender, e) =>
             {
