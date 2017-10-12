@@ -5,7 +5,7 @@ namespace OverloadTester
 {
     class Program
     {
-        private static int TIMES = 40; //The number of connection requests to send
+        private static int TIMES = 10; //The number of connection requests to send
         private static string IP = "192.168.1.106"; //the IP of the raspberry
         static void Main(string[] args)
         {
@@ -17,7 +17,6 @@ namespace OverloadTester
         static async Task MainAsync(string[] args)
         {
             Console.WriteLine("Tester Started.");
-            Console.WriteLine(System.Net.WebUtility.UrlDecode("Bar%20Angel"));
             //Test I - send a single message
             Console.ForegroundColor = ConsoleColor.Cyan;
             Console.WriteLine("Test I Started.");
@@ -36,7 +35,7 @@ namespace OverloadTester
             //Test IV - Like test III, but every message will be resend until received a proper answer
             Console.ForegroundColor = ConsoleColor.Magenta;
             Console.WriteLine("Test IV Started.");
-            //await testSendAndResend();
+            await testSendAndResend();
 
             Console.ForegroundColor = ConsoleColor.White;
             Console.WriteLine("DONE!");
@@ -150,7 +149,8 @@ namespace OverloadTester
 
             for (int i = 0; i < TIMES; i++)
             {
-                msg[i] = new DRP(DRPDevType.APP, "test" + i, "", "", 0, 0, DRPMessageType.SCANNED);
+                //sid:f5ccac253e6e9ce70bd96a3b9a0b59d2
+                msg[i] = new DRP(DRPDevType.APP, "sid:f5ccac253e6e9ce70bd96a3b9a0b59d2", "", "", 0, 0, DRPMessageType.SCANNED);
                 senders[i] = new TCPSender();
                 tasks[i] = sr2(senders[i], IP, msg[i]);
                 Console.WriteLine("msg " + i + " sent");

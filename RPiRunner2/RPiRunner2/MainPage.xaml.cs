@@ -308,10 +308,17 @@ namespace RPiRunner2
                         if (uhl != null)
                         {
                             knownWeight = float.Parse(fields["known"]);
-                            uhl.setParameters(nullweight, rawWeight, knownWeight);
-                            html = HTTPServer.HTMLRewrite(html, "span", "calibration_feedback", "OK! the device's parameters are:<br />OFFSET: " + uhl.Offset + "<br />SCALE: " + uhl.Scale);
-                            PermanentData.Scale = uhl.Scale;
-                            PermanentData.Offset = uhl.Offset;
+                            if (uhl.Scale != 0)
+                            {
+                                uhl.setParameters(nullweight, rawWeight, knownWeight);
+                                html = HTTPServer.HTMLRewrite(html, "span", "calibration_feedback", "OK! the device's parameters are:<br />OFFSET: " + uhl.Offset + "<br />SCALE: " + uhl.Scale);
+                                PermanentData.Scale = uhl.Scale;
+                                PermanentData.Offset = uhl.Offset;
+                            }
+                            else
+                            {
+                                html = HTTPServer.HTMLRewrite(html, "span", "calibration_feedback", "the SCALE cannot be zero.");
+                            }
                         }
                         else
                         {
@@ -329,10 +336,17 @@ namespace RPiRunner2
                     {
                         float offset = float.Parse(fields["man_offset"]);
                         float scale = float.Parse(fields["man_scale"]);
-                        uhl.setParameters(offset, scale);
-                        html = HTTPServer.HTMLRewrite(html, "span", "calibration_feedback", "OK! the device's parameters are:<br />OFFSET: " + uhl.Offset + "<br />SCALE: " + uhl.Scale);
-                        PermanentData.Scale = uhl.Scale;
-                        PermanentData.Offset = uhl.Offset;
+                        if (scale != 0)
+                        {
+                            uhl.setParameters(offset, scale);
+                            html = HTTPServer.HTMLRewrite(html, "span", "calibration_feedback", "OK! the device's parameters are:<br />OFFSET: " + uhl.Offset + "<br />SCALE: " + uhl.Scale);
+                            PermanentData.Scale = uhl.Scale;
+                            PermanentData.Offset = uhl.Offset;
+                        }
+                        else
+                        {
+                            html = HTTPServer.HTMLRewrite(html, "span", "calibration_feedback", "the SCALE cannot be zero.");
+                        }
                     }
                     else
                     {
@@ -517,16 +531,16 @@ namespace RPiRunner2
 
                         //sending to cloud
                         Dictionary<string, string> jsend = new Dictionary<string, string>();
-                        jsend.Add("username", uhl.currentServedUser().Username);
+                        jsend.Add("username", msg.UserName);
                         jsend.Add("weigh", w.ToString());
                         //jsend.Add("createdAt", DateTime.Now.ToString());
 
-                        //string sendToCloud = JsonConvert.SerializeObject(jsend);
-                        //Task cloudTask = AzureIoTHub.SendDeviceToCloudMessageAsync(sendToCloud);
+                        string sendToCloud = JsonConvert.SerializeObject(jsend);
+                        Task cloudTask = AzureIoTHub.SendDeviceToCloudMessageAsync(sendToCloud);
 
                         await sendTask;
                         uhl.FinishUser();
-                       // await cloudTask;
+                        await cloudTask;
                         return;
                     }
                     catch

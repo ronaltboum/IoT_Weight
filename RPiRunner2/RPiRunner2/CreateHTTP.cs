@@ -68,14 +68,5 @@ namespace RPiRunner2
                     "Content-Length: 0\r\n" +
                     "WWW-Authenticate: Basic realm=\"logtorpi\"\r\n\r\n\r\n";
         }
-        //after the user entered invalid login details
-        public static string Code403_Forbidden()
-        {
-            return "";
-        }
-        public static string Code500_InternalServerError()
-        {
-            return "";
-        }
     }
 }
