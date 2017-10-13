@@ -205,9 +205,16 @@ namespace WeightTest
 
         private void Button_test_Click(object sender, RoutedEventArgs e)
         {
+            int[] meas;
+            float standart, smart;
             while (true)
             {
-                System.Diagnostics.Debug.WriteLine(hx711b.getWeight(AVG_NUM));
+                meas = hx711b.getListOfMeasures(AVG_NUM);
+                standart = hx711b.avg(meas);
+                hx711b.detectAnomalies(meas, (int)(AVG_NUM * 0.1), 0.95f);
+                smart = hx711b.avg(meas);
+
+                Debug.WriteLine("Without filtering: " + standart + "\tWith Filtering: " + smart);
             }
 
         }
