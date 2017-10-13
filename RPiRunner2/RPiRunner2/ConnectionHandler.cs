@@ -103,9 +103,13 @@ namespace RPiRunner2
                         jsend.Add("username", msg.UserName);
                         jsend.Add("weigh", w.ToString());
 
-                        string sendToCloud = JsonConvert.SerializeObject(jsend);
-                        Task cloudTask = AzureIoTHub.SendDeviceToCloudMessageAsync(sendToCloud);
+                        Task cloudTask = null;
+                        if (msg.UserName != null)
+                        {
+                            string sendToCloud = JsonConvert.SerializeObject(jsend);
+                            cloudTask = AzureIoTHub.SendDeviceToCloudMessageAsync(sendToCloud);
 
+                        }
                         await sendTask;
                         uhl.FinishUser();
                         await cloudTask;

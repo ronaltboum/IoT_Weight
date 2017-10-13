@@ -4,6 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Windows.Devices.Gpio;
+using Accord.Statistics.Distributions.Univariate;
+using Accord.Statistics;
+using Accord.Math;
 namespace RPiRunner2
 {
     /**
@@ -153,6 +156,55 @@ namespace RPiRunner2
                 sum += (int)read();
             }
             return (float)sum / times;
+        }
+
+        //Using 'Anomaly Detection' method to filer out inaccurate measures
+        //Note:measurment time may be longer
+        public float smartGetRawWeight(int times = 100, float tolerance = 0.95f, float trainingGroupRatio = 0.1f)
+        {
+            int[] results = new int[times];
+            long sum = 0;
+            for (int i = 0; i < times; i++)
+            {
+                results[i] = (int)read();
+            }
+
+            detectAnomalies(results,(int)(times*trainingGroupRatio),tolerance);
+
+            int count = 0;
+            for (int i = 0; i < times; i++)
+            {
+                if (results[i] > int.MinValue)
+                {
+                    sum += results[i];
+                    count++;
+                }
+            }
+            return (float)sum / count;
+        }
+
+        private void detectAnomalies(int[] results, int training, float tolerance)
+        {
+            int low;
+            low = (results.Length - training) / 2;
+            int[] sample = (new ArraySegment<int>(results, low, low + training)).Array;
+            
+
+            double mean;
+            double std;
+           
+
+            mean = Measures.Mean(sample);
+            std = Measures.StandardDeviation(sample,mean);
+
+            NormalDistribution norm = new NormalDistribution(mean, std);
+
+            for (int i = 0; i < results.Length; i++)
+            {
+
+                if (norm.ProbabilityDensityFunction(results[i]) < (1 - tolerance))
+                    results[i] = int.MinValue;
+            }
         }
 
         public float getWeight(int times = 100)
