@@ -13,7 +13,8 @@ namespace RPiRunner2
     class UserHardwareLinker : LinearHX
     {
         private TempProfile currUser;
-
+        public const int WEIGH_AVG = 1000;
+        public const float CALIB_FACTOR = 1.75f;
 
         public UserHardwareLinker(GpioPin sck, GpioPin dout): base(dout,sck)
         {

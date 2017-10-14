@@ -203,14 +203,42 @@
           "metaData" : ""
         }
       ]
+    },
+    {
+      "id" : 10,
+      "src" : "C:\\Users\\Bar Angel\\Dropbox\\mobizen_20171014_002322.mp4",
+      "rect" : [0, 0, 480, 816],
+      "lastMod" : "20171013T212446",
+      "sourceTracks" : [
+        {
+          "range" : [0, 327333333],
+          "type" : 2,
+          "editRate" : 10000000,
+          "trackRect" : [0, 0, 0, 0],
+          "sampleRate" : 44100,
+          "bitDepth" : 16,
+          "numChannels" : 2,
+          "metaData" : ""
+        },
+        {
+          "range" : [0, 327333333],
+          "type" : 0,
+          "editRate" : 10000000,
+          "trackRect" : [0, 0, 480, 816],
+          "sampleRate" : "625000/72299",
+          "bitDepth" : 24,
+          "numChannels" : 0,
+          "metaData" : ""
+        }
+      ]
     }
   ],
   "timeline" : {
-    "id" : 10,
+    "id" : 11,
     "sceneTrack" : {
       "scenes" : [
         {
-          "duration" : 248.5,
+          "duration" : 246.9,
           "title" : "",
           "type" : "",
           "csml" : {
@@ -224,7 +252,7 @@
                 "trackIndex" : 1,
                 "medias" : [
                   {
-                    "id" : 11,
+                    "id" : 12,
                     "_type" : "AMFile",
                     "src" : 8,
                     "trackNumber" : 0,
@@ -239,7 +267,7 @@
                     "effects" : [
 
                     ],
-                    "start" : 48,
+                    "start" : 0,
                     "duration" : 7407,
                     "mediaStart" : 0,
                     "mediaDuration" : 7407,
@@ -258,7 +286,7 @@
                 "trackIndex" : 2,
                 "medias" : [
                   {
-                    "id" : 12,
+                    "id" : 13,
                     "_type" : "Callout",
                     "def" : {
                       "kind" : "remix",
@@ -408,7 +436,7 @@
                           }
                         }
                     ],
-                    "start" : 48,
+                    "start" : 9,
                     "duration" : 525,
                     "mediaStart" : 0,
                     "mediaDuration" : 525,
@@ -425,7 +453,7 @@
                     }
                   },
                   {
-                    "id" : 13,
+                    "id" : 14,
                     "_type" : "IMFile",
                     "src" : 4,
                     "trackNumber" : 0,
@@ -443,7 +471,7 @@
                     "effects" : [
 
                     ],
-                    "start" : 573,
+                    "start" : 534,
                     "duration" : 372,
                     "mediaStart" : 0,
                     "mediaDuration" : 1,
@@ -462,7 +490,7 @@
                     }
                   },
                   {
-                    "id" : 14,
+                    "id" : 15,
                     "_type" : "IMFile",
                     "src" : 5,
                     "trackNumber" : 0,
@@ -480,7 +508,7 @@
                     "effects" : [
 
                     ],
-                    "start" : 945,
+                    "start" : 906,
                     "duration" : 468,
                     "mediaStart" : 0,
                     "mediaDuration" : 1,
@@ -499,11 +527,11 @@
                     }
                   },
                   {
-                    "id" : 15,
+                    "id" : 16,
                     "_type" : "UnifiedMedia",
                     "video" : 
                         {
-                          "id" : 16,
+                          "id" : 17,
                           "_type" : "VMFile",
                           "src" : 2,
                           "trackNumber" : 0,
@@ -517,7 +545,7 @@
                           "effects" : [
 
                           ],
-                          "start" : 1413,
+                          "start" : 1374,
                           "duration" : 378,
                           "mediaStart" : 0,
                           "mediaDuration" : 378,
@@ -528,7 +556,7 @@
                         },
                     "audio" : 
                         {
-                          "id" : 17,
+                          "id" : 18,
                           "_type" : "AMFile",
                           "src" : 2,
                           "trackNumber" : 1,
@@ -546,7 +574,7 @@
                           "effects" : [
 
                           ],
-                          "start" : 1413,
+                          "start" : 1374,
                           "duration" : 378,
                           "mediaStart" : 0,
                           "mediaDuration" : 378,
@@ -556,7 +584,7 @@
                           }
                         }
 ,
-                    "start" : 1413,
+                    "start" : 1374,
                     "duration" : 378,
                     "mediaStart" : 0,
                     "mediaDuration" : 378,
@@ -567,7 +595,7 @@
                     }
                   },
                   {
-                    "id" : 18,
+                    "id" : 19,
                     "_type" : "IMFile",
                     "src" : 7,
                     "trackNumber" : 0,
@@ -584,7 +612,7 @@
                     "effects" : [
 
                     ],
-                    "start" : 1791,
+                    "start" : 1752,
                     "duration" : 261,
                     "mediaStart" : 0,
                     "mediaDuration" : 1,
@@ -602,7 +630,7 @@
                     }
                   },
                   {
-                    "id" : 19,
+                    "id" : 20,
                     "_type" : "IMFile",
                     "src" : 7,
                     "trackNumber" : 0,
@@ -619,7 +647,7 @@
                     "effects" : [
 
                     ],
-                    "start" : 2052,
+                    "start" : 2013,
                     "duration" : 15,
                     "mediaStart" : 0,
                     "mediaDuration" : 1,
@@ -637,11 +665,11 @@
                     }
                   },
                   {
-                    "id" : 20,
+                    "id" : 21,
                     "_type" : "UnifiedMedia",
                     "video" : 
                         {
-                          "id" : 21,
+                          "id" : 22,
                           "_type" : "VMFile",
                           "src" : 3,
                           "trackNumber" : 0,
@@ -655,7 +683,7 @@
                           "effects" : [
 
                           ],
-                          "start" : 2067,
+                          "start" : 2028,
                           "duration" : 180,
                           "mediaStart" : 0,
                           "mediaDuration" : 180,
@@ -666,7 +694,7 @@
                         },
                     "audio" : 
                         {
-                          "id" : 22,
+                          "id" : 23,
                           "_type" : "AMFile",
                           "src" : 3,
                           "trackNumber" : 1,
@@ -684,7 +712,7 @@
                           "effects" : [
 
                           ],
-                          "start" : 2067,
+                          "start" : 2028,
                           "duration" : 180,
                           "mediaStart" : 0,
                           "mediaDuration" : 180,
@@ -694,7 +722,7 @@
                           }
                         }
 ,
-                    "start" : 2067,
+                    "start" : 2028,
                     "duration" : 180,
                     "mediaStart" : 0,
                     "mediaDuration" : 311,
@@ -705,7 +733,7 @@
                     }
                   },
                   {
-                    "id" : 23,
+                    "id" : 24,
                     "_type" : "StitchedMedia",
                     "minMediaStart" : 0,
                     "attributes" : {
@@ -720,11 +748,11 @@
                     },
                     "medias" : [
                         {
-                          "id" : 24,
+                          "id" : 25,
                           "_type" : "UnifiedMedia",
                           "video" : 
                               {
-                                "id" : 25,
+                                "id" : 26,
                                 "_type" : "VMFile",
                                 "src" : 1,
                                 "trackNumber" : 1,
@@ -745,7 +773,7 @@
                               },
                           "audio" : 
                               {
-                                "id" : 26,
+                                "id" : 27,
                                 "_type" : "AMFile",
                                 "src" : 1,
                                 "trackNumber" : 0,
@@ -783,11 +811,11 @@
                           }
                         },
                         {
-                          "id" : 27,
+                          "id" : 28,
                           "_type" : "UnifiedMedia",
                           "video" : 
                               {
-                                "id" : 28,
+                                "id" : 29,
                                 "_type" : "VMFile",
                                 "src" : 1,
                                 "trackNumber" : 1,
@@ -808,7 +836,7 @@
                               },
                           "audio" : 
                               {
-                                "id" : 29,
+                                "id" : 30,
                                 "_type" : "AMFile",
                                 "src" : 1,
                                 "trackNumber" : 0,
@@ -846,11 +874,11 @@
                           }
                         },
                         {
-                          "id" : 30,
+                          "id" : 31,
                           "_type" : "UnifiedMedia",
                           "video" : 
                               {
-                                "id" : 31,
+                                "id" : 32,
                                 "_type" : "VMFile",
                                 "src" : 1,
                                 "trackNumber" : 1,
@@ -871,7 +899,7 @@
                               },
                           "audio" : 
                               {
-                                "id" : 32,
+                                "id" : 33,
                                 "_type" : "AMFile",
                                 "src" : 1,
                                 "trackNumber" : 0,
@@ -912,10 +940,10 @@
                     "effects" : [
 
                     ],
-                    "start" : 2247,
-                    "duration" : 1944,
+                    "start" : 2208,
+                    "duration" : 1099,
                     "mediaStart" : 102,
-                    "mediaDuration" : "640175076/219515",
+                    "mediaDuration" : "2171458051/1317090",
                     "scalar" : "1317090/1975849",
                     "metadata" : {
                       "WinSubProjectDisplayName" : "",
@@ -930,7 +958,131 @@
                     }
                   },
                   {
-                    "id" : 33,
+                    "id" : 34,
+                    "_type" : "UnifiedMedia",
+                    "video" : 
+                        {
+                          "id" : 35,
+                          "_type" : "VMFile",
+                          "src" : 10,
+                          "trackNumber" : 1,
+                          "attributes" : {
+                            "ident" : "mobizen_20171014_002322"
+                          },
+                          "effects" : [
+
+                          ],
+                          "start" : 3307,
+                          "duration" : 566,
+                          "mediaStart" : 67,
+                          "mediaDuration" : 566,
+                          "scalar" : 1,
+                          "animationTracks" : {
+
+                          }
+                        },
+                    "audio" : 
+                        {
+                          "id" : 36,
+                          "_type" : "AMFile",
+                          "src" : 10,
+                          "trackNumber" : 0,
+                          "attributes" : {
+                            "ident" : "",
+                            "sampleRate" : 44100,
+                            "bitDepth" : 16,
+                            "gain" : 1.0,
+                            "mixToMono" : false
+                          },
+                            "channelNumber" : "0,1",
+                          "effects" : [
+
+                          ],
+                          "start" : 3307,
+                          "duration" : 566,
+                          "mediaStart" : 67,
+                          "mediaDuration" : 566,
+                          "scalar" : 1,
+                          "animationTracks" : {
+
+                          }
+                        }
+,
+                    "start" : 3307,
+                    "duration" : 566,
+                    "mediaStart" : 0,
+                    "mediaDuration" : 981,
+                    "scalar" : 1,
+                    "metadata" : {
+                      "WinSubProjectDisplayName" : "",
+                      "clipSpeedAttribute" : false,
+                      "default-translation0" : 0.0,
+                      "default-translation1" : 0.0
+                    }
+                  },
+                  {
+                    "id" : 37,
+                    "_type" : "UnifiedMedia",
+                    "video" : 
+                        {
+                          "id" : 38,
+                          "_type" : "VMFile",
+                          "src" : 10,
+                          "trackNumber" : 1,
+                          "attributes" : {
+                            "ident" : "mobizen_20171014_002322"
+                          },
+                          "effects" : [
+
+                          ],
+                          "start" : 3873,
+                          "duration" : 300,
+                          "mediaStart" : 681,
+                          "mediaDuration" : 300,
+                          "scalar" : 1,
+                          "animationTracks" : {
+
+                          }
+                        },
+                    "audio" : 
+                        {
+                          "id" : 39,
+                          "_type" : "AMFile",
+                          "src" : 10,
+                          "trackNumber" : 0,
+                          "attributes" : {
+                            "ident" : "",
+                            "sampleRate" : 44100,
+                            "bitDepth" : 16,
+                            "gain" : 1.0,
+                            "mixToMono" : false
+                          },
+                            "channelNumber" : "0,1",
+                          "effects" : [
+
+                          ],
+                          "start" : 3873,
+                          "duration" : 300,
+                          "mediaStart" : 681,
+                          "mediaDuration" : 300,
+                          "scalar" : 1,
+                          "animationTracks" : {
+
+                          }
+                        }
+,
+                    "start" : 3873,
+                    "duration" : 300,
+                    "mediaStart" : 0,
+                    "mediaDuration" : 981,
+                    "scalar" : 1,
+                    "metadata" : {
+                      "WinSubProjectDisplayName" : "",
+                      "clipSpeedAttribute" : false
+                    }
+                  },
+                  {
+                    "id" : 40,
                     "_type" : "StitchedMedia",
                     "minMediaStart" : 0,
                     "attributes" : {
@@ -945,11 +1097,11 @@
                     },
                     "medias" : [
                         {
-                          "id" : 34,
+                          "id" : 41,
                           "_type" : "UnifiedMedia",
                           "video" : 
                               {
-                                "id" : 35,
+                                "id" : 42,
                                 "_type" : "VMFile",
                                 "src" : 1,
                                 "trackNumber" : 1,
@@ -970,7 +1122,7 @@
                               },
                           "audio" : 
                               {
-                                "id" : 36,
+                                "id" : 43,
                                 "_type" : "AMFile",
                                 "src" : 1,
                                 "trackNumber" : 0,
@@ -1007,166 +1159,6 @@
                             "default-translation1" : 0.0
                           }
                         },
-                        {
-                          "id" : 37,
-                          "_type" : "UnifiedMedia",
-                          "video" : 
-                              {
-                                "id" : 38,
-                                "_type" : "VMFile",
-                                "src" : 1,
-                                "trackNumber" : 1,
-                                "attributes" : {
-                                  "ident" : "appTour"
-                                },
-                                "effects" : [
-
-                                ],
-                                "start" : 1670,
-                                "duration" : 1805,
-                                "mediaStart" : 1737,
-                                "mediaDuration" : 1805,
-                                "scalar" : 1,
-                                "animationTracks" : {
-
-                                }
-                              },
-                          "audio" : 
-                              {
-                                "id" : 39,
-                                "_type" : "AMFile",
-                                "src" : 1,
-                                "trackNumber" : 0,
-                                "attributes" : {
-                                  "ident" : "",
-                                  "sampleRate" : 44100,
-                                  "bitDepth" : 16,
-                                  "gain" : 1.0,
-                                  "mixToMono" : false
-                                },
-                                  "channelNumber" : "0,1",
-                                "effects" : [
-
-                                ],
-                                "start" : 1670,
-                                "duration" : 1805,
-                                "mediaStart" : 1737,
-                                "mediaDuration" : 1805,
-                                "scalar" : 1,
-                                "animationTracks" : {
-
-                                }
-                              }
-,
-                          "start" : 1670,
-                          "duration" : 1805,
-                          "mediaStart" : 0,
-                          "mediaDuration" : 4764,
-                          "scalar" : 1,
-                          "metadata" : {
-                            "WinSubProjectDisplayName" : "",
-                            "clipSpeedAttribute" : true,
-                            "default-translation0" : 0.0,
-                            "default-translation1" : 0.0
-                          }
-                        },
-                        {
-                          "id" : 40,
-                          "_type" : "UnifiedMedia",
-                          "video" : 
-                              {
-                                "id" : 41,
-                                "_type" : "VMFile",
-                                "src" : 1,
-                                "trackNumber" : 1,
-                                "attributes" : {
-                                  "ident" : "appTour"
-                                },
-                                "effects" : [
-
-                                ],
-                                "start" : 3475,
-                                "duration" : 1145,
-                                "mediaStart" : 3619,
-                                "mediaDuration" : 1145,
-                                "scalar" : 1,
-                                "animationTracks" : {
-
-                                }
-                              },
-                          "audio" : 
-                              {
-                                "id" : 42,
-                                "_type" : "AMFile",
-                                "src" : 1,
-                                "trackNumber" : 0,
-                                "attributes" : {
-                                  "ident" : "",
-                                  "sampleRate" : 44100,
-                                  "bitDepth" : 16,
-                                  "gain" : 1.0,
-                                  "mixToMono" : false
-                                },
-                                  "channelNumber" : "0,1",
-                                "effects" : [
-
-                                ],
-                                "start" : 3475,
-                                "duration" : 1145,
-                                "mediaStart" : 3619,
-                                "mediaDuration" : 1145,
-                                "scalar" : 1,
-                                "animationTracks" : {
-
-                                }
-                              }
-,
-                          "start" : 3475,
-                          "duration" : 1145,
-                          "mediaStart" : 0,
-                          "mediaDuration" : 4764,
-                          "scalar" : 1,
-                          "metadata" : {
-                            "WinSubProjectDisplayName" : "",
-                            "clipSpeedAttribute" : true,
-                            "default-translation0" : 0.0,
-                            "default-translation1" : 0.0
-                          }
-                        }
-                    ],
-                    "effects" : [
-
-                    ],
-                    "start" : 4191,
-                    "duration" : 120,
-                    "mediaStart" : "662565606/219515",
-                    "mediaDuration" : "67178866/658545",
-                    "scalar" : "39512700/33589433",
-                    "metadata" : {
-                      "WinSubProjectDisplayName" : "",
-                      "clipSpeedAttribute" : true,
-                      "default-translation0" : 0.0,
-                      "default-translation1" : 0.0
-                    },
-                    "animationTracks" : {
-
-                    }
-                  },
-                  {
-                    "id" : 43,
-                    "_type" : "StitchedMedia",
-                    "minMediaStart" : 0,
-                    "attributes" : {
-                      "ident" : "appTour",
-                      "gain" : 1.0,
-                      "mixToMono" : false
-                    },
-                    "parameters" : {
-                      "volume" : 0.0,
-                      "cursorOpacity" : 1.0,
-                      "cursorScale" : 1.0
-                    },
-                    "medias" : [
                         {
                           "id" : 44,
                           "_type" : "UnifiedMedia",
@@ -1182,10 +1174,10 @@
                                 "effects" : [
 
                                 ],
-                                "start" : 0,
-                                "duration" : 1670,
-                                "mediaStart" : 0,
-                                "mediaDuration" : 1670,
+                                "start" : 1670,
+                                "duration" : 1805,
+                                "mediaStart" : 1737,
+                                "mediaDuration" : 1805,
                                 "scalar" : 1,
                                 "animationTracks" : {
 
@@ -1208,18 +1200,18 @@
                                 "effects" : [
 
                                 ],
-                                "start" : 0,
-                                "duration" : 1670,
-                                "mediaStart" : 0,
-                                "mediaDuration" : 1670,
+                                "start" : 1670,
+                                "duration" : 1805,
+                                "mediaStart" : 1737,
+                                "mediaDuration" : 1805,
                                 "scalar" : 1,
                                 "animationTracks" : {
 
                                 }
                               }
 ,
-                          "start" : 0,
-                          "duration" : 1670,
+                          "start" : 1670,
+                          "duration" : 1805,
                           "mediaStart" : 0,
                           "mediaDuration" : 4764,
                           "scalar" : 1,
@@ -1245,69 +1237,6 @@
                                 "effects" : [
 
                                 ],
-                                "start" : 1670,
-                                "duration" : 1805,
-                                "mediaStart" : 1737,
-                                "mediaDuration" : 1805,
-                                "scalar" : 1,
-                                "animationTracks" : {
-
-                                }
-                              },
-                          "audio" : 
-                              {
-                                "id" : 49,
-                                "_type" : "AMFile",
-                                "src" : 1,
-                                "trackNumber" : 0,
-                                "attributes" : {
-                                  "ident" : "",
-                                  "sampleRate" : 44100,
-                                  "bitDepth" : 16,
-                                  "gain" : 1.0,
-                                  "mixToMono" : false
-                                },
-                                  "channelNumber" : "0,1",
-                                "effects" : [
-
-                                ],
-                                "start" : 1670,
-                                "duration" : 1805,
-                                "mediaStart" : 1737,
-                                "mediaDuration" : 1805,
-                                "scalar" : 1,
-                                "animationTracks" : {
-
-                                }
-                              }
-,
-                          "start" : 1670,
-                          "duration" : 1805,
-                          "mediaStart" : 0,
-                          "mediaDuration" : 4764,
-                          "scalar" : 1,
-                          "metadata" : {
-                            "WinSubProjectDisplayName" : "",
-                            "clipSpeedAttribute" : true,
-                            "default-translation0" : 0.0,
-                            "default-translation1" : 0.0
-                          }
-                        },
-                        {
-                          "id" : 50,
-                          "_type" : "UnifiedMedia",
-                          "video" : 
-                              {
-                                "id" : 51,
-                                "_type" : "VMFile",
-                                "src" : 1,
-                                "trackNumber" : 1,
-                                "attributes" : {
-                                  "ident" : "appTour"
-                                },
-                                "effects" : [
-
-                                ],
                                 "start" : 3475,
                                 "duration" : 1145,
                                 "mediaStart" : 3619,
@@ -1319,7 +1248,7 @@
                               },
                           "audio" : 
                               {
-                                "id" : 52,
+                                "id" : 49,
                                 "_type" : "AMFile",
                                 "src" : 1,
                                 "trackNumber" : 0,
@@ -1360,7 +1289,7 @@
                     "effects" : [
 
                     ],
-                    "start" : 4311,
+                    "start" : 4173,
                     "duration" : 915,
                     "mediaStart" : "2054875684/658545",
                     "mediaDuration" : "120526789/87806",
@@ -1376,7 +1305,7 @@
                     }
                   },
                   {
-                    "id" : 53,
+                    "id" : 50,
                     "_type" : "IMFile",
                     "src" : 9,
                     "trackNumber" : 0,
@@ -1406,7 +1335,7 @@
                           "_type" : "GenericBehaviorEffect",
                           "effectName" : "reveal",
                           "start" : 0,
-                          "duration" : 2123                        ,
+                          "duration" : 2213                        ,
                           "in" : {
                             "attributes" : {
                               "name" : "reveal",
@@ -1498,8 +1427,8 @@
                           }
                         }
                     ],
-                    "start" : 5332,
-                    "duration" : 2123,
+                    "start" : 5194,
+                    "duration" : 2213,
                     "mediaStart" : 0,
                     "mediaDuration" : 1,
                     "scalar" : 1,
@@ -1525,7 +1454,7 @@
                     "rightMedia" : 14
                   },
                   {
-                    "name" : "CircleStretch",
+                    "name" : "Dissolve",
                     "duration" : 15,
                     "useAudioPreRoll" : true,
                     "useVisualPreRoll" : true,
@@ -1538,23 +1467,38 @@
                     "useAudioPreRoll" : true,
                     "useVisualPreRoll" : true,
                     "leftMedia" : 15,
-                    "rightMedia" : 18
+                    "rightMedia" : 16
                   },
                   {
                     "name" : "CircleStretch",
                     "duration" : 15,
                     "useAudioPreRoll" : true,
                     "useVisualPreRoll" : true,
-                    "leftMedia" : 19,
-                    "rightMedia" : 20
+                    "leftMedia" : 16,
+                    "rightMedia" : 19
+                  },
+                  {
+                    "name" : "CircleStretch",
+                    "duration" : 15,
+                    "useAudioPreRoll" : true,
+                    "useVisualPreRoll" : true,
+                    "leftMedia" : 20,
+                    "rightMedia" : 21
                   },
                   {
                     "name" : "GradientWipe",
                     "duration" : 15,
                     "useAudioPreRoll" : true,
                     "useVisualPreRoll" : true,
-                    "leftMedia" : 20,
-                    "rightMedia" : 23
+                    "leftMedia" : 21,
+                    "rightMedia" : 24
+                  },
+                  {
+                    "name" : "Dissolve",
+                    "duration" : 30,
+                    "useAudioPreRoll" : true,
+                    "useVisualPreRoll" : true,
+                    "leftMedia" : 40
                   }
                 ]
               },
@@ -1562,7 +1506,7 @@
                 "trackIndex" : 3,
                 "medias" : [
                   {
-                    "id" : 54,
+                    "id" : 51,
                     "_type" : "Callout",
                     "def" : {
                       "kind" : "remix",
@@ -1705,7 +1649,7 @@
                           }
                         }
                     ],
-                    "start" : 210,
+                    "start" : 171,
                     "duration" : 363,
                     "mediaStart" : -129,
                     "mediaDuration" : 363,
@@ -1722,7 +1666,7 @@
                     }
                   },
                   {
-                    "id" : 55,
+                    "id" : 52,
                     "_type" : "Callout",
                     "def" : {
                       "kind" : "remix",
@@ -1840,7 +1784,7 @@
                           }
                         }
                     ],
-                    "start" : 698,
+                    "start" : 659,
                     "duration" : 247,
                     "mediaStart" : 0,
                     "mediaDuration" : 247,
@@ -1858,7 +1802,7 @@
                     }
                   },
                   {
-                    "id" : 56,
+                    "id" : 53,
                     "_type" : "Callout",
                     "def" : {
                       "kind" : "remix",
@@ -1976,7 +1920,7 @@
                           }
                         }
                     ],
-                    "start" : 988,
+                    "start" : 949,
                     "duration" : 425,
                     "mediaStart" : 0,
                     "mediaDuration" : 425,
@@ -1994,7 +1938,7 @@
                     }
                   },
                   {
-                    "id" : 57,
+                    "id" : 54,
                     "_type" : "Callout",
                     "def" : {
                       "kind" : "remix",
@@ -2112,7 +2056,7 @@
                           }
                         }
                     ],
-                    "start" : 1848,
+                    "start" : 1809,
                     "duration" : 204,
                     "mediaStart" : 57,
                     "mediaDuration" : 204,
@@ -2133,7 +2077,7 @@
                     }
                   },
                   {
-                    "id" : 58,
+                    "id" : 55,
                     "_type" : "Callout",
                     "def" : {
                       "kind" : "remix",
@@ -2262,7 +2206,7 @@
                           }
                         }
                     ],
-                    "start" : 2352,
+                    "start" : 2313,
                     "duration" : 115,
                     "mediaStart" : 0,
                     "mediaDuration" : 115,
@@ -2287,7 +2231,7 @@
                     }
                   },
                   {
-                    "id" : 59,
+                    "id" : 56,
                     "_type" : "Callout",
                     "def" : {
                       "kind" : "remix",
@@ -2416,7 +2360,7 @@
                           }
                         }
                     ],
-                    "start" : 2755,
+                    "start" : 2716,
                     "duration" : 115,
                     "mediaStart" : 0,
                     "mediaDuration" : 115,
@@ -2443,7 +2387,7 @@
                     }
                   },
                   {
-                    "id" : 60,
+                    "id" : 57,
                     "_type" : "Callout",
                     "def" : {
                       "kind" : "remix",
@@ -2572,7 +2516,7 @@
                           }
                         }
                     ],
-                    "start" : 2976,
+                    "start" : 2937,
                     "duration" : 115,
                     "mediaStart" : 0,
                     "mediaDuration" : 115,
@@ -2597,7 +2541,7 @@
                     }
                   },
                   {
-                    "id" : 61,
+                    "id" : 58,
                     "_type" : "Callout",
                     "def" : {
                       "kind" : "remix",
@@ -2726,7 +2670,7 @@
                           }
                         }
                     ],
-                    "start" : 3118,
+                    "start" : 3079,
                     "duration" : 115,
                     "mediaStart" : 0,
                     "mediaDuration" : 115,
@@ -2751,7 +2695,7 @@
                     }
                   },
                   {
-                    "id" : 62,
+                    "id" : 59,
                     "_type" : "Callout",
                     "def" : {
                       "kind" : "remix",
@@ -2880,7 +2824,7 @@
                           }
                         }
                     ],
-                    "start" : 3306,
+                    "start" : 3267,
                     "duration" : 115,
                     "mediaStart" : 0,
                     "mediaDuration" : 115,
@@ -2905,7 +2849,7 @@
                     }
                   },
                   {
-                    "id" : 63,
+                    "id" : 60,
                     "_type" : "Callout",
                     "def" : {
                       "kind" : "remix",
@@ -2921,8 +2865,8 @@
                       "stroke-color-opacity" : 1.0,
                       "stroke-color-red" : 1.0,
                       "stroke-width" : 0.0,
-                      "tail-x" : 131.201691088995,
-                      "tail-y" : 147.017085984451,
+                      "tail-x" : 98.1139462984193,
+                      "tail-y" : -106.883843260587,
                       "width" : 314.933655833633,
                       "word-wrap" : 1.0,
                       "fill-style" : "solid",
@@ -2954,8 +2898,8 @@
                       "autoRotateText" : true
                     },
                     "parameters" : {
-                      "translation0" : -48.4848484848437,
-                      "translation1" : 113.636363636424,
+                      "translation0" : 21.3153506217434,
+                      "translation1" : 126.363745246255,
                       "rotation2" : -0.90975315794421,
                       "scale0" : 0.88325,
                       "scale1" : 0.88325
@@ -3034,7 +2978,7 @@
                           }
                         }
                     ],
-                    "start" : 3452,
+                    "start" : 3413,
                     "duration" : 91,
                     "mediaStart" : -32,
                     "mediaDuration" : 91,
@@ -3059,7 +3003,7 @@
                     }
                   },
                   {
-                    "id" : 64,
+                    "id" : 61,
                     "_type" : "Callout",
                     "def" : {
                       "kind" : "remix",
@@ -3188,7 +3132,7 @@
                           }
                         }
                     ],
-                    "start" : 4009,
+                    "start" : 3945,
                     "duration" : 115,
                     "mediaStart" : 0,
                     "mediaDuration" : 115,
@@ -3213,7 +3157,7 @@
                     }
                   },
                   {
-                    "id" : 65,
+                    "id" : 62,
                     "_type" : "Callout",
                     "def" : {
                       "kind" : "remix",
@@ -3295,8 +3239,8 @@
                         {
                           "_type" : "GenericBehaviorEffect",
                           "effectName" : "fade",
-                          "start" : 0,
-                          "duration" : 62                        ,
+                          "start" : -44,
+                          "duration" : 143                        ,
                           "in" : {
                             "attributes" : {
                               "name" : "fadeIn",
@@ -3342,10 +3286,10 @@
                           }
                         }
                     ],
-                    "start" : 4212,
-                    "duration" : 62,
-                    "mediaStart" : 0,
-                    "mediaDuration" : 62,
+                    "start" : 4129,
+                    "duration" : 143,
+                    "mediaStart" : -44,
+                    "mediaDuration" : 143,
                     "scalar" : 1,
                     "metadata" : {
                       "WinSubProjectDisplayName" : "",
@@ -3367,7 +3311,7 @@
                     }
                   },
                   {
-                    "id" : 66,
+                    "id" : 63,
                     "_type" : "Callout",
                     "def" : {
                       "kind" : "remix",
@@ -3496,7 +3440,7 @@
                           }
                         }
                     ],
-                    "start" : 4656,
+                    "start" : 4574,
                     "duration" : 151,
                     "mediaStart" : 0,
                     "mediaDuration" : 151,
@@ -3521,7 +3465,7 @@
                     }
                   },
                   {
-                    "id" : 67,
+                    "id" : 64,
                     "_type" : "Callout",
                     "def" : {
                       "kind" : "remix",
@@ -3543,7 +3487,7 @@
                         "interp" : "linr"
                       },
                       "horizontal-alignment" : "center",
-                      "text" : "Created as a project in IoT Workshop in Tel-Aviv University",
+                      "text" : "Created as a project at IoT Workshop(spring 2017) in Tel-Aviv University",
                       "vertical-alignment" : "center",
                       "font" : {
                         "color-blue" : {
@@ -3579,7 +3523,7 @@
                         "keyframes" : [
                           {
                             "time" : 0,
-                            "value" : [{"name":"underline","rangeEnd":59,"rangeStart":0,"value":0,"valueType":"int"},{"name":"strikethrough","rangeEnd":59,"rangeStart":0,"value":0,"valueType":"int"},{"name":"fontWeight","rangeEnd":59,"rangeStart":0,"value":400,"valueType":"int"},{"name":"fontName","rangeEnd":59,"rangeStart":0,"value":"Montserrat","valueType":"string"},{"name":"fontSize","rangeEnd":59,"rangeStart":0,"value":22,"valueType":"double"},{"name":"fontItalic","rangeEnd":59,"rangeStart":0,"value":0,"valueType":"int"},{"name":"fgColor","rangeEnd":59,"rangeStart":0,"value":"(255,255,255,255)","valueType":"color"}],
+                            "value" : [{"name":"fontSize","rangeEnd":72,"rangeStart":0,"value":22,"valueType":"double"},{"name":"fontWeight","rangeEnd":72,"rangeStart":0,"value":400,"valueType":"int"},{"name":"fontItalic","rangeEnd":72,"rangeStart":0,"value":0,"valueType":"int"},{"name":"fontName","rangeEnd":72,"rangeStart":23,"value":"Montserrat","valueType":"string"},{"name":"underline","rangeEnd":72,"rangeStart":0,"value":0,"valueType":"int"},{"name":"fontName","rangeEnd":21,"rangeStart":0,"value":"Montserrat","valueType":"string"},{"name":"strikethrough","rangeEnd":72,"rangeStart":0,"value":0,"valueType":"int"},{"name":"fgColor","rangeEnd":72,"rangeStart":0,"value":"(255,255,255,255)","valueType":"color"},{"name":"fontName","rangeEnd":23,"rangeStart":21,"value":"Arial","valueType":"string"}],
                             "duration" : 0
                           }
                         ]
@@ -3683,8 +3627,8 @@
                         {
                           "_type" : "GenericBehaviorEffect",
                           "effectName" : "shifting",
-                          "start" : -129,
-                          "duration" : 2004                        ,
+                          "start" : -227,
+                          "duration" : 2093                        ,
                           "in" : {
                             "attributes" : {
                               "name" : "shifting",
@@ -3769,10 +3713,10 @@
                           }
                         }
                     ],
-                    "start" : 5451,
-                    "duration" : 2004,
-                    "mediaStart" : -129,
-                    "mediaDuration" : 2004,
+                    "start" : 5314,
+                    "duration" : 2093,
+                    "mediaStart" : -227,
+                    "mediaDuration" : 2093,
                     "scalar" : 1,
                     "metadata" : {
                       "WinSubProjectDisplayName" : "",
@@ -3793,7 +3737,7 @@
                 "trackIndex" : 4,
                 "medias" : [
                   {
-                    "id" : 68,
+                    "id" : 65,
                     "_type" : "Callout",
                     "def" : {
                       "kind" : "remix",
@@ -3935,7 +3879,7 @@
                           }
                         }
                     ],
-                    "start" : 423,
+                    "start" : 384,
                     "duration" : 150,
                     "mediaStart" : 0,
                     "mediaDuration" : 150,
@@ -3953,7 +3897,7 @@
                     }
                   },
                   {
-                    "id" : 69,
+                    "id" : 66,
                     "_type" : "Callout",
                     "def" : {
                       "kind" : "remix",
@@ -4117,7 +4061,7 @@
                           }
                         }
                     ],
-                    "start" : 1085,
+                    "start" : 1046,
                     "duration" : 286,
                     "mediaStart" : 0,
                     "mediaDuration" : 286,
@@ -4136,7 +4080,7 @@
                     }
                   },
                   {
-                    "id" : 70,
+                    "id" : 67,
                     "_type" : "Callout",
                     "def" : {
                       "kind" : "remix",
@@ -4254,7 +4198,7 @@
                           }
                         }
                     ],
-                    "start" : 1900,
+                    "start" : 1861,
                     "duration" : 152,
                     "mediaStart" : 52,
                     "mediaDuration" : 152,
@@ -4275,7 +4219,7 @@
                     }
                   },
                   {
-                    "id" : 71,
+                    "id" : 68,
                     "_type" : "Callout",
                     "def" : {
                       "kind" : "remix",
@@ -4331,7 +4275,7 @@
                           }
                         }
                     ],
-                    "start" : 2548,
+                    "start" : 2509,
                     "duration" : 150,
                     "mediaStart" : 0,
                     "mediaDuration" : 150,
@@ -4349,7 +4293,85 @@
                     }
                   },
                   {
-                    "id" : 72,
+                    "id" : 69,
+                    "_type" : "Callout",
+                    "def" : {
+                      "kind" : "remix",
+                      "shape" : "shape-rectangle",
+                      "style" : "urban",
+                      "fill-color-blue" : 0.866666666666667,
+                      "fill-color-green" : 1.0,
+                      "fill-color-opacity" : 1.0,
+                      "fill-color-red" : 1.0,
+                      "height" : 68.3333333332895,
+                      "stroke-color-blue" : 1.0,
+                      "stroke-color-green" : 1.0,
+                      "stroke-color-opacity" : 1.0,
+                      "stroke-color-red" : 1.0,
+                      "stroke-width" : 0.0,
+                      "width" : 86.6666666665579,
+                      "fill-style" : "solid",
+                      "horizontal-alignment" : "center",
+                      "stroke-style" : "solid",
+                      "vertical-alignment" : "center",
+                      "textAttributes" : {
+                        "type" : "textAttributeList",
+                        "keyframes" : [
+                          {
+                            "time" : 0,
+                            "value" : null,
+                            "duration" : 0
+                          }
+                        ]
+                      }
+                    },
+                    "attributes" : {
+                      "autoRotateText" : true
+                    },
+                    "parameters" : {
+                      "translation0" : 195.000001271633,
+                      "translation1" : -326.666666666786
+                    },
+                    "effects" : [
+                        {
+                          "effectName" : "DropShadow",
+                          "category" : "categoryVisualEffects",
+                          "parameters" : {
+                            "angle" : 5.49778714378214,
+                            "blur" : 0.0,
+                            "color-alpha" : 1.0,
+                            "color-blue" : 0.1216,
+                            "color-green" : 0.1216,
+                            "color-red" : 0.1216,
+                            "enabled" : 1,
+                            "offset" : 54.1666666666667,
+                            "opacity" : 0.0
+                          },
+                          "metadata" : {
+                            "default-dropshadow-blur" : 10.0,
+                            "default-dropshadow-offset" : 10.0,
+                            "default-dropshadow-opacity" : 0.4
+                          }
+                        }
+                    ],
+                    "start" : 4060,
+                    "duration" : 150,
+                    "mediaStart" : 0,
+                    "mediaDuration" : 150,
+                    "scalar" : 1,
+                    "metadata" : {
+                      "WinSubProjectDisplayName" : "",
+                      "clipSpeedAttribute" : false,
+                      "default-fill-color-blue" : 1.0,
+                      "default-translation0" : 0.0,
+                      "default-translation1" : 0.0
+                    },
+                    "animationTracks" : {
+
+                    }
+                  },
+                  {
+                    "id" : 70,
                     "_type" : "Callout",
                     "def" : {
                       "kind" : "remix",
@@ -4478,7 +4500,7 @@
                           }
                         }
                     ],
-                    "start" : 4724,
+                    "start" : 4642,
                     "duration" : 83,
                     "mediaStart" : 37,
                     "mediaDuration" : 83,
@@ -4503,7 +4525,7 @@
                     }
                   },
                   {
-                    "id" : 73,
+                    "id" : 71,
                     "_type" : "Callout",
                     "def" : {
                       "kind" : "remix",
@@ -4665,8 +4687,8 @@
                         {
                           "_type" : "GenericBehaviorEffect",
                           "effectName" : "shifting",
-                          "start" : 63,
-                          "duration" : 1679                        ,
+                          "start" : -55,
+                          "duration" : 1788                        ,
                           "in" : {
                             "attributes" : {
                               "name" : "shifting",
@@ -4751,10 +4773,10 @@
                           }
                         }
                     ],
-                    "start" : 5776,
-                    "duration" : 1679,
-                    "mediaStart" : 63,
-                    "mediaDuration" : 1679,
+                    "start" : 5619,
+                    "duration" : 1788,
+                    "mediaStart" : -55,
+                    "mediaDuration" : 1788,
                     "scalar" : 1,
                     "metadata" : {
                       "WinSubProjectDisplayName" : "",
@@ -4775,7 +4797,7 @@
                 "trackIndex" : 5,
                 "medias" : [
                   {
-                    "id" : 74,
+                    "id" : 72,
                     "_type" : "Callout",
                     "def" : {
                       "kind" : "remix",
@@ -4939,7 +4961,7 @@
                           }
                         }
                     ],
-                    "start" : 1033,
+                    "start" : 994,
                     "duration" : 338,
                     "mediaStart" : 0,
                     "mediaDuration" : 338,
@@ -4959,7 +4981,7 @@
                     }
                   },
                   {
-                    "id" : 75,
+                    "id" : 73,
                     "_type" : "Callout",
                     "def" : {
                       "kind" : "remix",
@@ -5122,7 +5144,7 @@
                           "_type" : "GenericBehaviorEffect",
                           "effectName" : "shifting",
                           "start" : -70,
-                          "duration" : 1531                        ,
+                          "duration" : 1621                        ,
                           "in" : {
                             "attributes" : {
                               "name" : "shifting",
@@ -5207,10 +5229,10 @@
                           }
                         }
                     ],
-                    "start" : 5924,
-                    "duration" : 1531,
+                    "start" : 5786,
+                    "duration" : 1621,
                     "mediaStart" : -70,
-                    "mediaDuration" : 1531,
+                    "mediaDuration" : 1621,
                     "scalar" : 1,
                     "metadata" : {
                       "WinSubProjectDisplayName" : "",
@@ -5231,7 +5253,7 @@
                 "trackIndex" : 6,
                 "medias" : [
                   {
-                    "id" : 76,
+                    "id" : 74,
                     "_type" : "Callout",
                     "def" : {
                       "kind" : "remix",
@@ -5397,7 +5419,7 @@
                           }
                         }
                     ],
-                    "start" : 1143,
+                    "start" : 1104,
                     "duration" : 228,
                     "mediaStart" : 0,
                     "mediaDuration" : 228,
@@ -5418,7 +5440,7 @@
                     }
                   },
                   {
-                    "id" : 77,
+                    "id" : 75,
                     "_type" : "Callout",
                     "def" : {
                       "kind" : "remix",
@@ -5581,7 +5603,7 @@
                           "_type" : "GenericBehaviorEffect",
                           "effectName" : "shifting",
                           "start" : -65,
-                          "duration" : 1467                        ,
+                          "duration" : 1592                        ,
                           "in" : {
                             "attributes" : {
                               "name" : "shifting",
@@ -5666,10 +5688,10 @@
                           }
                         }
                     ],
-                    "start" : 5988,
-                    "duration" : 1467,
+                    "start" : 5815,
+                    "duration" : 1592,
                     "mediaStart" : -65,
-                    "mediaDuration" : 1467,
+                    "mediaDuration" : 1592,
                     "scalar" : 1,
                     "metadata" : {
                       "WinSubProjectDisplayName" : "",
@@ -5691,7 +5713,7 @@
                 "trackIndex" : 7,
                 "medias" : [
                   {
-                    "id" : 78,
+                    "id" : 76,
                     "_type" : "Callout",
                     "def" : {
                       "kind" : "remix",
@@ -5856,7 +5878,7 @@
                           }
                         }
                     ],
-                    "start" : 1183,
+                    "start" : 1144,
                     "duration" : 188,
                     "mediaStart" : 0,
                     "mediaDuration" : 188,
@@ -5877,7 +5899,7 @@
                     }
                   },
                   {
-                    "id" : 79,
+                    "id" : 77,
                     "_type" : "Callout",
                     "def" : {
                       "kind" : "remix",
@@ -6040,7 +6062,7 @@
                           "_type" : "GenericBehaviorEffect",
                           "effectName" : "shifting",
                           "start" : -80,
-                          "duration" : 1403                        ,
+                          "duration" : 1568                        ,
                           "in" : {
                             "attributes" : {
                               "name" : "shifting",
@@ -6125,10 +6147,10 @@
                           }
                         }
                     ],
-                    "start" : 6052,
-                    "duration" : 1403,
+                    "start" : 5839,
+                    "duration" : 1568,
                     "mediaStart" : -80,
-                    "mediaDuration" : 1403,
+                    "mediaDuration" : 1568,
                     "scalar" : 1,
                     "metadata" : {
                       "WinSubProjectDisplayName" : "",
@@ -6149,7 +6171,7 @@
                 "trackIndex" : 8,
                 "medias" : [
                   {
-                    "id" : 80,
+                    "id" : 78,
                     "_type" : "Callout",
                     "def" : {
                       "kind" : "remix",
@@ -6314,7 +6336,7 @@
                           }
                         }
                     ],
-                    "start" : 1210,
+                    "start" : 1171,
                     "duration" : 161,
                     "mediaStart" : 0,
                     "mediaDuration" : 161,
@@ -6335,7 +6357,7 @@
                     }
                   },
                   {
-                    "id" : 81,
+                    "id" : 79,
                     "_type" : "Callout",
                     "def" : {
                       "kind" : "remix",
@@ -6498,7 +6520,7 @@
                           "_type" : "GenericBehaviorEffect",
                           "effectName" : "shifting",
                           "start" : -80,
-                          "duration" : 1189                        ,
+                          "duration" : 1279                        ,
                           "in" : {
                             "attributes" : {
                               "name" : "shifting",
@@ -6583,10 +6605,10 @@
                           }
                         }
                     ],
-                    "start" : 6266,
-                    "duration" : 1189,
+                    "start" : 6128,
+                    "duration" : 1279,
                     "mediaStart" : -80,
-                    "mediaDuration" : 1189,
+                    "mediaDuration" : 1279,
                     "scalar" : 1,
                     "metadata" : {
                       "WinSubProjectDisplayName" : "",
@@ -6607,7 +6629,7 @@
                 "trackIndex" : 9,
                 "medias" : [
                   {
-                    "id" : 82,
+                    "id" : 80,
                     "_type" : "Callout",
                     "def" : {
                       "kind" : "remix",
@@ -6773,7 +6795,7 @@
                           }
                         }
                     ],
-                    "start" : 1236,
+                    "start" : 1197,
                     "duration" : 135,
                     "mediaStart" : 0,
                     "mediaDuration" : 135,
@@ -6799,6 +6821,11 @@
                 "trackIndex" : 10,
                 "medias" : [
                 ]
+              },
+              {
+                "trackIndex" : 11,
+                "medias" : [
+                ]
               }
             ]
           }
@@ -6806,6 +6833,15 @@
       ]
     },
     "trackAttributes" : [
+      {
+        "ident" : "",
+        "audioMuted" : false,
+        "videoHidden" : false,
+        "metadata" : {
+          "IsLocked" : "False",
+          "WinTrackHeight" : "56"
+        }
+      },
       {
         "ident" : "",
         "audioMuted" : false,
@@ -6922,7 +6958,7 @@
     "backgroundColor" : [ 0, 0, 0, 255]
   },
   "metadata" : {
-    "AutoSaveFile" : "C:\\Users\\Bar Angel\\AppData\\Local\\TechSmith\\Camtasia Studio\\9.0\\Auto-Saves\\video21c340da.autosave.tscproj",
+    "AutoSaveFile" : "C:\\Users\\Bar Angel\\AppData\\Local\\TechSmith\\Camtasia Studio\\9.0\\Auto-Saves\\video2a68197f.autosave.tscproj",
     "CanvasZoom" : 60,
     "Date" : "2017-10-12 10:19:32 PM",
     "Fit" : 0,

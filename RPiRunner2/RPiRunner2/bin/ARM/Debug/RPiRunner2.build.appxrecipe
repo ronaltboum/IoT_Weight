@@ -28,6 +28,18 @@
     <AppxPackagedFile Include="C:\Temp\Repos\TAU_IoT_Workshop\RPiRunner2\RPiRunner2\bin\ARM\Debug\RPiRunner2.exe">
       <PackagePath>entrypoint\RPiRunner2.exe</PackagePath>
     </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\Bar Angel\.nuget\packages\Accord\3.7.0\lib\netstandard1.4\Accord.dll">
+      <PackagePath>Accord.dll</PackagePath>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\Bar Angel\.nuget\packages\Accord.Math\3.7.0\lib\netstandard1.4\Accord.Math.Core.dll">
+      <PackagePath>Accord.Math.Core.dll</PackagePath>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\Bar Angel\.nuget\packages\Accord.Math\3.7.0\lib\netstandard1.4\Accord.Math.dll">
+      <PackagePath>Accord.Math.dll</PackagePath>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\Bar Angel\.nuget\packages\Accord.Statistics\3.7.0\lib\netstandard1.4\Accord.Statistics.dll">
+      <PackagePath>Accord.Statistics.dll</PackagePath>
+    </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\Bar Angel\.nuget\packages\DotNetty.Buffers\0.4.4\lib\netstandard1.3\DotNetty.Buffers.dll">
       <PackagePath>DotNetty.Buffers.dll</PackagePath>
     </AppxPackagedFile>
@@ -469,12 +481,6 @@
     <AppxPackagedFile Include="C:\Users\Bar Angel\.nuget\packages\Validation\2.4.15\lib\netstandard1.3\Validation.dll">
       <PackagePath>Validation.dll</PackagePath>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Temp\Repos\TAU_IoT_Workshop\RPiRunner2\RPiRunner2\Login.html">
-      <PackagePath>Login.html</PackagePath>
-    </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Temp\Repos\TAU_IoT_Workshop\RPiRunner2\RPiRunner2\SettingsPage.html">
-      <PackagePath>SettingsPage.html</PackagePath>
-    </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Temp\Repos\TAU_IoT_Workshop\RPiRunner2\RPiRunner2\Properties\Default.rd.xml">
       <PackagePath>Properties\Default.rd.xml</PackagePath>
     </AppxPackagedFile>
@@ -504,6 +510,12 @@
     <AppxPackagedFile Include="C:\Temp\Repos\TAU_IoT_Workshop\RPiRunner2\RPiRunner2\Assets\Wide310x150Logo.scale-200.png">
       <PackagePath>Assets\Wide310x150Logo.scale-200.png</PackagePath>
       <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Temp\Repos\TAU_IoT_Workshop\RPiRunner2\RPiRunner2\SettingsPage.html">
+      <PackagePath>SettingsPage.html</PackagePath>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\Bar Angel\.nuget\packages\accord\3.7.0\build\Accord.dll.config">
+      <PackagePath>Accord.dll.config</PackagePath>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Temp\Repos\TAU_IoT_Workshop\RPiRunner2\RPiRunner2\bin\ARM\Debug\RPiRunner2.xr.xml">
       <PackagePath>RPiRunner2.xr.xml</PackagePath>

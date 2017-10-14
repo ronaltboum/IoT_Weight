@@ -167,7 +167,6 @@ namespace IoTWeight
                 handleGUI_OnSuccess("62.2");
                 return;
             }
-            //TODO: send ACKs (we'll do it later)
         }
 
 

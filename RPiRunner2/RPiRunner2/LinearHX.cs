@@ -169,7 +169,7 @@ namespace RPiRunner2
                 results[i] = (int)read();
             }
 
-            detectAnomalies(results,(int)(times*trainingGroupRatio),tolerance);
+            detectAnomalies(results, (int)(times * trainingGroupRatio), tolerance);
 
             int count = 0;
             for (int i = 0; i < times; i++)

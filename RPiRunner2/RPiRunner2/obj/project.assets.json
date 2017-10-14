@@ -29749,6 +29749,10 @@
       }
     },
     "dependencies": {
+      "Accord.Statistics": {
+        "target": "Package",
+        "version": "3.7.0"
+      },
       "DotNetty.Buffers": {
         "target": "Package",
         "version": "0.4.4"
@@ -29836,15 +29840,15 @@
       "Validation": {
         "target": "Package",
         "version": "2.4.15"
-      },
-      "Accord.Statistics": {
-        "target": "Package",
-        "version": "[3.7.0, )"
       }
     },
     "frameworks": {
       "uap10.0.10586": {
         "dependencies": {
+          "Accord.Statistics": {
+            "target": "Package",
+            "version": "3.7.0"
+          },
           "DotNetty.Buffers": {
             "target": "Package",
             "version": "0.4.4"

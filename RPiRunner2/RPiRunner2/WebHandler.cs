@@ -147,7 +147,7 @@ namespace RPiRunner2
                 return;
             }
 
-            Task<float> hardwtask = null;
+            float hardwtask = -100;
             try
             {
                 /*determine which operation the client requested and do it.*/
@@ -207,7 +207,19 @@ namespace RPiRunner2
                     //weighing something for calibration
                     if (uhl != null)
                     {
-                        hardwtask = uhl.getRawWeightAsync((int)(UserHardwareLinker.WEIGH_AVG * UserHardwareLinker.CALIB_FACTOR));
+                        hardwtask = uhl.getRawWeight((int)(UserHardwareLinker.WEIGH_AVG * UserHardwareLinker.CALIB_FACTOR));
+                        if (fields.Keys.Contains("soffset"))
+                        {
+                            nullweight = hardwtask;
+                            System.Diagnostics.Debug.WriteLine("nullweight: " + nullweight);
+                            html = HTTPServer.HTMLRewrite(html, "span", "calibration_feedback", "The sensor returned value: " + nullweight);
+                        }
+                        if (fields.Keys.Contains("sscale"))
+                        {
+                            rawWeight = hardwtask;
+                            System.Diagnostics.Debug.WriteLine("rawWeight: " + rawWeight);
+                            html = HTTPServer.HTMLRewrite(html, "span", "calibration_feedback", "The sensor returned value: " + rawWeight);
+                        }
                     }
                     else
                     {
@@ -291,33 +303,16 @@ namespace RPiRunner2
                 System.Diagnostics.Debug.WriteLine(e.Message);
             }
 
-            string response = CreateHTTP.Code200_Ok(html);
-
-            Task writeTask = PermanentData.WriteToMemoryAsync();
-
             html = HTTPServer.HTMLInputFill(html, "text", "name", PermanentData.Devname);
             html = HTTPServer.HTMLInputFill(html, "text", "serial", PermanentData.Serial);
             html = HTTPServer.HTMLInputFill(html, "text", "man_offset", PermanentData.Offset.ToString());
             html = HTTPServer.HTMLInputFill(html, "text", "man_scale", PermanentData.Scale.ToString());
 
+            string response = CreateHTTP.Code200_Ok(html);
+
+            Task writeTask = PermanentData.WriteToMemoryAsync();
+
             Task sendTask = http.Send(response, writer);
-
-
-            if (hardwtask != null)
-            {
-                if (fields.Keys.Contains("soffset"))
-                {
-                    nullweight = await hardwtask;
-                    System.Diagnostics.Debug.WriteLine("nullweight: " + nullweight);
-                    html = HTTPServer.HTMLRewrite(html, "span", "calibration_feedback", "The sensor returned value: " + nullweight);
-                }
-                if (fields.Keys.Contains("sscale"))
-                {
-                    rawWeight = await hardwtask;
-                    System.Diagnostics.Debug.WriteLine("rawWeight: " + rawWeight);
-                    html = HTTPServer.HTMLRewrite(html, "span", "calibration_feedback", "The sensor returned value: " + rawWeight);
-                }
-            }
 
             await writeTask;
             await sendTask;

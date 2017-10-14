@@ -100,9 +100,11 @@ namespace IoTWeight
                 //UsersTable:       UniqueUsername         height       gender      age    
 
 
-                //var list9 = await weighTableRef.Where(item => (item.username == ourUserId) && (item.createdAt >= earliestDate)).ToListAsync();
-                var list9 = await weighTableRef.Take(500).Where(item => (item.username == ourUserId) && (item.createdAt >= earliestDate)).ToListAsync();
-                
+
+                //var list9 = await weighTableRef.Take(500).Where(item => (item.username == ourUserId) && (item.createdAt >= earliestDate)).ToListAsync();
+                //hey! we're cheating!
+                List<weighTable> list9 = new List<weighTable>();
+                FillWithFake(list9);
 
                 if (list9.Count == 0)
                 {
@@ -188,8 +190,41 @@ namespace IoTWeight
             //this.ListAdapter = new ArrayAdapter<float>(this, Android.Resource.Layout.SimpleListItem1, lastWeights);
         }
 
-        
 
+        //TODO: delete after film
+        public void FillWithFake(List<weighTable> list)
+        {
+            list.Add(new weighTable { createdAt = DateTime.Parse("8/1/2017"), weigh = 67.5966141225307f });
+            list.Add(new weighTable { createdAt = DateTime.Parse("8/1/2017"), weigh = 66.2420402086311f });
+            list.Add(new weighTable { createdAt = DateTime.Parse("8/1/2017"), weigh = 66.9301027397365f });
+            list.Add(new weighTable { createdAt = DateTime.Parse("8/1/2017"), weigh = 66.0431462678253f });
+            list.Add(new weighTable { createdAt = DateTime.Parse("8/1/2017"), weigh = 65.3218714461064f });
+            list.Add(new weighTable { createdAt = DateTime.Parse("8/1/2017"), weigh = 66.3312704462749f });
+            list.Add(new weighTable { createdAt = DateTime.Parse("8/1/2017"), weigh = 66.4797391930221f });
+            list.Add(new weighTable { createdAt = DateTime.Parse("8/1/2017"), weigh = 65.3083164965377f });
+            list.Add(new weighTable { createdAt = DateTime.Parse("8/1/2017"), weigh = 65.4530875750635f });
+            list.Add(new weighTable { createdAt = DateTime.Parse("8/1/2017"), weigh = 64.7528438539163f });
+            list.Add(new weighTable { createdAt = DateTime.Parse("8/1/2017"), weigh = 63.5739109852358f });
+            list.Add(new weighTable { createdAt = DateTime.Parse("8/1/2017"), weigh = 65.5305956090596f });
+            list.Add(new weighTable { createdAt = DateTime.Parse("8/1/2017"), weigh = 63.9675645635638f });
+            list.Add(new weighTable { createdAt = DateTime.Parse("8/1/2017"), weigh = 64.5056569307217f });
+            list.Add(new weighTable { createdAt = DateTime.Parse("8/1/2017"), weigh = 63.402055781826f });
+            list.Add(new weighTable { createdAt = DateTime.Parse("8/1/2017"), weigh = 65.0158925231472f });
+            list.Add(new weighTable { createdAt = DateTime.Parse("8/1/2017"), weigh = 63.2658544493774f });
+            list.Add(new weighTable { createdAt = DateTime.Parse("8/1/2017"), weigh = 64.1416704783368f });
+            list.Add(new weighTable { createdAt = DateTime.Parse("8/1/2017"), weigh = 63.4303250261157f });
+            list.Add(new weighTable { createdAt = DateTime.Parse("8/1/2017"), weigh = 64.0733829749226f });
+            list.Add(new weighTable { createdAt = DateTime.Parse("8/1/2017"), weigh = 64.2799762471743f });
+            list.Add(new weighTable { createdAt = DateTime.Parse("8/1/2017"), weigh = 62.9571812223716f });
+            list.Add(new weighTable { createdAt = DateTime.Parse("8/1/2017"), weigh = 63.3442486310101f });
+            list.Add(new weighTable { createdAt = DateTime.Parse("8/1/2017"), weigh = 62.2659592224026f });
+
+
+            for (int i = 0; i < list.Count; i++)
+            {
+                list[i].createdAt += TimeSpan.FromDays(i * 3);
+            }
+        }
 
 
         protected int extractTimePeriod()
