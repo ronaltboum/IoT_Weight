@@ -92,8 +92,8 @@ namespace RPiRunner2
                     uhl.StartUser(profile);
                     try
                     {
-                        float w = uhl.getWeight(UserHardwareLinker.WEIGH_AVG);
-                        DRP response = new DRP(DRPDevType.RBPI, msg.UserName, PermanentData.Serial, PermanentData.Devname, w, 0, DRPMessageType.DATA);
+                        double w = uhl.getWeight(UserHardwareLinker.WEIGH_AVG);
+                        DRP response = new DRP(DRPDevType.RBPI, msg.UserName, PermanentData.Serial, PermanentData.Devname, (float)w, 0, DRPMessageType.DATA);
                         //sending result to client
                         Task sendTask = tcp.Send(response.ToString(), writer);
                         System.Diagnostics.Debug.WriteLine("message sent: " + response.ToString());
@@ -112,7 +112,8 @@ namespace RPiRunner2
                         }
                         await sendTask;
                         uhl.FinishUser();
-                        await cloudTask;
+                        if (cloudTask != null)
+                            await cloudTask;
                         return;
                     }
                     catch

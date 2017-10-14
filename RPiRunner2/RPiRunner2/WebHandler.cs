@@ -106,9 +106,9 @@ namespace RPiRunner2
         }
 
         //calibration received data
-        float nullweight;
-        float knownWeight;
-        float rawWeight;
+        double nullweight;
+        double knownWeight;
+        double rawWeight;
 
         /// <summary>
         /// This method is activated every time a message has received from the user.
@@ -147,7 +147,7 @@ namespace RPiRunner2
                 return;
             }
 
-            float hardwtask = -100;
+            double hardwtask = -100;
             try
             {
                 /*determine which operation the client requested and do it.*/
@@ -285,8 +285,8 @@ namespace RPiRunner2
                     //calibration using default values
                     if (uhl != null)
                     {
-                        float offset = PermanentData.BEST_OFFSET;
-                        float scale = PermanentData.BEST_SCALE;
+                        double offset = PermanentData.BEST_OFFSET;
+                        double scale = PermanentData.BEST_SCALE;
                         uhl.setParameters(offset, scale);
                         html = HTTPServer.HTMLRewrite(html, "span", "calibration_feedback", "OK! the device's parameters are:<br />OFFSET: " + uhl.Offset + "<br />SCALE: " + uhl.Scale);
                         PermanentData.Scale = uhl.Scale;

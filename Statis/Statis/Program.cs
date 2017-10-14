@@ -12,7 +12,7 @@ namespace Statis
     {
         static void Main(string[] args)
         {
-            int[] meas = new int[] { 3, 4, 3, 4, 2, 3, 4, 4, 3, 2, 1, 5, 2, 3, 4, 4, 3, 2, 3, 4, 4, 3, 4, 3, 10, 200, -50 };
+            int[] meas = new int[] { -88, 4, 10, 4, 200, 3, 4, 4, 3, 5, 1, 100, 2, 3, 4, 4, 3, 2, 3, 4, 4, 3, 4, 3, 4, 300, 1 };
             System.Console.WriteLine("all results:\t" + avg(meas));
             detectAnomalies(meas, (int)(meas.Length * 0.2), 0.95f);
             System.Console.WriteLine("Filtered results:\t" + avg(meas));
@@ -58,10 +58,11 @@ namespace Statis
 
                 NormalDistribution norm = new NormalDistribution(mean, std);
 
+                double zScore;
                 for (int i = 0; i < results.Length; i++)
                 {
-
-                    if (norm.DistributionFunction(results[i]) < (1 - tolerance))
+                    zScore = Math.Abs(results[i] - mean)/std;
+                    if (2*(1-norm.DistributionFunction(zScore)) < (1 - tolerance))
                         results[i] = int.MinValue;
                 }
             }

@@ -15,8 +15,8 @@ namespace RPiRunner2
     */
     class LinearHX
     {
-        private float offset;
-        private float scale;
+        private double offset;
+        private double scale;
         private int gain;
 
         //PD_SCK
@@ -27,8 +27,8 @@ namespace RPiRunner2
 
         private GpioController gpio;
 
-        public float Offset { get => offset; set => offset = value; }
-        public float Scale { get => scale; set => scale = value; }
+        public double Offset { get => offset; set => offset = value; }
+        public double Scale { get => scale; set => scale = value; }
         public int Gain { get => gain; set => gain = value; }
         public GpioPin PowerDownAndSerialClockInput1 { get => PowerDownAndSerialClockInput; set => PowerDownAndSerialClockInput = value; }
         public GpioPin SerialDataOutput1 { get => SerialDataOutput; set => SerialDataOutput = value; }
@@ -54,12 +54,12 @@ namespace RPiRunner2
          * @param rawWeight the value received when calculation an object with a known weight
          * @param realWeight the real known weight of the weighted object
          */
-        public void setParameters(float rawNull, float rawWeight, float realWeight)
+        public void setParameters(double rawNull, double rawWeight, double realWeight)
         {
             this.offset = rawNull;
             this.scale = (rawWeight - rawNull) / realWeight;
         }
-        public void setParameters(float offset, float scale)
+        public void setParameters(double offset, double scale)
         {
             this.offset = offset;
             this.scale = scale;
@@ -69,11 +69,11 @@ namespace RPiRunner2
          * Gets the received data from the scale and transform it into the real weight of the object
          * You can manually specify the values of 'scale' and 'offset' or use the precalculated ones (which you have set by 'setParameters(..)')
          */
-        public float transform(float rawData)
+        public double transform(double rawData)
         {
             return transform(rawData, scale, offset);
         }
-        public float transform(float rawData, float scale, float offset)
+        public double transform(double rawData, double scale, double offset)
         {
             return (rawData - offset) / scale;
         }
@@ -148,19 +148,19 @@ namespace RPiRunner2
 
         // returns an average reading; times = how many times to read
         // NOTE: reaturns raw data!
-        public float getRawWeight(int times = 100)
+        public double getRawWeight(int times = 100)
         {
             long sum = 0;
             for (int i = 0; i < times; i++)
             {
                 sum += (int)read();
             }
-            return (float)sum / times;
+            return (double)sum / times;
         }
 
         //Using 'Anomaly Detection' method to filer out inaccurate measures
         //Note:measurment time may be longer
-        public float smartGetRawWeight(int times = 100, float tolerance = 0.95f, float trainingGroupRatio = 0.1f)
+        public double smartGetRawWeight(int times = 100, double tolerance = 0.95f, double trainingGroupRatio = 0.1f)
         {
             int[] results = new int[times];
             long sum = 0;
@@ -180,54 +180,59 @@ namespace RPiRunner2
                     count++;
                 }
             }
-            return (float)sum / count;
+            return (double)sum / count;
         }
 
-        private void detectAnomalies(int[] results, int training, float tolerance)
+        public static void detectAnomalies(int[] results, int training, double tolerance)
         {
             int low;
             low = (results.Length - training) / 2;
-            int[] sample = (new ArraySegment<int>(results, low, low + training)).Array;
-            
+            int[] sample = new int[training];
+            for (int i = 0; i < training; i++)
+                sample[i] = results[low + i];
+
 
             double mean;
             double std;
-           
+
 
             mean = Measures.Mean(sample);
-            std = Measures.StandardDeviation(sample,mean);
+            std = Measures.StandardDeviation(sample, mean);
 
-            NormalDistribution norm = new NormalDistribution(mean, std);
-
-            for (int i = 0; i < results.Length; i++)
+            if (std > 0)
             {
 
-                if (norm.ProbabilityDensityFunction(results[i]) < (1 - tolerance))
-                    results[i] = int.MinValue;
+                NormalDistribution norm = new NormalDistribution(mean, std);
+
+                double zScore;
+                for (int i = 0; i < results.Length; i++)
+                {
+                    zScore = Math.Abs(results[i] - mean) / std;
+                    if (2 * (1 - norm.DistributionFunction(zScore)) < (1 - tolerance))
+                        results[i] = int.MinValue;
+                }
+            }
+            else
+            {
+                for (int i = 0; i < results.Length; i++)
+                {
+
+                    if (results[i] != mean)
+                        results[i] = int.MinValue;
+                }
             }
         }
 
-        public float getWeight(int times = 100)
+        public double getWeight(int times = 100)
         {
-            float raw = getRawWeight(times);
+            double raw = getRawWeight(times);
             return transform(raw);
         }
-        public float getWeight(float rawWeight)
+        public double getWeight(double rawWeight)
         {
             return transform(rawWeight);
         }
 
-
-        public async Task<float> getWeightAsync(int times = 100)
-        {
-            float raw = await getRawWeightAsync(times);
-            return transform(raw);
-        }
-
-        public async Task<float> getRawWeightAsync(int times = 100)
-        {
-            return await Task.Run(() => getRawWeight());
-        }
 
         // puts the chip into power down mode
         public void power_down()

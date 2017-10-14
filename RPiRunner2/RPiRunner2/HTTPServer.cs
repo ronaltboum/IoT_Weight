@@ -34,8 +34,6 @@ namespace RPiRunner2
         private bool restricted;
         private DateTime last_login;
 
-        public const int SESSION = 20; // session time in minutes;
-
         private string username;
         private string password;
 
@@ -50,16 +48,6 @@ namespace RPiRunner2
             this.restricted = true;
             this.username = username;
             this.password = password;
-        }
-
-        public bool isSessionEnded()
-        {
-            return (DateTime.Now - last_login).Minutes == SESSION;
-        }
-
-        public bool validate(string username, string password)
-        {
-            return username.Equals(this.username) && password.Equals(this.password);
         }
 
         public void changeCredentials(string username, string password)

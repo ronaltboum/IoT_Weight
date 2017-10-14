@@ -13,8 +13,8 @@ namespace RPiRunner2
     /// </summary>
     class PermanentData
     {
-        public const float BEST_OFFSET = -261614.7f;
-        public const float BEST_SCALE = -13228.89f;
+        public const double BEST_OFFSET = -261614.7f;
+        public const double BEST_SCALE = -13228.89f;
 
         public const string DEFAULT_FILE = "smart_weight_data.swd";
         public const string NULL_SYMBOL = "#";
@@ -22,8 +22,8 @@ namespace RPiRunner2
         private static string serial;
         private static string lastseenIP;
         private static string currIP;
-        private static float offset;
-        private static float scale;
+        private static double offset;
+        private static double scale;
         private static string username;
         private static string password;
 
@@ -31,8 +31,8 @@ namespace RPiRunner2
         public static string Serial { get => serial; set => serial = value; }
         public static string LastseenIP { get => lastseenIP; set => lastseenIP = value; }
         public static string CurrIP { get => currIP; set => currIP = value; }
-        public static float Offset { get => offset; set => offset = value; }
-        public static float Scale { get => scale; set => scale = value; }
+        public static double Offset { get => offset; set => offset = value; }
+        public static double Scale { get => scale; set => scale = value; }
         public static string Username { get => username; set => username = value; }
         public static string Password { get => password; set => password = value; }
 
@@ -102,8 +102,8 @@ namespace RPiRunner2
             public string devname = "AALSmartWeight";
             public string serial = NULL_SYMBOL;
             public string lastseenIP = NULL_SYMBOL; 
-            public float offset = BEST_OFFSET;
-            public float scale = BEST_SCALE;
+            public double offset = BEST_OFFSET;
+            public double scale = BEST_SCALE;
             public string username = "admin";
             public string password = "admin";
         }
