@@ -103,7 +103,6 @@ namespace IoTWeight
                 //get username from Facebook:
                 var response = await client.InvokeApiAsync<JToken>("getExtraDetails", HttpMethod.Get, null);
                 Console.WriteLine("JToken response = {0}" , response);
-                //string myName = "Logged in successfully but cannot get user name from Facebook Graph API";
                 if (response != null)
                 {
                     if (response["facebook"] != null)
@@ -112,7 +111,6 @@ namespace IoTWeight
                         if (userId != null)
                         {
                             JToken name = response["facebook"]["claims"]["name"];
-                            //JToken name = response["facebook"]["claims"]["wow"];
                             if (name != null)
                             {
                                 if ((string)name != null)
@@ -122,12 +120,6 @@ namespace IoTWeight
 
                     }
                 }
-
-                //response = null;
-                //JToken abc = response["bla"]["claims"]["woohoo"];
-                //myName = (string)abc;
-                Console.WriteLine("myName = " + myName);
-
             }
             catch (Exception ex)
             {
@@ -186,7 +178,7 @@ namespace IoTWeight
                 Console.WriteLine("In LoginUserAsDifferentUser after StartActivity");
                 Finish();
             }
-            //TODO:  google Finish after StartActivity.
+            
             else
             {
                 CreateAndShowDialog("Unable to authenticate.", "Sorry");
