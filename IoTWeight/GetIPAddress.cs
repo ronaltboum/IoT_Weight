@@ -66,10 +66,6 @@ namespace IoTWeight
             weighAgainButton.Click += (sender, e) =>
             {
                 Finish();
-                //var intent = new Intent(this, typeof(LogInActivity)).SetFlags(ActivityFlags.ClearTask);
-                //var intent = new Intent(this, typeof(LogInActivity))
-                //.SetFlags(ActivityFlags.ReorderToFront);
-                //StartActivity(intent);
             };
 
             string qrCode = Intent.GetStringExtra("qrcode") ?? "QR Code not available";
@@ -91,14 +87,13 @@ namespace IoTWeight
                 //    return;
 
                 var ipAddressList = await raspberryTableRef.Where(item => (item.QRCode == qrCode)).ToListAsync();
-                //TODO:  handle this case
+                
                 if (ipAddressList.Count == 0)
                 {
                     ProgressBar progress = FindViewById<ProgressBar>(Resource.Id.ProgressCircle);
                     progress.Visibility = ViewStates.Gone;
 
                     string sorryMessage = "Sorry!\nNo Raspberries with the QR code: " + qrCode + " were found in the database. \nEither the Raspberry was not registered in the cloud via the installation process  , \nor there was an error in the barcode scan. \nIn the later case, please press the back button and try to scan again";
-                    //CreateAndShowDialog("No Raspberries with the QR code: " + qrCode + " were found in the database. \nEither the Raspberry was not registered in the cloud via the installation process  , \nor there was an error in the barcode scan. \nIn the later case, please press the back button and try to scan again", "Sorry:");
                     FindViewById<TextView>(Resource.Id.Text1).Text = sorryMessage;
                 }
 
@@ -119,7 +114,6 @@ namespace IoTWeight
         }
 
 
-        //signature previously had return type void instread of Task.  also,  call to TalkToRaspberry wasn't awaited.
         private async Task TalkToRaspberry()
         {
             string ip = ipaddress;
@@ -130,7 +124,7 @@ namespace IoTWeight
                 return;
             }
 
-            DRP result = await sendSCANNED(); //TODO: check what happend if there is no answer
+            DRP result = await sendSCANNED();
 
             if (result == null)
             {
@@ -177,7 +171,6 @@ namespace IoTWeight
                 handleGUI_OnFailure("The scaling could not been done due to error.");
                 return;
             }
-            //TODO: send ACKs (we'll do it later)
         }
 
 
