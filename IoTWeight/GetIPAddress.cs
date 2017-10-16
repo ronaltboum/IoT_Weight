@@ -229,6 +229,7 @@ namespace IoTWeight
         //Find and delete the last weight in the database in order to delete it:
         private async Task deleteWeigh()
         {
+            //IMobileServiceTable<weighTable> weighTableRef;
             weighTable toDelete = null;
             MobileServiceClient client = ToDoActivity.CurrentActivity.CurrentClient;
             try
@@ -236,9 +237,12 @@ namespace IoTWeight
                 weighTableRef = client.GetTable<weighTable>();
                 DateTime today = DateTime.Now;
                 DateTime earliestDate = today.AddMinutes(-5);
-                
-                var toBeDeletedList = await weighTableRef.Where(item => (item.username == ourUserId) && (item.createdAt >= earliestDate) && (item.weigh == currentWeigh)).ToListAsync();
-                if (toBeDeletedList.Count == 0)
+
+                //var toBeDeletedList = await weighTableRef.Where(item => (item.username == ourUserId) && (item.createdAt >= earliestDate) && (item.weigh == currentWeigh)).ToListAsync();
+                //int roundedUp = (int)Math.Ceiling(precise);
+                int roundedUp = (int)Math.Ceiling(currentWeigh);
+                var toBeDeletedList = await weighTableRef.Where(item => (item.username == ourUserId) && (item.createdAt >= earliestDate) && (item.weigh <= roundedUp) && (item.weigh >= roundedUp-1)).ToListAsync();
+                if (toBeDeletedList.Count == 0) 
                 {
                     toDelete = null;
                     FindViewById<TextView>(Resource.Id.Text1).Text = "Cannot Delete.\nWeigh has not yet arrived to the database in the cloud";
