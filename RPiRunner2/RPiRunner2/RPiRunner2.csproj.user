@@ -16,8 +16,16 @@
     <DeviceId>30F105C9-681E-420b-A277-7C086EAD8A4E</DeviceId>
     <DeployOptionalPackages>false</DeployOptionalPackages>
     <UseEmulator>false</UseEmulator>
-    <RemoteDebugMachine>172.16.86.215</RemoteDebugMachine>
+    <RemoteDebugMachine>TAUIoT</RemoteDebugMachine>
     <AuthenticationMode>Universal</AuthenticationMode>
     <RemoteDebugEnabled>true</RemoteDebugEnabled>
+  </PropertyGroup>
+  <PropertyGroup>
+    <AppxPackageIsForStore>False</AppxPackageIsForStore>
+    <AppxShowAllApps>False</AppxShowAllApps>
+    <AppxBuildConfigurationSelection>x86|x64|arm</AppxBuildConfigurationSelection>
+    <PackageOptionalProjectsInIdeBuilds>False</PackageOptionalProjectsInIdeBuilds>
+    <RemoteMachine0>TAUIoT</RemoteMachine0>
+    <UseAuthentication0>False</UseAuthentication0>
   </PropertyGroup>
 </Project>

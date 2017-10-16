@@ -5,14 +5,14 @@
     xmlns:local="using:ScaleHub"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    mc:Ignorable="d">
+    mc:Ignorable="d" Width="1942">
 
-    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}" Margin="0,0,996,-692">
         <Grid.RowDefinitions>
-            <RowDefinition Height="89*"/>
-            <RowDefinition Height="14*"/>
+            <RowDefinition/>
+            <RowDefinition Height="0*"/>
         </Grid.RowDefinitions>
-        <ListView x:Name="lv_scalesnearby" HorizontalAlignment="Left" Height="589" Margin="120,130,0,0" VerticalAlignment="Top" Width="709" FontSize="24" Background="#FFF3F3F3" ItemClick="lv_scalesnearby_ItemClick" IsItemClickEnabled="True">
+        <ListView x:Name="lv_scalesnearby" Height="325" Margin="38,147,245,0" VerticalAlignment="Top" FontSize="24" Background="#FFF3F3F3" ItemClick="lv_scalesnearby_ItemClick" IsItemClickEnabled="True" HorizontalContentAlignment="Stretch">
             <ListView.ItemTemplate>
                 <DataTemplate>
                     <StackPanel>
@@ -28,8 +28,8 @@
                 </DataTemplate>
             </ListView.ItemTemplate>
         </ListView>
-        <TextBlock HorizontalAlignment="Left" Height="120" Margin="120,10,0,0" TextWrapping="Wrap" Text="WeightTracks nearby" VerticalAlignment="Top" Width="1269" FontSize="72"/>
-        <TextBlock x:Name="tb_wait" HorizontalAlignment="Left" Height="37" Margin="120,724,0,0" TextWrapping="Wrap" Text="Finidhing devices..." VerticalAlignment="Top" Width="663" FontSize="20"/>
-        <Button Content="refresh" HorizontalAlignment="Left" Margin="684,724,0,0" VerticalAlignment="Top" Height="37" Width="145" Click="Button_Click"/>
+        <TextBlock HorizontalAlignment="Left" Height="120" Margin="38,27,0,0" TextWrapping="Wrap" Text="WeightTracks nearby" VerticalAlignment="Top" Width="709" FontSize="72"/>
+        <TextBlock x:Name="tb_wait" HorizontalAlignment="Left" Height="37" Margin="38,477,0,0" TextWrapping="Wrap" Text="Finiding devices..." VerticalAlignment="Top" Width="663" FontSize="20"/>
+        <Button Content="refresh" HorizontalAlignment="Right" Margin="0,477,245,0" VerticalAlignment="Top" Height="37" Width="145" Click="Button_Click"/>
     </Grid>
 </Page>

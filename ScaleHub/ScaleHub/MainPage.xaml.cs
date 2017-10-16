@@ -43,6 +43,19 @@ namespace ScaleHub
             Task.Run(() => MainPageAsync());
         }
 
+
+        public async void DistinctIP(List<RaspberryTable> rasps)
+        {
+            string seen = "";
+            for(int i=rasps.Count-1;i>=0;i--)
+            {
+                if (seen.IndexOf(rasps[i].IPAddress) >= 0)
+                    rasps.RemoveAt(i);
+                else
+                    seen += " " + rasps[i].IPAddress;
+            }
+        }
+
         public async Task MainPageAsync()
         {
             List<RaspberryTable> rasps = await getListOfRasps();
@@ -50,10 +63,15 @@ namespace ScaleHub
             //FilterByMask(rasps, "192.168.1.0", 24);
 
             Dictionary<Task<string>, RaspberryTable> connections = new Dictionary<Task<string>, RaspberryTable>();
+
+            DistinctIP(rasps);
+
             foreach (RaspberryTable rasp in rasps)
             {
                 connections.Add(tryConnect(rasp.IPAddress),rasp);
             }
+
+            
 
             string result;
             RaspberryTable rtForConn;
@@ -85,6 +103,14 @@ namespace ScaleHub
                 connections.Remove(firstReturn);
                 System.Diagnostics.Debug.WriteLine("CONNECTIONS: "+ connections.Count);
             }
+            if (count == 0)
+            {
+                await Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, () =>
+                {
+                    tb_wait.Text = "no devices found in range.";
+                });
+            }
+
             System.Diagnostics.Debug.WriteLine("That's all folks.");
         }
 
