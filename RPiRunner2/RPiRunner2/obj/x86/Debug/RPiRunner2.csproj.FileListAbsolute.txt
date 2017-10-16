@@ -263,3 +263,11 @@ C:\Temp\Repos\TAU_IoT_Workshop\RPiRunner2\RPiRunner2\bin\x86\Debug\SQLitePCLRaw.
 C:\Temp\Repos\TAU_IoT_Workshop\RPiRunner2\RPiRunner2\obj\x86\Debug\Microsoft.Azure.Mobile.Client\en-US\Microsoft.WindowsAzure.MobileServices.Resources.resw
 C:\Temp\Repos\TAU_IoT_Workshop\RPiRunner2\RPiRunner2\obj\x86\Debug\Microsoft.Azure.Mobile.Client.SQLiteStore\en-US\Microsoft.WindowsAzure.MobileServices.SQLiteStore.Properties.Resources.resw
 C:\Temp\Repos\TAU_IoT_Workshop\RPiRunner2\RPiRunner2\obj\x86\Debug\Microsoft.Azure.Mobile.Client.pri.xml
+C:\Temp\Repos\TAU_IoT_Workshop\RPiRunner2\RPiRunner2\bin\x86\Debug\Accord.dll.config
+C:\Temp\Repos\TAU_IoT_Workshop\RPiRunner2\RPiRunner2\bin\x86\Debug\Accord.dll
+C:\Temp\Repos\TAU_IoT_Workshop\RPiRunner2\RPiRunner2\bin\x86\Debug\Accord.Math.Core.dll
+C:\Temp\Repos\TAU_IoT_Workshop\RPiRunner2\RPiRunner2\bin\x86\Debug\Accord.Math.dll
+C:\Temp\Repos\TAU_IoT_Workshop\RPiRunner2\RPiRunner2\bin\x86\Debug\Accord.Statistics.dll
+C:\Temp\Repos\TAU_IoT_Workshop\RPiRunner2\RPiRunner2\obj\x86\Debug\Accord\en\Accord.Properties.Resources.resw
+C:\Temp\Repos\TAU_IoT_Workshop\RPiRunner2\RPiRunner2\obj\x86\Debug\resources.en.resfiles
+C:\Temp\Repos\TAU_IoT_Workshop\RPiRunner2\RPiRunner2\obj\x86\Debug\resources.en.resfiles.intermediate

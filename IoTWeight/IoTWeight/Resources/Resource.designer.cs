@@ -51,7 +51,7 @@ namespace IoTWeight
 			public const int ic_launcher = 2130837504;
 			
 			// aapt resource value: 0x7f020001
-			public const int QRcode = 2130837505;
+			public const int qrcode = 2130837505;
 			
 			static Drawable()
 			{
@@ -93,8 +93,8 @@ namespace IoTWeight
 			// aapt resource value: 0x7f07001d
 			public const int DeleteButton = 2131165213;
 			
-			// aapt resource value: 0x7f07003c
-			public const int DeleteWeighs = 2131165244;
+			// aapt resource value: 0x7f07003d
+			public const int DeleteWeighs = 2131165245;
 			
 			// aapt resource value: 0x7f070022
 			public const int FinishActivity = 2131165218;
@@ -147,11 +147,14 @@ namespace IoTWeight
 			// aapt resource value: 0x7f070003
 			public const int buttonLoginUser = 2131165187;
 			
+			// aapt resource value: 0x7f07003c
+			public const int checkToDoItem = 2131165244;
+			
 			// aapt resource value: 0x7f070017
 			public const int chooseTime = 2131165207;
 			
-			// aapt resource value: 0x7f07003e
-			public const int contentFrame = 2131165246;
+			// aapt resource value: 0x7f07003f
+			public const int contentFrame = 2131165247;
 			
 			// aapt resource value: 0x7f07001c
 			public const int currentWeigh = 2131165212;
@@ -186,8 +189,8 @@ namespace IoTWeight
 			// aapt resource value: 0x7f070005
 			public const int listViewToDo = 2131165189;
 			
-			// aapt resource value: 0x7f07003f
-			public const int menu_refresh = 2131165247;
+			// aapt resource value: 0x7f070040
+			public const int menu_refresh = 2131165248;
 			
 			// aapt resource value: 0x7f07001f
 			public const int plot_view = 2131165215;
@@ -252,8 +255,8 @@ namespace IoTWeight
 			// aapt resource value: 0x7f070021
 			public const int updateButton = 2131165217;
 			
-			// aapt resource value: 0x7f07003d
-			public const int updateHeight = 2131165245;
+			// aapt resource value: 0x7f07003e
+			public const int updateHeight = 2131165246;
 			
 			// aapt resource value: 0x7f070024
 			public const int welcomeText = 2131165220;
@@ -317,13 +320,16 @@ namespace IoTWeight
 			public const int row = 2130903054;
 			
 			// aapt resource value: 0x7f03000f
-			public const int updateProfile = 2130903055;
+			public const int Row_List_To_Do = 2130903055;
 			
 			// aapt resource value: 0x7f030010
-			public const int zxingscanneractivitylayout = 2130903056;
+			public const int updateProfile = 2130903056;
 			
 			// aapt resource value: 0x7f030011
-			public const int zxingscannerfragmentlayout = 2130903057;
+			public const int zxingscanneractivitylayout = 2130903057;
+			
+			// aapt resource value: 0x7f030012
+			public const int zxingscannerfragmentlayout = 2130903058;
 			
 			static Layout()
 			{

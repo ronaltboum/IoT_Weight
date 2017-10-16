@@ -5,8 +5,8 @@ namespace OverloadTester
 {
     class Program
     {
-        private static int TIMES = 10; //The number of connection requests to send
-        private static string IP = "192.168.1.106"; //the IP of the raspberry
+        private static int TIMES = 20; //The number of connection requests to send
+        private static string IP = "192.168.43.109"; //the IP of the raspberry
         static void Main(string[] args)
         {
             Task.Run(() => MainAsync(args));
@@ -20,17 +20,17 @@ namespace OverloadTester
             //Test I - send a single message
             Console.ForegroundColor = ConsoleColor.Cyan;
             Console.WriteLine("Test I Started.");
-            //await testSendOne();
+            await testSendOne();
 
             //Test II - send several messages, but wait for each one to return an answer before sending the next one
             Console.ForegroundColor = ConsoleColor.Green;
             Console.WriteLine("Test II Started.");
-            //await testSendSerial();
+            await testSendSerial();
 
             //Test III - Sending several messages simultaneously and receiving (hopefully) all the answers
             Console.ForegroundColor = ConsoleColor.Yellow;
             Console.WriteLine("Test III Started.");
-            //await testSendParallel();
+            await testSendParallel();
 
             //Test IV - Like test III, but every message will be resend until received a proper answer
             Console.ForegroundColor = ConsoleColor.Magenta;

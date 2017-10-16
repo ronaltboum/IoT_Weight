@@ -31,13 +31,29 @@
     <AppXManifest Include="C:\Temp\Repos\TAU_IoT_Workshop\WeightTest\WeightTest\bin\ARM\Debug\Core\AppxManifest.xml">
       <PackagePath>AppxManifest.xml</PackagePath>
       <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
-      <Modified>2017-10-02T11:03:40.988</Modified>
+      <Modified>2017-10-16T06:16:25.388</Modified>
     </AppXManifest>
   </ItemGroup>
   <ItemGroup>
     <AppxPackagedFile Include="C:\Temp\Repos\TAU_IoT_Workshop\WeightTest\WeightTest\bin\ARM\Debug\WeightTest.exe">
       <PackagePath>entrypoint\WeightTest.exe</PackagePath>
-      <Modified>2017-10-02T11:03:37.584</Modified>
+      <Modified>2017-10-16T06:16:24.918</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\Bar Angel\.nuget\packages\Accord\3.7.0\lib\netstandard1.4\Accord.dll">
+      <PackagePath>Accord.dll</PackagePath>
+      <Modified>2017-08-20T19:42:54.000</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\Bar Angel\.nuget\packages\Accord.Math\3.7.0\lib\netstandard1.4\Accord.Math.Core.dll">
+      <PackagePath>Accord.Math.Core.dll</PackagePath>
+      <Modified>2017-08-20T19:42:52.000</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\Bar Angel\.nuget\packages\Accord.Math\3.7.0\lib\netstandard1.4\Accord.Math.dll">
+      <PackagePath>Accord.Math.dll</PackagePath>
+      <Modified>2017-08-20T19:42:52.000</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\Bar Angel\.nuget\packages\Accord.Statistics\3.7.0\lib\netstandard1.4\Accord.Statistics.dll">
+      <PackagePath>Accord.Statistics.dll</PackagePath>
+      <Modified>2017-08-20T19:42:56.000</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\Bar Angel\.nuget\packages\Microsoft.CSharp\4.0.1\lib\netcore50\Microsoft.CSharp.dll">
       <PackagePath>Microsoft.CSharp.dll</PackagePath>
@@ -529,6 +545,10 @@
       <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
       <Modified>2017-09-20T03:02:06.000</Modified>
     </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\Bar Angel\.nuget\packages\accord\3.7.0\build\Accord.dll.config">
+      <PackagePath>Accord.dll.config</PackagePath>
+      <Modified>2017-08-20T19:42:54.000</Modified>
+    </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Temp\Repos\TAU_IoT_Workshop\WeightTest\WeightTest\bin\ARM\Debug\WeightTest.xr.xml">
       <PackagePath>WeightTest.xr.xml</PackagePath>
       <Modified>2017-10-02T07:05:51.996</Modified>
@@ -540,11 +560,11 @@
     <AppxPackagedFile Include="C:\Temp\Repos\TAU_IoT_Workshop\WeightTest\WeightTest\bin\ARM\Debug\resources.pri">
       <PackagePath>resources.pri</PackagePath>
       <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
-      <Modified>2017-10-02T11:03:40.408</Modified>
+      <Modified>2017-10-15T13:29:30.964</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Temp\Repos\TAU_IoT_Workshop\WeightTest\WeightTest\bin\ARM\Debug\Core\WeightTest.exe">
       <PackagePath>WeightTest.exe</PackagePath>
-      <Modified>2017-10-02T11:03:40.974</Modified>
+      <Modified>2017-10-16T06:16:25.372</Modified>
     </AppxPackagedFile>
   </ItemGroup>
   <ItemGroup>

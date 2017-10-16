@@ -31,13 +31,29 @@
     <AppXManifest Include="C:\Temp\Repos\TAU_IoT_Workshop\RPiRunner2\RPiRunner2\bin\x86\Debug\Core\AppxManifest.xml">
       <PackagePath>AppxManifest.xml</PackagePath>
       <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
-      <Modified>2017-10-09T09:44:19.876</Modified>
+      <Modified>2017-10-15T08:46:31.929</Modified>
     </AppXManifest>
   </ItemGroup>
   <ItemGroup>
     <AppxPackagedFile Include="C:\Temp\Repos\TAU_IoT_Workshop\RPiRunner2\RPiRunner2\bin\x86\Debug\RPiRunner2.exe">
       <PackagePath>entrypoint\RPiRunner2.exe</PackagePath>
-      <Modified>2017-10-09T09:44:15.222</Modified>
+      <Modified>2017-10-15T08:46:19.643</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\Bar Angel\.nuget\packages\Accord\3.7.0\lib\netstandard1.4\Accord.dll">
+      <PackagePath>Accord.dll</PackagePath>
+      <Modified>2017-08-20T19:42:54.000</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\Bar Angel\.nuget\packages\Accord.Math\3.7.0\lib\netstandard1.4\Accord.Math.Core.dll">
+      <PackagePath>Accord.Math.Core.dll</PackagePath>
+      <Modified>2017-08-20T19:42:52.000</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\Bar Angel\.nuget\packages\Accord.Math\3.7.0\lib\netstandard1.4\Accord.Math.dll">
+      <PackagePath>Accord.Math.dll</PackagePath>
+      <Modified>2017-08-20T19:42:52.000</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\Bar Angel\.nuget\packages\Accord.Statistics\3.7.0\lib\netstandard1.4\Accord.Statistics.dll">
+      <PackagePath>Accord.Statistics.dll</PackagePath>
+      <Modified>2017-08-20T19:42:56.000</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\Bar Angel\.nuget\packages\DotNetty.Buffers\0.4.4\lib\netstandard1.3\DotNetty.Buffers.dll">
       <PackagePath>DotNetty.Buffers.dll</PackagePath>
@@ -631,14 +647,6 @@
       <PackagePath>Validation.dll</PackagePath>
       <Modified>2017-03-14T19:41:02.000</Modified>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Temp\Repos\TAU_IoT_Workshop\RPiRunner2\RPiRunner2\Login.html">
-      <PackagePath>Login.html</PackagePath>
-      <Modified>2017-09-20T03:02:06.000</Modified>
-    </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Temp\Repos\TAU_IoT_Workshop\RPiRunner2\RPiRunner2\SettingsPage.html">
-      <PackagePath>SettingsPage.html</PackagePath>
-      <Modified>2017-10-07T21:05:27.147</Modified>
-    </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Temp\Repos\TAU_IoT_Workshop\RPiRunner2\RPiRunner2\Properties\Default.rd.xml">
       <PackagePath>Properties\Default.rd.xml</PackagePath>
       <Modified>2017-09-20T03:02:06.000</Modified>
@@ -677,6 +685,14 @@
       <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
       <Modified>2017-09-20T03:02:06.000</Modified>
     </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Temp\Repos\TAU_IoT_Workshop\RPiRunner2\RPiRunner2\SettingsPage.html">
+      <PackagePath>SettingsPage.html</PackagePath>
+      <Modified>2017-10-11T14:30:52.053</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\Bar Angel\.nuget\packages\accord\3.7.0\build\Accord.dll.config">
+      <PackagePath>Accord.dll.config</PackagePath>
+      <Modified>2017-08-20T19:42:54.000</Modified>
+    </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Temp\Repos\TAU_IoT_Workshop\RPiRunner2\RPiRunner2\bin\x86\Debug\RPiRunner2.xr.xml">
       <PackagePath>RPiRunner2.xr.xml</PackagePath>
       <Modified>2017-09-25T17:21:06.459</Modified>
@@ -688,11 +704,11 @@
     <AppxPackagedFile Include="C:\Temp\Repos\TAU_IoT_Workshop\RPiRunner2\RPiRunner2\bin\x86\Debug\resources.pri">
       <PackagePath>resources.pri</PackagePath>
       <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
-      <Modified>2017-10-05T08:35:01.265</Modified>
+      <Modified>2017-10-15T08:46:27.881</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Temp\Repos\TAU_IoT_Workshop\RPiRunner2\RPiRunner2\bin\x86\Debug\Core\RPiRunner2.exe">
       <PackagePath>RPiRunner2.exe</PackagePath>
-      <Modified>2017-10-09T09:44:19.858</Modified>
+      <Modified>2017-10-15T08:46:31.888</Modified>
     </AppxPackagedFile>
   </ItemGroup>
   <ItemGroup>

@@ -22390,18 +22390,22 @@
       }
     },
     "dependencies": {
+      "Accord.Statistics": {
+        "target": "Package",
+        "version": "3.7.0"
+      },
       "Microsoft.NETCore.UniversalWindowsPlatform": {
         "target": "Package",
         "version": "5.2.3"
-      },
-      "Accord.Statistics": {
-        "target": "Package",
-        "version": "[3.7.0, )"
       }
     },
     "frameworks": {
       "uap10.0.10586": {
         "dependencies": {
+          "Accord.Statistics": {
+            "target": "Package",
+            "version": "3.7.0"
+          },
           "Microsoft.NETCore.UniversalWindowsPlatform": {
             "target": "Package",
             "version": "5.2.3"

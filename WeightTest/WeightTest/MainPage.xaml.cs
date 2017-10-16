@@ -26,7 +26,7 @@ namespace WeightTest
     {
         const byte DOUT_PIN = 26;
         const byte SLK_PIN = 19;
-        private const int AVG_NUM = 1500;
+        private const int AVG_NUM = 1000;
 
         private GpioPin dout;
         private GpioPin slk;
@@ -210,9 +210,9 @@ namespace WeightTest
             while (true)
             {
                 meas = hx711b.getListOfMeasures(AVG_NUM);
-                standart = hx711b.avg(meas);
+                standart = hx711b.transform(hx711b.avg(meas));
                 hx711b.detectAnomalies(meas, (int)(AVG_NUM * 0.1), 0.95f);
-                smart = hx711b.avg(meas);
+                smart =hx711b.transform( hx711b.avg(meas));
 
                 Debug.WriteLine("Without filtering: " + standart + "\tWith Filtering: " + smart);
             }

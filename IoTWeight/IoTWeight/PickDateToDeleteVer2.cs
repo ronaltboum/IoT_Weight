@@ -24,6 +24,9 @@ namespace IoTWeight
         Button _remAllButton;
         private IMobileServiceTable<weighTable> weighTableRef;
         string ourUserId = ToDoActivity.CurrentActivity.Currentuserid;
+        //Bar's sid:    sid:f5ccac253e6e9ce70bd96a3b9a0b59d2
+        //string ourUserId = "sid:f5ccac253e6e9ce70bd96a3b9a0b59d2";
+        //ourUserId = BarSID; 
         DateTime datePicked;
         DeleteJob job;
         protected override void OnCreate(Bundle bundle)
@@ -169,41 +172,7 @@ namespace IoTWeight
             }
         }
 
-        /*
-        private async Task deleteWeighs(DateTime time)
-        {
-            MobileServiceClient client = ToDoActivity.CurrentActivity.CurrentClient;
-            try
-            {
-                weighTableRef = client.GetTable<weighTable>();
-                //get all the to be deleted weights -  the weights before the specified date
-                var toBeDeleted = await weighTableRef.Where(item => (item.username == ourUserId) && (item.createdAt <= time)).ToListAsync();
-                if (toBeDeleted.Count == 0)
-                {
-                    //CreateAndShowDialog("No weights were found prior to the specified date", "Cannot Delete");
-                    FindViewById<TextView>(Resource.Id.date_display).Text = "Cannot Delete.\nNo weights were found prior to the specified date";
-                }
-                else
-                {
-                    foreach (weighTable weight in toBeDeleted)
-                    {
-                        await weighTableRef.DeleteAsync(weight);
-                        //Console.WriteLine("SLEEPING !!!!!!!!!!!!!!!!!!!");
-                        //await Task.Delay(90000);
-                        //object o2 = null;
-                        //int i2 = (int)o2;   
-                    }
-              
-                    FindViewById<TextView>(Resource.Id.date_display).Text = "Deleted Successfully";
-                }
-            }
-            catch (Exception e)
-            {
-                CreateAndShowDialog(e, "Error");
-            }
-        }
-
-        */
+        
         void CreateAndShowDialog(Exception exception, String title)
         {
             CreateAndShowDialog(exception.Message, title);

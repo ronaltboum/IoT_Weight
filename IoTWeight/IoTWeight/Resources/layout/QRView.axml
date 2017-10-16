@@ -10,11 +10,11 @@
          android:src="@drawable/Qrcode"
         android:layout_gravity="center"
          />
-    <TextView
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="Do you see the scale's QR Code? Scan it by clicking on 'scan' to start the weighing."
-        style="@style/DefText"
-        android:id="@+id/QRresult" />
+  <TextView
+      android:textAppearance="?android:attr/textAppearanceLarge"
+      android:text="Do you see the scale's QR Code? Scan it by clicking on 'scan' to start the weighing."
+      style="@style/DefText"
+      android:id="@+id/QRresult" />
 
   <TextView
      android:textAppearance="?android:attr/textAppearanceLarge"

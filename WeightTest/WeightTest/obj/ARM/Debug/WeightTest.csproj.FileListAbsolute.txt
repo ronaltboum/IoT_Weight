@@ -210,3 +210,12 @@ C:\Temp\Repos\TAU_IoT_Workshop\WeightTest\WeightTest\obj\ARM\Debug\qualifiers.tx
 C:\Temp\Repos\TAU_IoT_Workshop\WeightTest\WeightTest\obj\ARM\Debug\qualifiers.txt.intermediate
 C:\Temp\Repos\TAU_IoT_Workshop\WeightTest\WeightTest\obj\ARM\Debug\MultipleQualifiersPerDimensionFound.txt
 C:\Temp\Repos\TAU_IoT_Workshop\WeightTest\WeightTest\obj\ARM\Debug\ProjectArchitectures.txt
+C:\Temp\Repos\TAU_IoT_Workshop\WeightTest\WeightTest\bin\ARM\Debug\Accord.dll.config
+C:\Temp\Repos\TAU_IoT_Workshop\WeightTest\WeightTest\bin\ARM\Debug\Accord.dll
+C:\Temp\Repos\TAU_IoT_Workshop\WeightTest\WeightTest\bin\ARM\Debug\Accord.Math.Core.dll
+C:\Temp\Repos\TAU_IoT_Workshop\WeightTest\WeightTest\bin\ARM\Debug\Accord.Math.dll
+C:\Temp\Repos\TAU_IoT_Workshop\WeightTest\WeightTest\bin\ARM\Debug\Accord.Statistics.dll
+C:\Temp\Repos\TAU_IoT_Workshop\WeightTest\WeightTest\obj\ARM\Debug\Accord\en\Accord.Properties.Resources.resw
+C:\Temp\Repos\TAU_IoT_Workshop\WeightTest\WeightTest\obj\ARM\Debug\WeightTest.csproj.GenerateResource.Cache
+C:\Temp\Repos\TAU_IoT_Workshop\WeightTest\WeightTest\obj\ARM\Debug\resources.en.resfiles
+C:\Temp\Repos\TAU_IoT_Workshop\WeightTest\WeightTest\obj\ARM\Debug\resources.en.resfiles.intermediate

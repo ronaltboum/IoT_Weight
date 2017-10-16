@@ -28,15 +28,13 @@ namespace IoTWeight
 
             string userName = Intent.GetStringExtra("userName") ?? "Username not available";
             FindViewById<TextView>(Resource.Id.welcomeText).Text = "Hello " + userName + "!";
-
+      
             Button getStatsButton = FindViewById<Button>(Resource.Id.GetStats);
             Button startWeighButton = FindViewById<Button>(Resource.Id.StartWeigh);
             Button BMIButton = FindViewById<Button>(Resource.Id.BMI);
             Button updateButton = FindViewById<Button>(Resource.Id.update);
-
             Button LogoutButton = FindViewById<Button>(Resource.Id.ButtonLogout);
-            //LogoutButton.Visibility = ViewStates.Gone;
-
+     
             Button debuggButton = FindViewById<Button>(Resource.Id.debuggButton);
             debuggButton.Visibility = ViewStates.Gone;
 
@@ -97,9 +95,13 @@ namespace IoTWeight
                 var intent = new Intent(this, typeof(ToDoActivity));
                 intent.AddFlags(ActivityFlags.ClearTop);
                 StartActivity(intent);
+                //Console.WriteLine("In LogOut after StartActivity");
+                Finish();    
             };
 
         }
+
+        
         void CreateAndShowDialog(string message, string title)
         {
             var builder = new AlertDialog.Builder(this);

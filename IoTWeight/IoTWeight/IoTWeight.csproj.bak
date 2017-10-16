@@ -119,13 +119,11 @@
   <ItemGroup>
     <Compile Include="CalculateBMI.cs" />
     <Compile Include="DatePickerFragment.cs" />
-    <Compile Include="DeleteWeighs.cs" />
     <Compile Include="DRP.cs" />
     <Compile Include="GetIPAddress.cs" />
     <Compile Include="GetStatsChooseDisplay.cs" />
     <Compile Include="InsertWeightsForDebugg.cs" />
     <Compile Include="LogInActivity.cs" />
-    <Compile Include="PickDateToDelete.cs" />
     <Compile Include="PickDateToDeleteVer2.cs" />
     <Compile Include="QRScan.cs" />
     <Compile Include="RaspberryTable.cs" />
@@ -210,7 +208,8 @@
     <AndroidResource Include="Resources\values-v14\styles.xml" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Novell\Novell.MonoDroid.CSharp.targets" />
+  <ItemGroup />
   <ItemGroup>
-    <Folder Include="Resources\drawable\" />
+    <AndroidResource Include="Resources\drawable\qrcode.png" />
   </ItemGroup>
 </Project>

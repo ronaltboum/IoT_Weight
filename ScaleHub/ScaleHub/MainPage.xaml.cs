@@ -5,8 +5,10 @@ using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
 using System.Threading.Tasks;
+using Windows.ApplicationModel.DataTransfer;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
+using Windows.UI.Popups;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
@@ -27,7 +29,10 @@ namespace ScaleHub
         const string applicationURL = @"https://iotweight.azurewebsites.net";
         const string WELCOME_MSG = "@welcome@";
         const int PORT = 9888;
+        const int WEBPORT = 9000;
         List<RaspTableWithDevname> listItems;
+
+        int count = 0;
         public MainPage()
         {
             this.InitializeComponent();
@@ -44,31 +49,42 @@ namespace ScaleHub
 
             //FilterByMask(rasps, "192.168.1.0", 24);
 
-            Dictionary<RaspberryTable,Task<string>> connections = new Dictionary<RaspberryTable, Task<string>>();
+            Dictionary<Task<string>, RaspberryTable> connections = new Dictionary<Task<string>, RaspberryTable>();
             foreach (RaspberryTable rasp in rasps)
             {
-                connections.Add(rasp,tryConnect(rasp.IPAddress));
+                connections.Add(tryConnect(rasp.IPAddress),rasp);
             }
 
-
-            await Task.WhenAll(connections.Values);
-
-            int count = 0;
-            foreach(RaspberryTable rasp in rasps)
+            string result;
+            RaspberryTable rtForConn;
+            Task<string> firstReturn;
+            Task uiUpdate = null ;
+            count = 0;
+            while (connections.Count > 0)
             {
-                if (connections[rasp].Result != null)
+                firstReturn = await Task.WhenAny(connections.Keys);
+                if (firstReturn == null)
+                    continue;
+                result = firstReturn.Result;
+                rtForConn = connections[firstReturn];
+                if (rtForConn == null)
+                    continue;
+                if (firstReturn.Result != null)
                 {
-                    System.Diagnostics.Debug.WriteLine(connections[rasp].Result + " (" + rasp.QRCode + ") -- " + rasp.IPAddress);
-                    listItems.Add(RaspTableWithDevname.initFromTable(rasp, connections[rasp].Result));
+                    System.Diagnostics.Debug.WriteLine(result + " (" + rtForConn.QRCode + ") -- " + rtForConn.IPAddress);
+                    listItems.Add(RaspTableWithDevname.initFromTable(rtForConn, result));
                     count++;
+                    if (uiUpdate != null)
+                        await uiUpdate;
+                    uiUpdate = Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, () =>
+                     {
+                         lv_scalesnearby.ItemsSource = new List<RaspTableWithDevname>(listItems);
+                         tb_wait.Text = count + " devices found.";
+                     }).AsTask();
                 }
+                connections.Remove(firstReturn);
+                System.Diagnostics.Debug.WriteLine("CONNECTIONS: "+ connections.Count);
             }
-
-            await Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, () => {
-                lv_scalesnearby.ItemsSource = new List<RaspTableWithDevname> (listItems);
-                tb_wait.Text = count + " devices found.";
-            });
-
             System.Diagnostics.Debug.WriteLine("That's all folks.");
         }
 
@@ -146,9 +162,26 @@ namespace ScaleHub
             
         }
 
-        private void lv_scalesnearby_ItemClick(object sender, ItemClickEventArgs e)
+        private async void lv_scalesnearby_ItemClick(object sender, ItemClickEventArgs e)
         {
+            System.Diagnostics.Debug.WriteLine("clickify");
 
+            ListView senderlist = sender as ListView;
+            string ip = (e.ClickedItem as RaspTableWithDevname).IPAddress;
+            string url = "http://" + ip + ":" + WEBPORT;
+
+            var dataPackage = new DataPackage();
+            dataPackage.SetText(url);
+            Clipboard.SetContent(dataPackage);
+
+            var dialog = new MessageDialog("The address was copied to clipboard:\n" + url, "Copied");
+            await dialog.ShowAsync();
+        }
+
+        private async void Button_Click(object sender, RoutedEventArgs e)
+        {
+            listItems.Clear();
+            await MainPageAsync();
         }
     }
 }

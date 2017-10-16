@@ -31,13 +31,13 @@
     <AppXManifest Include="C:\Temp\Repos\TAU_IoT_Workshop\RPiRunner2\RPiRunner2\bin\ARM\Debug\Core\AppxManifest.xml">
       <PackagePath>AppxManifest.xml</PackagePath>
       <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
-      <Modified>2017-10-13T20:12:11.348</Modified>
+      <Modified>2017-10-15T13:57:17.954</Modified>
     </AppXManifest>
   </ItemGroup>
   <ItemGroup>
     <AppxPackagedFile Include="C:\Temp\Repos\TAU_IoT_Workshop\RPiRunner2\RPiRunner2\bin\ARM\Debug\RPiRunner2.exe">
       <PackagePath>entrypoint\RPiRunner2.exe</PackagePath>
-      <Modified>2017-10-13T20:11:46.340</Modified>
+      <Modified>2017-10-15T13:57:08.430</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\Bar Angel\.nuget\packages\Accord\3.7.0\lib\netstandard1.4\Accord.dll">
       <PackagePath>Accord.dll</PackagePath>
@@ -700,11 +700,11 @@
     <AppxPackagedFile Include="C:\Temp\Repos\TAU_IoT_Workshop\RPiRunner2\RPiRunner2\bin\ARM\Debug\resources.pri">
       <PackagePath>resources.pri</PackagePath>
       <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
-      <Modified>2017-10-13T20:12:06.056</Modified>
+      <Modified>2017-10-15T08:47:59.468</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Temp\Repos\TAU_IoT_Workshop\RPiRunner2\RPiRunner2\bin\ARM\Debug\Core\RPiRunner2.exe">
       <PackagePath>RPiRunner2.exe</PackagePath>
-      <Modified>2017-10-13T20:12:11.311</Modified>
+      <Modified>2017-10-15T13:57:17.919</Modified>
     </AppxPackagedFile>
   </ItemGroup>
   <ItemGroup>

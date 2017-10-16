@@ -12,7 +12,7 @@
             <RowDefinition Height="89*"/>
             <RowDefinition Height="14*"/>
         </Grid.RowDefinitions>
-        <ListView x:Name="lv_scalesnearby" HorizontalAlignment="Left" Height="589" Margin="120,130,0,0" VerticalAlignment="Top" Width="1269" FontSize="24" Background="#FFF3F3F3" DoubleTapped="lv_scalesnearby_DoubleTapped" ItemClick="lv_scalesnearby_ItemClick">
+        <ListView x:Name="lv_scalesnearby" HorizontalAlignment="Left" Height="589" Margin="120,130,0,0" VerticalAlignment="Top" Width="709" FontSize="24" Background="#FFF3F3F3" ItemClick="lv_scalesnearby_ItemClick" IsItemClickEnabled="True">
             <ListView.ItemTemplate>
                 <DataTemplate>
                     <StackPanel>
@@ -30,5 +30,6 @@
         </ListView>
         <TextBlock HorizontalAlignment="Left" Height="120" Margin="120,10,0,0" TextWrapping="Wrap" Text="WeightTracks nearby" VerticalAlignment="Top" Width="1269" FontSize="72"/>
         <TextBlock x:Name="tb_wait" HorizontalAlignment="Left" Height="37" Margin="120,724,0,0" TextWrapping="Wrap" Text="Finidhing devices..." VerticalAlignment="Top" Width="663" FontSize="20"/>
+        <Button Content="refresh" HorizontalAlignment="Left" Margin="684,724,0,0" VerticalAlignment="Top" Height="37" Width="145" Click="Button_Click"/>
     </Grid>
 </Page>

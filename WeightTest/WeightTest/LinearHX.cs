@@ -198,7 +198,17 @@ namespace WeightTest
         }
         public float avg(int[] res)
         {
-            return (float)Measures.Mean(res);
+            float mean = 0;
+            int count = 0;
+            for (int i = 0; i < res.Length; i++)
+            {
+                if (res[i] > int.MinValue)
+                {
+                    mean += res[i];
+                    count++;
+                }
+            }
+            return mean / count;
         }
         //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~`
 
@@ -207,23 +217,39 @@ namespace WeightTest
         {
             int low;
             low = (results.Length - training) / 2;
-            int[] sample = (new ArraySegment<int>(results, low, low + training)).Array;
-            
+            int[] sample = new int[training];
+            for (int i = 0; i < training; i++)
+                sample[i] = results[low + i];
+
 
             double mean;
             double std;
-           
+
 
             mean = Measures.Mean(sample);
-            std = Measures.StandardDeviation(sample,mean);
+            std = Measures.StandardDeviation(sample, mean);
 
-            NormalDistribution norm = new NormalDistribution(mean, std);
-
-            for (int i = 0; i < results.Length; i++)
+            if (std > 0)
             {
 
-                if (norm.ProbabilityDensityFunction(results[i]) < (1 - tolerance))
-                    results[i] = int.MinValue;
+                NormalDistribution norm = new NormalDistribution(mean, std);
+
+                double zScore;
+                for (int i = 0; i < results.Length; i++)
+                {
+                    zScore = Math.Abs(results[i] - mean) / std;
+                    if (2 * (1 - norm.DistributionFunction(zScore)) < (1 - tolerance))
+                        results[i] = int.MinValue;
+                }
+            }
+            else
+            {
+                for (int i = 0; i < results.Length; i++)
+                {
+
+                    if (results[i] != mean)
+                        results[i] = int.MinValue;
+                }
             }
         }
 

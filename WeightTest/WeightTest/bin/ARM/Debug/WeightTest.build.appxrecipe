@@ -28,6 +28,18 @@
     <AppxPackagedFile Include="C:\Temp\Repos\TAU_IoT_Workshop\WeightTest\WeightTest\bin\ARM\Debug\WeightTest.exe">
       <PackagePath>entrypoint\WeightTest.exe</PackagePath>
     </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\Bar Angel\.nuget\packages\Accord\3.7.0\lib\netstandard1.4\Accord.dll">
+      <PackagePath>Accord.dll</PackagePath>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\Bar Angel\.nuget\packages\Accord.Math\3.7.0\lib\netstandard1.4\Accord.Math.Core.dll">
+      <PackagePath>Accord.Math.Core.dll</PackagePath>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\Bar Angel\.nuget\packages\Accord.Math\3.7.0\lib\netstandard1.4\Accord.Math.dll">
+      <PackagePath>Accord.Math.dll</PackagePath>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\Bar Angel\.nuget\packages\Accord.Statistics\3.7.0\lib\netstandard1.4\Accord.Statistics.dll">
+      <PackagePath>Accord.Statistics.dll</PackagePath>
+    </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\Bar Angel\.nuget\packages\Microsoft.CSharp\4.0.1\lib\netcore50\Microsoft.CSharp.dll">
       <PackagePath>Microsoft.CSharp.dll</PackagePath>
     </AppxPackagedFile>
@@ -396,6 +408,9 @@
     <AppxPackagedFile Include="C:\Temp\Repos\TAU_IoT_Workshop\WeightTest\WeightTest\Assets\Wide310x150Logo.scale-200.png">
       <PackagePath>Assets\Wide310x150Logo.scale-200.png</PackagePath>
       <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\Bar Angel\.nuget\packages\accord\3.7.0\build\Accord.dll.config">
+      <PackagePath>Accord.dll.config</PackagePath>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Temp\Repos\TAU_IoT_Workshop\WeightTest\WeightTest\bin\ARM\Debug\WeightTest.xr.xml">
       <PackagePath>WeightTest.xr.xml</PackagePath>

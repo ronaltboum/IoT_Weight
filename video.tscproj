@@ -2,7 +2,7 @@
   "title" : "",
   "description" : "",
   "author" : "",
-  "width" : 480.0,
+  "width" : 1088.0,
   "height" : 816.0,
   "version" : "0.5",
   "editRate" : 30,
@@ -264,6 +264,9 @@
                       "mixToMono" : false
                     },
                       "channelNumber" : "0,1",
+                    "parameters" : {
+                      "volume" : 0.604395604395604
+                    },
                     "effects" : [
 
                     ],
@@ -1314,21 +1317,9 @@
                       "ident" : "logo580"
                     },
                     "parameters" : {
-                      "translation1" : {
-                        "type" : "double",
-                        "defaultValue" : 328.591133004996,
-                        "interp" : "eioe"
-                      },
-                      "scale0" : {
-                        "type" : "double",
-                        "defaultValue" : 0.48126586057581,
-                        "interp" : "eioe"
-                      },
-                      "scale1" : {
-                        "type" : "double",
-                        "defaultValue" : 0.48126586057581,
-                        "interp" : "eioe"
-                      }
+                      "translation1" : 328.591133004996,
+                      "scale0" : 0.48126586057581,
+                      "scale1" : 0.48126586057581
                     },
                     "effects" : [
                         {
@@ -1470,7 +1461,7 @@
                     "rightMedia" : 16
                   },
                   {
-                    "name" : "CircleStretch",
+                    "name" : "Fade",
                     "duration" : 15,
                     "useAudioPreRoll" : true,
                     "useVisualPreRoll" : true,
@@ -1478,7 +1469,7 @@
                     "rightMedia" : 19
                   },
                   {
-                    "name" : "CircleStretch",
+                    "name" : "Fade",
                     "duration" : 15,
                     "useAudioPreRoll" : true,
                     "useVisualPreRoll" : true,
@@ -1512,8 +1503,8 @@
                       "kind" : "remix",
                       "shape" : "text",
                       "style" : "basic",
-                      "height" : 218.333333333374,
-                      "width" : 376.666666667096,
+                      "height" : 133.333333333348,
+                      "width" : 1025.00000000054,
                       "word-wrap" : 1.0,
                       "horizontal-alignment" : "center",
                       "text" : "The smart way to stay in shape",
@@ -1532,7 +1523,7 @@
                         "keyframes" : [
                           {
                             "time" : 0,
-                            "value" : [{"name":"fgColor","rangeEnd":30,"rangeStart":0,"value":"(255,255,255,255)","valueType":"color"},{"name":"fontItalic","rangeEnd":30,"rangeStart":0,"value":0,"valueType":"int"},{"name":"underline","rangeEnd":30,"rangeStart":0,"value":0,"valueType":"int"},{"name":"fontWeight","rangeEnd":30,"rangeStart":0,"value":400,"valueType":"int"},{"name":"strikethrough","rangeEnd":30,"rangeStart":0,"value":0,"valueType":"int"},{"name":"fontSize","rangeEnd":30,"rangeStart":0,"value":96,"valueType":"double"},{"name":"fontName","rangeEnd":30,"rangeStart":0,"value":"Montserrat","valueType":"string"}],
+                            "value" : [{"name":"fontWeight","rangeEnd":30,"rangeStart":0,"value":400,"valueType":"int"},{"name":"strikethrough","rangeEnd":30,"rangeStart":0,"value":0,"valueType":"int"},{"name":"fontName","rangeEnd":30,"rangeStart":0,"value":"Montserrat","valueType":"string"},{"name":"fontSize","rangeEnd":30,"rangeStart":0,"value":70,"valueType":"double"},{"name":"underline","rangeEnd":30,"rangeStart":0,"value":0,"valueType":"int"},{"name":"fgColor","rangeEnd":30,"rangeStart":0,"value":"(255,255,255,255)","valueType":"color"},{"name":"fontItalic","rangeEnd":30,"rangeStart":0,"value":0,"valueType":"int"}],
                             "duration" : 0
                           }
                         ]
@@ -1542,8 +1533,8 @@
                       "autoRotateText" : true
                     },
                     "parameters" : {
-                      "translation0" : 8.50000000002119,
-                      "translation1" : -19.1666666666851
+                      "translation0" : -9.16666666665873,
+                      "translation1" : 23.3333333333406
                     },
                     "effects" : [
                         {
@@ -1659,6 +1650,7 @@
                       "clipSpeedAttribute" : false,
                       "default-HAlign" : "center",
                       "default-VAlign" : "center",
+                      "default-text-attributes" : "[{\"name\":\"fgColor\",\"rangeEnd\":30,\"rangeStart\":0,\"value\":\"(255,255,255,255)\",\"valueType\":\"color\"},{\"name\":\"fontItalic\",\"rangeEnd\":30,\"rangeStart\":0,\"value\":0,\"valueType\":\"int\"},{\"name\":\"underline\",\"rangeEnd\":30,\"rangeStart\":0,\"value\":0,\"valueType\":\"int\"},{\"name\":\"fontWeight\",\"rangeEnd\":30,\"rangeStart\":0,\"value\":400,\"valueType\":\"int\"},{\"name\":\"strikethrough\",\"rangeEnd\":30,\"rangeStart\":0,\"value\":0,\"valueType\":\"int\"},{\"name\":\"fontSize\",\"rangeEnd\":30,\"rangeStart\":0,\"value\":96,\"valueType\":\"double\"},{\"name\":\"fontName\",\"rangeEnd\":30,\"rangeStart\":0,\"value\":\"Montserrat\",\"valueType\":\"string\"}]",
                       "default-translation1" : 35.0
                     },
                     "animationTracks" : {
@@ -3471,50 +3463,18 @@
                       "kind" : "remix",
                       "shape" : "text",
                       "style" : "basic",
-                      "height" : {
-                        "type" : "double",
-                        "defaultValue" : 95.4761904762801,
-                        "interp" : "linr"
-                      },
-                      "width" : {
-                        "type" : "double",
-                        "defaultValue" : 480.000005086663,
-                        "interp" : "linr"
-                      },
-                      "word-wrap" : {
-                        "type" : "double",
-                        "defaultValue" : 1.0,
-                        "interp" : "linr"
-                      },
+                      "height" : 95.4761904762801,
+                      "width" : 858.33333841995,
+                      "word-wrap" : 1.0,
                       "horizontal-alignment" : "center",
                       "text" : "Created as a project at IoT Workshop(spring 2017) in Tel-Aviv University",
                       "vertical-alignment" : "center",
                       "font" : {
-                        "color-blue" : {
-                          "type" : "double",
-                          "defaultValue" : 1.0,
-                          "interp" : "linr"
-                        },
-                        "color-green" : {
-                          "type" : "double",
-                          "defaultValue" : 1.0,
-                          "interp" : "linr"
-                        },
-                        "color-red" : {
-                          "type" : "double",
-                          "defaultValue" : 1.0,
-                          "interp" : "linr"
-                        },
-                        "size" : {
-                          "type" : "double",
-                          "defaultValue" : 96.0,
-                          "interp" : "linr"
-                        },
-                        "tracking" : {
-                          "type" : "double",
-                          "defaultValue" : 0.0,
-                          "interp" : "linr"
-                        },
+                        "color-blue" : 1.0,
+                        "color-green" : 1.0,
+                        "color-red" : 1.0,
+                        "size" : 96.0,
+                        "tracking" : 0.0,
                         "name" : "Montserrat",
                         "weight" : "Regular"
                       },
@@ -3533,95 +3493,23 @@
                       "autoRotateText" : true
                     },
                     "parameters" : {
-                      "translation0" : {
-                        "type" : "double",
-                        "defaultValue" : -5.08661754849982e-06,
-                        "interp" : "eioe"
-                      },
-                      "translation1" : {
-                        "type" : "double",
-                        "defaultValue" : 201.706078076848,
-                        "interp" : "eioe"
-                      }
+                      "translation0" : -5.50000508657736,
+                      "translation1" : 201.706078076848
                     },
                     "effects" : [
                         {
                           "effectName" : "DropShadow",
                           "category" : "categoryVisualEffects",
                           "parameters" : {
-                            "angle" : {
-                              "type" : "double",
-                              "defaultValue" : 5.49778714378214,
-                              "interp" : "linr",
-                              "uiHints" : {
-                                "userInterfaceType" : 0,
-                                "unitType" : 0
-                              }
-                            },
-                            "blur" : {
-                              "type" : "double",
-                              "defaultValue" : 10.0,
-                              "interp" : "linr",
-                              "uiHints" : {
-                                "userInterfaceType" : 0,
-                                "unitType" : 0
-                              }
-                            },
-                            "color-alpha" : {
-                              "type" : "double",
-                              "defaultValue" : 1.0,
-                              "interp" : "linr",
-                              "uiHints" : {
-                                "userInterfaceType" : 0,
-                                "unitType" : 0
-                              }
-                            },
-                            "color-blue" : {
-                              "type" : "double",
-                              "defaultValue" : 0.1216,
-                              "interp" : "linr",
-                              "uiHints" : {
-                                "userInterfaceType" : 0,
-                                "unitType" : 0
-                              }
-                            },
-                            "color-green" : {
-                              "type" : "double",
-                              "defaultValue" : 0.1216,
-                              "interp" : "linr",
-                              "uiHints" : {
-                                "userInterfaceType" : 0,
-                                "unitType" : 0
-                              }
-                            },
-                            "color-red" : {
-                              "type" : "double",
-                              "defaultValue" : 0.1216,
-                              "interp" : "linr",
-                              "uiHints" : {
-                                "userInterfaceType" : 0,
-                                "unitType" : 0
-                              }
-                            },
+                            "angle" : 5.49778714378214,
+                            "blur" : 10.0,
+                            "color-alpha" : 1.0,
+                            "color-blue" : 0.1216,
+                            "color-green" : 0.1216,
+                            "color-red" : 0.1216,
                             "enabled" : 1,
-                            "offset" : {
-                              "type" : "double",
-                              "defaultValue" : 10.0,
-                              "interp" : "linr",
-                              "uiHints" : {
-                                "userInterfaceType" : 0,
-                                "unitType" : 0
-                              }
-                            },
-                            "opacity" : {
-                              "type" : "double",
-                              "defaultValue" : 0.4,
-                              "interp" : "linr",
-                              "uiHints" : {
-                                "userInterfaceType" : 0,
-                                "unitType" : 0
-                              }
-                            }
+                            "offset" : 10.0,
+                            "opacity" : 0.4
                           }
                         },
                         {
@@ -3678,7 +3566,6 @@
                               "shift" : {
                                 "type" : "double",
                                 "defaultValue" : 0.0,
-                                "interp" : "linr",
                                 "valueBounds" : {
                                   "minValue" : 0.0,
                                   "maxValue" : 100.0,
@@ -3743,8 +3630,8 @@
                       "kind" : "remix",
                       "shape" : "text",
                       "style" : "basic",
-                      "height" : 74.9999999999027,
-                      "width" : 443.333333333377,
+                      "height" : 59.9999999999165,
+                      "width" : 533.333333333332,
                       "word-wrap" : 1.0,
                       "horizontal-alignment" : "center",
                       "text" : "Using IoT and cloud technologies!",
@@ -3773,8 +3660,8 @@
                       "autoRotateText" : true
                     },
                     "parameters" : {
-                      "translation0" : 0.333333333375911,
-                      "translation1" : -370.500000000063
+                      "translation0" : -8.83333333295781,
+                      "translation1" : -378.000000000063
                     },
                     "effects" : [
                         {
@@ -4531,50 +4418,18 @@
                       "kind" : "remix",
                       "shape" : "text",
                       "style" : "basic",
-                      "height" : {
-                        "type" : "double",
-                        "defaultValue" : 88.3333333333703,
-                        "interp" : "linr"
-                      },
-                      "width" : {
-                        "type" : "double",
-                        "defaultValue" : 376.666666667096,
-                        "interp" : "linr"
-                      },
-                      "word-wrap" : {
-                        "type" : "double",
-                        "defaultValue" : 1.0,
-                        "interp" : "linr"
-                      },
-                      "horizontal-alignment" : "center",
+                      "height" : 88.3333333333703,
+                      "width" : 376.666666667096,
+                      "word-wrap" : 1.0,
+                      "horizontal-alignment" : "left",
                       "text" : "Created by:",
                       "vertical-alignment" : "center",
                       "font" : {
-                        "color-blue" : {
-                          "type" : "double",
-                          "defaultValue" : 1.0,
-                          "interp" : "linr"
-                        },
-                        "color-green" : {
-                          "type" : "double",
-                          "defaultValue" : 1.0,
-                          "interp" : "linr"
-                        },
-                        "color-red" : {
-                          "type" : "double",
-                          "defaultValue" : 1.0,
-                          "interp" : "linr"
-                        },
-                        "size" : {
-                          "type" : "double",
-                          "defaultValue" : 96.0,
-                          "interp" : "linr"
-                        },
-                        "tracking" : {
-                          "type" : "double",
-                          "defaultValue" : 0.0,
-                          "interp" : "linr"
-                        },
+                        "color-blue" : 1.0,
+                        "color-green" : 1.0,
+                        "color-red" : 1.0,
+                        "size" : 96.0,
+                        "tracking" : 0.0,
                         "name" : "Montserrat",
                         "weight" : "Regular"
                       },
@@ -4593,95 +4448,23 @@
                       "autoRotateText" : true
                     },
                     "parameters" : {
-                      "translation0" : {
-                        "type" : "double",
-                        "defaultValue" : -51.5000101730831,
-                        "interp" : "eioe"
-                      },
-                      "translation1" : {
-                        "type" : "double",
-                        "defaultValue" : 87.500002543247,
-                        "interp" : "eioe"
-                      }
+                      "translation0" : -218.999997457184,
+                      "translation1" : 127.500002543172
                     },
                     "effects" : [
                         {
                           "effectName" : "DropShadow",
                           "category" : "categoryVisualEffects",
                           "parameters" : {
-                            "angle" : {
-                              "type" : "double",
-                              "defaultValue" : 5.49778714378214,
-                              "interp" : "linr",
-                              "uiHints" : {
-                                "userInterfaceType" : 0,
-                                "unitType" : 0
-                              }
-                            },
-                            "blur" : {
-                              "type" : "double",
-                              "defaultValue" : 10.0,
-                              "interp" : "linr",
-                              "uiHints" : {
-                                "userInterfaceType" : 0,
-                                "unitType" : 0
-                              }
-                            },
-                            "color-alpha" : {
-                              "type" : "double",
-                              "defaultValue" : 1.0,
-                              "interp" : "linr",
-                              "uiHints" : {
-                                "userInterfaceType" : 0,
-                                "unitType" : 0
-                              }
-                            },
-                            "color-blue" : {
-                              "type" : "double",
-                              "defaultValue" : 0.1216,
-                              "interp" : "linr",
-                              "uiHints" : {
-                                "userInterfaceType" : 0,
-                                "unitType" : 0
-                              }
-                            },
-                            "color-green" : {
-                              "type" : "double",
-                              "defaultValue" : 0.1216,
-                              "interp" : "linr",
-                              "uiHints" : {
-                                "userInterfaceType" : 0,
-                                "unitType" : 0
-                              }
-                            },
-                            "color-red" : {
-                              "type" : "double",
-                              "defaultValue" : 0.1216,
-                              "interp" : "linr",
-                              "uiHints" : {
-                                "userInterfaceType" : 0,
-                                "unitType" : 0
-                              }
-                            },
+                            "angle" : 5.49778714378214,
+                            "blur" : 10.0,
+                            "color-alpha" : 1.0,
+                            "color-blue" : 0.1216,
+                            "color-green" : 0.1216,
+                            "color-red" : 0.1216,
                             "enabled" : 1,
-                            "offset" : {
-                              "type" : "double",
-                              "defaultValue" : 10.0,
-                              "interp" : "linr",
-                              "uiHints" : {
-                                "userInterfaceType" : 0,
-                                "unitType" : 0
-                              }
-                            },
-                            "opacity" : {
-                              "type" : "double",
-                              "defaultValue" : 0.4,
-                              "interp" : "linr",
-                              "uiHints" : {
-                                "userInterfaceType" : 0,
-                                "unitType" : 0
-                              }
-                            }
+                            "offset" : 10.0,
+                            "opacity" : 0.4
                           }
                         },
                         {
@@ -4738,7 +4521,6 @@
                               "shift" : {
                                 "type" : "double",
                                 "defaultValue" : 0.0,
-                                "interp" : "linr",
                                 "valueBounds" : {
                                   "minValue" : 0.0,
                                   "maxValue" : 100.0,
@@ -4783,6 +4565,7 @@
                       "clipSpeedAttribute" : false,
                       "default-HAlign" : "center",
                       "default-VAlign" : "center",
+                      "default-rotation2" : 0.0,
                       "default-text-attributes" : "[{\"name\":\"fgColor\",\"rangeEnd\":30,\"rangeStart\":0,\"value\":\"(255,255,255,255)\",\"valueType\":\"color\"},{\"name\":\"fontItalic\",\"rangeEnd\":30,\"rangeStart\":0,\"value\":0,\"valueType\":\"int\"},{\"name\":\"underline\",\"rangeEnd\":30,\"rangeStart\":0,\"value\":0,\"valueType\":\"int\"},{\"name\":\"fontWeight\",\"rangeEnd\":30,\"rangeStart\":0,\"value\":400,\"valueType\":\"int\"},{\"name\":\"strikethrough\",\"rangeEnd\":30,\"rangeStart\":0,\"value\":0,\"valueType\":\"int\"},{\"name\":\"fontSize\",\"rangeEnd\":30,\"rangeStart\":0,\"value\":96,\"valueType\":\"double\"},{\"name\":\"fontName\",\"rangeEnd\":30,\"rangeStart\":0,\"value\":\"Montserrat\",\"valueType\":\"string\"}]",
                       "default-translation0" : 8.50000000002119,
                       "default-translation1" : 35.0
@@ -4985,52 +4768,100 @@
                     "_type" : "Callout",
                     "def" : {
                       "kind" : "remix",
+                      "shape" : "shape-rectangle",
+                      "style" : "urban",
+                      "fill-color-blue" : 0.0,
+                      "fill-color-green" : 0.0,
+                      "fill-color-opacity" : 1.0,
+                      "fill-color-red" : 0.0,
+                      "height" : 891.666666666529,
+                      "stroke-color-blue" : 1.0,
+                      "stroke-color-green" : 1.0,
+                      "stroke-color-opacity" : 1.0,
+                      "stroke-color-red" : 1.0,
+                      "stroke-width" : 0.0,
+                      "width" : 475.293696669544,
+                      "fill-style" : "solid",
+                      "horizontal-alignment" : "center",
+                      "stroke-style" : "solid",
+                      "vertical-alignment" : "center",
+                      "textAttributes" : {
+                        "type" : "textAttributeList",
+                        "keyframes" : [
+                          {
+                            "time" : 0,
+                            "value" : null,
+                            "duration" : 0
+                          }
+                        ]
+                      }
+                    },
+                    "attributes" : {
+                      "autoRotateText" : true
+                    },
+                    "parameters" : {
+                      "translation0" : 472.940545004368,
+                      "translation1" : -1.16666666664526
+                    },
+                    "effects" : [
+                        {
+                          "effectName" : "DropShadow",
+                          "category" : "categoryVisualEffects",
+                          "parameters" : {
+                            "angle" : 5.49778714378214,
+                            "blur" : 0.0,
+                            "color-alpha" : 1.0,
+                            "color-blue" : 0.1216,
+                            "color-green" : 0.1216,
+                            "color-red" : 0.1216,
+                            "enabled" : 1,
+                            "offset" : 0.0,
+                            "opacity" : 0.0
+                          },
+                          "metadata" : {
+                            "default-dropshadow-blur" : 10.0,
+                            "default-dropshadow-offset" : 10.0,
+                            "default-dropshadow-opacity" : 0.4
+                          }
+                        }
+                    ],
+                    "start" : 1715,
+                    "duration" : 358,
+                    "mediaStart" : -52,
+                    "mediaDuration" : 358,
+                    "scalar" : 1,
+                    "metadata" : {
+                      "WinSubProjectDisplayName" : "",
+                      "clipSpeedAttribute" : false,
+                      "default-fill-color-blue" : 1.0,
+                      "default-fill-color-green" : 1.0,
+                      "default-fill-color-red" : 1.0,
+                      "default-translation0" : 0.0,
+                      "default-translation1" : 0.0
+                    },
+                    "animationTracks" : {
+
+                    }
+                  },
+                  {
+                    "id" : 74,
+                    "_type" : "Callout",
+                    "def" : {
+                      "kind" : "remix",
                       "shape" : "text",
                       "style" : "basic",
-                      "height" : {
-                        "type" : "double",
-                        "defaultValue" : 53.3333333333477,
-                        "interp" : "linr"
-                      },
-                      "width" : {
-                        "type" : "double",
-                        "defaultValue" : 213.333333333853,
-                        "interp" : "linr"
-                      },
-                      "word-wrap" : {
-                        "type" : "double",
-                        "defaultValue" : 1.0,
-                        "interp" : "linr"
-                      },
+                      "height" : 53.3333333333477,
+                      "width" : 213.333333333853,
+                      "word-wrap" : 1.0,
                       "horizontal-alignment" : "left",
                       "text" : "Bar Angel",
                       "vertical-alignment" : "center",
                       "font" : {
-                        "color-blue" : {
-                          "type" : "double",
-                          "defaultValue" : 1.0,
-                          "interp" : "linr"
-                        },
-                        "color-green" : {
-                          "type" : "double",
-                          "defaultValue" : 1.0,
-                          "interp" : "linr"
-                        },
-                        "color-red" : {
-                          "type" : "double",
-                          "defaultValue" : 1.0,
-                          "interp" : "linr"
-                        },
-                        "size" : {
-                          "type" : "double",
-                          "defaultValue" : 96.0,
-                          "interp" : "linr"
-                        },
-                        "tracking" : {
-                          "type" : "double",
-                          "defaultValue" : 0.0,
-                          "interp" : "linr"
-                        },
+                        "color-blue" : 1.0,
+                        "color-green" : 1.0,
+                        "color-red" : 1.0,
+                        "size" : 96.0,
+                        "tracking" : 0.0,
                         "name" : "Montserrat",
                         "weight" : "Regular"
                       },
@@ -5049,95 +4880,23 @@
                       "autoRotateText" : true
                     },
                     "parameters" : {
-                      "translation0" : {
-                        "type" : "double",
-                        "defaultValue" : -81.3333257036747,
-                        "interp" : "eioe"
-                      },
-                      "translation1" : {
-                        "type" : "double",
-                        "defaultValue" : 26.9999993641941,
-                        "interp" : "eioe"
-                      }
+                      "translation0" : -264.547599792564,
+                      "translation1" : 51.5833339690662
                     },
                     "effects" : [
                         {
                           "effectName" : "DropShadow",
                           "category" : "categoryVisualEffects",
                           "parameters" : {
-                            "angle" : {
-                              "type" : "double",
-                              "defaultValue" : 5.49778714378214,
-                              "interp" : "linr",
-                              "uiHints" : {
-                                "userInterfaceType" : 0,
-                                "unitType" : 0
-                              }
-                            },
-                            "blur" : {
-                              "type" : "double",
-                              "defaultValue" : 10.0,
-                              "interp" : "linr",
-                              "uiHints" : {
-                                "userInterfaceType" : 0,
-                                "unitType" : 0
-                              }
-                            },
-                            "color-alpha" : {
-                              "type" : "double",
-                              "defaultValue" : 1.0,
-                              "interp" : "linr",
-                              "uiHints" : {
-                                "userInterfaceType" : 0,
-                                "unitType" : 0
-                              }
-                            },
-                            "color-blue" : {
-                              "type" : "double",
-                              "defaultValue" : 0.1216,
-                              "interp" : "linr",
-                              "uiHints" : {
-                                "userInterfaceType" : 0,
-                                "unitType" : 0
-                              }
-                            },
-                            "color-green" : {
-                              "type" : "double",
-                              "defaultValue" : 0.1216,
-                              "interp" : "linr",
-                              "uiHints" : {
-                                "userInterfaceType" : 0,
-                                "unitType" : 0
-                              }
-                            },
-                            "color-red" : {
-                              "type" : "double",
-                              "defaultValue" : 0.1216,
-                              "interp" : "linr",
-                              "uiHints" : {
-                                "userInterfaceType" : 0,
-                                "unitType" : 0
-                              }
-                            },
+                            "angle" : 5.49778714378214,
+                            "blur" : 10.0,
+                            "color-alpha" : 1.0,
+                            "color-blue" : 0.1216,
+                            "color-green" : 0.1216,
+                            "color-red" : 0.1216,
                             "enabled" : 1,
-                            "offset" : {
-                              "type" : "double",
-                              "defaultValue" : 10.0,
-                              "interp" : "linr",
-                              "uiHints" : {
-                                "userInterfaceType" : 0,
-                                "unitType" : 0
-                              }
-                            },
-                            "opacity" : {
-                              "type" : "double",
-                              "defaultValue" : 0.4,
-                              "interp" : "linr",
-                              "uiHints" : {
-                                "userInterfaceType" : 0,
-                                "unitType" : 0
-                              }
-                            }
+                            "offset" : 10.0,
+                            "opacity" : 0.4
                           }
                         },
                         {
@@ -5194,7 +4953,6 @@
                               "shift" : {
                                 "type" : "double",
                                 "defaultValue" : 0.0,
-                                "interp" : "linr",
                                 "valueBounds" : {
                                   "minValue" : 0.0,
                                   "maxValue" : 100.0,
@@ -5253,7 +5011,7 @@
                 "trackIndex" : 6,
                 "medias" : [
                   {
-                    "id" : 74,
+                    "id" : 75,
                     "_type" : "Callout",
                     "def" : {
                       "kind" : "remix",
@@ -5440,56 +5198,24 @@
                     }
                   },
                   {
-                    "id" : 75,
+                    "id" : 76,
                     "_type" : "Callout",
                     "def" : {
                       "kind" : "remix",
                       "shape" : "text",
                       "style" : "basic",
-                      "height" : {
-                        "type" : "double",
-                        "defaultValue" : 49.1666666665867,
-                        "interp" : "linr"
-                      },
-                      "width" : {
-                        "type" : "double",
-                        "defaultValue" : 365.714269445707,
-                        "interp" : "linr"
-                      },
-                      "word-wrap" : {
-                        "type" : "double",
-                        "defaultValue" : 1.0,
-                        "interp" : "linr"
-                      },
+                      "height" : 49.1666666665867,
+                      "width" : 365.714269445707,
+                      "word-wrap" : 1.0,
                       "horizontal-alignment" : "left",
                       "text" : "Ron Altboim",
                       "vertical-alignment" : "center",
                       "font" : {
-                        "color-blue" : {
-                          "type" : "double",
-                          "defaultValue" : 1.0,
-                          "interp" : "linr"
-                        },
-                        "color-green" : {
-                          "type" : "double",
-                          "defaultValue" : 1.0,
-                          "interp" : "linr"
-                        },
-                        "color-red" : {
-                          "type" : "double",
-                          "defaultValue" : 1.0,
-                          "interp" : "linr"
-                        },
-                        "size" : {
-                          "type" : "double",
-                          "defaultValue" : 96.0,
-                          "interp" : "linr"
-                        },
-                        "tracking" : {
-                          "type" : "double",
-                          "defaultValue" : 0.0,
-                          "interp" : "linr"
-                        },
+                        "color-blue" : 1.0,
+                        "color-green" : 1.0,
+                        "color-red" : 1.0,
+                        "size" : 96.0,
+                        "tracking" : 0.0,
                         "name" : "Montserrat",
                         "weight" : "Regular"
                       },
@@ -5508,95 +5234,23 @@
                       "autoRotateText" : true
                     },
                     "parameters" : {
-                      "translation0" : {
-                        "type" : "double",
-                        "defaultValue" : -5.33332846855019,
-                        "interp" : "eioe"
-                      },
-                      "translation1" : {
-                        "type" : "double",
-                        "defaultValue" : -24.1666679381871,
-                        "interp" : "eioe"
-                      }
+                      "translation0" : -188.547602557439,
+                      "translation1" : 0.416666666685082
                     },
                     "effects" : [
                         {
                           "effectName" : "DropShadow",
                           "category" : "categoryVisualEffects",
                           "parameters" : {
-                            "angle" : {
-                              "type" : "double",
-                              "defaultValue" : 5.49778714378214,
-                              "interp" : "linr",
-                              "uiHints" : {
-                                "userInterfaceType" : 0,
-                                "unitType" : 0
-                              }
-                            },
-                            "blur" : {
-                              "type" : "double",
-                              "defaultValue" : 10.0,
-                              "interp" : "linr",
-                              "uiHints" : {
-                                "userInterfaceType" : 0,
-                                "unitType" : 0
-                              }
-                            },
-                            "color-alpha" : {
-                              "type" : "double",
-                              "defaultValue" : 1.0,
-                              "interp" : "linr",
-                              "uiHints" : {
-                                "userInterfaceType" : 0,
-                                "unitType" : 0
-                              }
-                            },
-                            "color-blue" : {
-                              "type" : "double",
-                              "defaultValue" : 0.1216,
-                              "interp" : "linr",
-                              "uiHints" : {
-                                "userInterfaceType" : 0,
-                                "unitType" : 0
-                              }
-                            },
-                            "color-green" : {
-                              "type" : "double",
-                              "defaultValue" : 0.1216,
-                              "interp" : "linr",
-                              "uiHints" : {
-                                "userInterfaceType" : 0,
-                                "unitType" : 0
-                              }
-                            },
-                            "color-red" : {
-                              "type" : "double",
-                              "defaultValue" : 0.1216,
-                              "interp" : "linr",
-                              "uiHints" : {
-                                "userInterfaceType" : 0,
-                                "unitType" : 0
-                              }
-                            },
+                            "angle" : 5.49778714378214,
+                            "blur" : 10.0,
+                            "color-alpha" : 1.0,
+                            "color-blue" : 0.1216,
+                            "color-green" : 0.1216,
+                            "color-red" : 0.1216,
                             "enabled" : 1,
-                            "offset" : {
-                              "type" : "double",
-                              "defaultValue" : 10.0,
-                              "interp" : "linr",
-                              "uiHints" : {
-                                "userInterfaceType" : 0,
-                                "unitType" : 0
-                              }
-                            },
-                            "opacity" : {
-                              "type" : "double",
-                              "defaultValue" : 0.4,
-                              "interp" : "linr",
-                              "uiHints" : {
-                                "userInterfaceType" : 0,
-                                "unitType" : 0
-                              }
-                            }
+                            "offset" : 10.0,
+                            "opacity" : 0.4
                           }
                         },
                         {
@@ -5653,7 +5307,6 @@
                               "shift" : {
                                 "type" : "double",
                                 "defaultValue" : 0.0,
-                                "interp" : "linr",
                                 "valueBounds" : {
                                   "minValue" : 0.0,
                                   "maxValue" : 100.0,
@@ -5713,7 +5366,7 @@
                 "trackIndex" : 7,
                 "medias" : [
                   {
-                    "id" : 76,
+                    "id" : 77,
                     "_type" : "Callout",
                     "def" : {
                       "kind" : "remix",
@@ -5899,56 +5552,24 @@
                     }
                   },
                   {
-                    "id" : 77,
+                    "id" : 78,
                     "_type" : "Callout",
                     "def" : {
                       "kind" : "remix",
                       "shape" : "text",
                       "style" : "basic",
-                      "height" : {
-                        "type" : "double",
-                        "defaultValue" : 51.3333333332902,
-                        "interp" : "linr"
-                      },
-                      "width" : {
-                        "type" : "double",
-                        "defaultValue" : 404.645161290972,
-                        "interp" : "linr"
-                      },
-                      "word-wrap" : {
-                        "type" : "double",
-                        "defaultValue" : 1.0,
-                        "interp" : "linr"
-                      },
+                      "height" : 51.3333333332902,
+                      "width" : 404.645161290972,
+                      "word-wrap" : 1.0,
                       "horizontal-alignment" : "left",
                       "text" : "Ramy Lerner",
                       "vertical-alignment" : "center",
                       "font" : {
-                        "color-blue" : {
-                          "type" : "double",
-                          "defaultValue" : 1.0,
-                          "interp" : "linr"
-                        },
-                        "color-green" : {
-                          "type" : "double",
-                          "defaultValue" : 1.0,
-                          "interp" : "linr"
-                        },
-                        "color-red" : {
-                          "type" : "double",
-                          "defaultValue" : 1.0,
-                          "interp" : "linr"
-                        },
-                        "size" : {
-                          "type" : "double",
-                          "defaultValue" : 96.0,
-                          "interp" : "linr"
-                        },
-                        "tracking" : {
-                          "type" : "double",
-                          "defaultValue" : 0.0,
-                          "interp" : "linr"
-                        },
+                        "color-blue" : 1.0,
+                        "color-green" : 1.0,
+                        "color-red" : 1.0,
+                        "size" : 96.0,
+                        "tracking" : 0.0,
                         "name" : "Montserrat",
                         "weight" : "Regular"
                       },
@@ -5967,95 +5588,23 @@
                       "autoRotateText" : true
                     },
                     "parameters" : {
-                      "translation0" : {
-                        "type" : "double",
-                        "defaultValue" : 14.1666797104455,
-                        "interp" : "eioe"
-                      },
-                      "translation1" : {
-                        "type" : "double",
-                        "defaultValue" : -74.500000635758,
-                        "interp" : "eioe"
-                      }
+                      "translation0" : -169.047594378443,
+                      "translation1" : -49.9166660308858
                     },
                     "effects" : [
                         {
                           "effectName" : "DropShadow",
                           "category" : "categoryVisualEffects",
                           "parameters" : {
-                            "angle" : {
-                              "type" : "double",
-                              "defaultValue" : 5.49778714378214,
-                              "interp" : "linr",
-                              "uiHints" : {
-                                "userInterfaceType" : 0,
-                                "unitType" : 0
-                              }
-                            },
-                            "blur" : {
-                              "type" : "double",
-                              "defaultValue" : 10.0,
-                              "interp" : "linr",
-                              "uiHints" : {
-                                "userInterfaceType" : 0,
-                                "unitType" : 0
-                              }
-                            },
-                            "color-alpha" : {
-                              "type" : "double",
-                              "defaultValue" : 1.0,
-                              "interp" : "linr",
-                              "uiHints" : {
-                                "userInterfaceType" : 0,
-                                "unitType" : 0
-                              }
-                            },
-                            "color-blue" : {
-                              "type" : "double",
-                              "defaultValue" : 0.1216,
-                              "interp" : "linr",
-                              "uiHints" : {
-                                "userInterfaceType" : 0,
-                                "unitType" : 0
-                              }
-                            },
-                            "color-green" : {
-                              "type" : "double",
-                              "defaultValue" : 0.1216,
-                              "interp" : "linr",
-                              "uiHints" : {
-                                "userInterfaceType" : 0,
-                                "unitType" : 0
-                              }
-                            },
-                            "color-red" : {
-                              "type" : "double",
-                              "defaultValue" : 0.1216,
-                              "interp" : "linr",
-                              "uiHints" : {
-                                "userInterfaceType" : 0,
-                                "unitType" : 0
-                              }
-                            },
+                            "angle" : 5.49778714378214,
+                            "blur" : 10.0,
+                            "color-alpha" : 1.0,
+                            "color-blue" : 0.1216,
+                            "color-green" : 0.1216,
+                            "color-red" : 0.1216,
                             "enabled" : 1,
-                            "offset" : {
-                              "type" : "double",
-                              "defaultValue" : 10.0,
-                              "interp" : "linr",
-                              "uiHints" : {
-                                "userInterfaceType" : 0,
-                                "unitType" : 0
-                              }
-                            },
-                            "opacity" : {
-                              "type" : "double",
-                              "defaultValue" : 0.4,
-                              "interp" : "linr",
-                              "uiHints" : {
-                                "userInterfaceType" : 0,
-                                "unitType" : 0
-                              }
-                            }
+                            "offset" : 10.0,
+                            "opacity" : 0.4
                           }
                         },
                         {
@@ -6112,7 +5661,6 @@
                               "shift" : {
                                 "type" : "double",
                                 "defaultValue" : 0.0,
-                                "interp" : "linr",
                                 "valueBounds" : {
                                   "minValue" : 0.0,
                                   "maxValue" : 100.0,
@@ -6171,7 +5719,7 @@
                 "trackIndex" : 8,
                 "medias" : [
                   {
-                    "id" : 78,
+                    "id" : 79,
                     "_type" : "Callout",
                     "def" : {
                       "kind" : "remix",
@@ -6357,56 +5905,24 @@
                     }
                   },
                   {
-                    "id" : 79,
+                    "id" : 80,
                     "_type" : "Callout",
                     "def" : {
                       "kind" : "remix",
                       "shape" : "text",
                       "style" : "basic",
-                      "height" : {
-                        "type" : "double",
-                        "defaultValue" : 117.999999999884,
-                        "interp" : "linr"
-                      },
-                      "width" : {
-                        "type" : "double",
-                        "defaultValue" : 480.00000365071,
-                        "interp" : "linr"
-                      },
-                      "word-wrap" : {
-                        "type" : "double",
-                        "defaultValue" : 1.0,
-                        "interp" : "linr"
-                      },
+                      "height" : 117.999999999884,
+                      "width" : 647.499999282409,
+                      "word-wrap" : 1.0,
                       "horizontal-alignment" : "center",
                       "text" : "Thank you for watching!",
                       "vertical-alignment" : "center",
                       "font" : {
-                        "color-blue" : {
-                          "type" : "double",
-                          "defaultValue" : 1.0,
-                          "interp" : "linr"
-                        },
-                        "color-green" : {
-                          "type" : "double",
-                          "defaultValue" : 1.0,
-                          "interp" : "linr"
-                        },
-                        "color-red" : {
-                          "type" : "double",
-                          "defaultValue" : 1.0,
-                          "interp" : "linr"
-                        },
-                        "size" : {
-                          "type" : "double",
-                          "defaultValue" : 96.0,
-                          "interp" : "linr"
-                        },
-                        "tracking" : {
-                          "type" : "double",
-                          "defaultValue" : 0.0,
-                          "interp" : "linr"
-                        },
+                        "color-blue" : 1.0,
+                        "color-green" : 1.0,
+                        "color-red" : 1.0,
+                        "size" : 96.0,
+                        "tracking" : 0.0,
                         "name" : "Montserrat",
                         "weight" : "Regular"
                       },
@@ -6425,95 +5941,23 @@
                       "autoRotateText" : true
                     },
                     "parameters" : {
-                      "translation0" : {
-                        "type" : "double",
-                        "defaultValue" : -1.82537367265923e-06,
-                        "interp" : "eioe"
-                      },
-                      "translation1" : {
-                        "type" : "double",
-                        "defaultValue" : -310.666666666857,
-                        "interp" : "eioe"
-                      }
+                      "translation0" : -5.58333551774403,
+                      "translation1" : -317.333333333537
                     },
                     "effects" : [
                         {
                           "effectName" : "DropShadow",
                           "category" : "categoryVisualEffects",
                           "parameters" : {
-                            "angle" : {
-                              "type" : "double",
-                              "defaultValue" : 5.49778714378214,
-                              "interp" : "linr",
-                              "uiHints" : {
-                                "userInterfaceType" : 0,
-                                "unitType" : 0
-                              }
-                            },
-                            "blur" : {
-                              "type" : "double",
-                              "defaultValue" : 10.0,
-                              "interp" : "linr",
-                              "uiHints" : {
-                                "userInterfaceType" : 0,
-                                "unitType" : 0
-                              }
-                            },
-                            "color-alpha" : {
-                              "type" : "double",
-                              "defaultValue" : 1.0,
-                              "interp" : "linr",
-                              "uiHints" : {
-                                "userInterfaceType" : 0,
-                                "unitType" : 0
-                              }
-                            },
-                            "color-blue" : {
-                              "type" : "double",
-                              "defaultValue" : 0.1216,
-                              "interp" : "linr",
-                              "uiHints" : {
-                                "userInterfaceType" : 0,
-                                "unitType" : 0
-                              }
-                            },
-                            "color-green" : {
-                              "type" : "double",
-                              "defaultValue" : 0.1216,
-                              "interp" : "linr",
-                              "uiHints" : {
-                                "userInterfaceType" : 0,
-                                "unitType" : 0
-                              }
-                            },
-                            "color-red" : {
-                              "type" : "double",
-                              "defaultValue" : 0.1216,
-                              "interp" : "linr",
-                              "uiHints" : {
-                                "userInterfaceType" : 0,
-                                "unitType" : 0
-                              }
-                            },
+                            "angle" : 5.49778714378214,
+                            "blur" : 10.0,
+                            "color-alpha" : 1.0,
+                            "color-blue" : 0.1216,
+                            "color-green" : 0.1216,
+                            "color-red" : 0.1216,
                             "enabled" : 1,
-                            "offset" : {
-                              "type" : "double",
-                              "defaultValue" : 10.0,
-                              "interp" : "linr",
-                              "uiHints" : {
-                                "userInterfaceType" : 0,
-                                "unitType" : 0
-                              }
-                            },
-                            "opacity" : {
-                              "type" : "double",
-                              "defaultValue" : 0.4,
-                              "interp" : "linr",
-                              "uiHints" : {
-                                "userInterfaceType" : 0,
-                                "unitType" : 0
-                              }
-                            }
+                            "offset" : 10.0,
+                            "opacity" : 0.4
                           }
                         },
                         {
@@ -6570,7 +6014,6 @@
                               "shift" : {
                                 "type" : "double",
                                 "defaultValue" : 0.0,
-                                "interp" : "linr",
                                 "valueBounds" : {
                                   "minValue" : 0.0,
                                   "maxValue" : 100.0,
@@ -6629,7 +6072,7 @@
                 "trackIndex" : 9,
                 "medias" : [
                   {
-                    "id" : 80,
+                    "id" : 81,
                     "_type" : "Callout",
                     "def" : {
                       "kind" : "remix",
@@ -6945,7 +6388,7 @@
     "captionAttributes" : {
       "enabled" : true,
       "fontName" : "Arial",
-      "fontSize" : 17,
+      "fontSize" : 40,
       "backgroundColor" : [ 0, 0, 0, 191],
       "foregroundColor" : [ 255, 255, 255, 255],
       "lang" : "en",
@@ -6958,7 +6401,7 @@
     "backgroundColor" : [ 0, 0, 0, 255]
   },
   "metadata" : {
-    "AutoSaveFile" : "C:\\Users\\Bar Angel\\AppData\\Local\\TechSmith\\Camtasia Studio\\9.0\\Auto-Saves\\video2a68197f.autosave.tscproj",
+    "AutoSaveFile" : "C:\\Users\\Bar Angel\\AppData\\Local\\TechSmith\\Camtasia Studio\\9.0\\Auto-Saves\\video2efdad88.autosave.tscproj",
     "CanvasZoom" : 60,
     "Date" : "2017-10-12 10:19:32 PM",
     "Fit" : 0,

@@ -108,7 +108,6 @@ namespace RPiRunner2
                         {
                             string sendToCloud = JsonConvert.SerializeObject(jsend);
                             cloudTask = AzureIoTHub.SendDeviceToCloudMessageAsync(sendToCloud);
-
                         }
                         await sendTask;
                         uhl.FinishUser();

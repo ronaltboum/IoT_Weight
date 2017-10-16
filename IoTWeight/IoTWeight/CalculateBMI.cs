@@ -1,18 +1,11 @@
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
 using Android.App;
 using Android.Content;
 using Android.OS;
-using Android.Runtime;
 using Android.Views;
 using Android.Widget;
 using Microsoft.WindowsAzure.MobileServices;
 using System.Threading.Tasks;
-using Java.Util;
-using Java.Net;
 
 namespace IoTWeight
 {
@@ -21,8 +14,8 @@ namespace IoTWeight
     {
         private IMobileServiceTable<UsersTable> UsersTableRef;
         private IMobileServiceTable<weighTable> weighTableRef;
-        float enteredHeight = 0;
-        string ourUserId = ToDoActivity.CurrentActivity.Currentuserid;
+        private float enteredHeight = 0;
+        private string ourUserId = ToDoActivity.CurrentActivity.Currentuserid;
        
 
         //TODO:  when Raspberry is incorporated:  check case where user first tries to 
@@ -56,7 +49,6 @@ namespace IoTWeight
             wikiLinkButton.Click += delegate {
                 var uri = Android.Net.Uri.Parse("https://en.wikipedia.org/wiki/Body_mass_index#Categories");
                 var intent = new Intent(Intent.ActionView, uri);
-                //finish();  //Kill the activity from which you will go to next activity 
                 StartActivity(intent);
             };
            
@@ -74,7 +66,6 @@ namespace IoTWeight
                 {
                     Console.WriteLine("Converted '{0}' to {1}.", value, number);
                     string message = "Converted " + value + "to " + number;
-                    //CreateAndShowDialog(message, "debug");
                     enteredHeight = number;
                 }
 
@@ -82,7 +73,6 @@ namespace IoTWeight
                 {
                     Console.WriteLine("Unable to convert '{0}'.", value);
                     string message = "Unable to convert " + value;
-                    //CreateAndShowDialog(message, "CONVERSION ERROR");
                     enteredHeight = 0;
                 }
             };
@@ -137,8 +127,7 @@ namespace IoTWeight
                     float height = user.height;
                     //check if there are weighs of this user in the weighTable:
                     var weighRecords = await weighTableRef.Where(item => (item.username == ourUserId)).ToListAsync();
-                    //TODO: cahnge to ==
-                    if (weighRecords.Count < 0)
+                    if (weighRecords.Count == 0)
                     {
                         CreateAndShowDialog( "No previous weighs were found. Please weigh yourself and try again", "Cannot calculate BMI");
                         //TODO:   return to main screen after user presses back once
@@ -146,19 +135,15 @@ namespace IoTWeight
                     else
                     {
                         //calculate BMI from user's most recent weighing:
-                        var mostRecendWeigh = 0; //TODO: weighRecords[weighRecords.Count - 1];
-                        float weight = 0; //TODO: mostRecendWeigh.weigh;
+                        var mostRecendWeigh = weighRecords[weighRecords.Count - 1];
+                        float weight = mostRecendWeigh.weigh;
                         //BMI formula from wikipedia:   BMI = weight in kg / (height in meters)^2
                         //https://en.wikipedia.org/wiki/Body_mass_index
                         double heigtSquared = Math.Pow(height, 2);
                         double BMI = weight / heigtSquared;
                         //String.Format("{0:0.00}", 123.4567);
                         string BMIInStringFormat = String.Format("{0:0.00}", BMI);
-
-                        //string BMI_message = "Your most recent weight = " + weight + "\nYour BMI = " + BMIInStringFormat;
-                        //TODO: hey! we're cheating!
-                        string BMI_message = "Your most recent weight = " + 62.2 + "\nYour BMI = " + 21.0;
-
+                        string BMI_message = "Your most recent weight = " + weight + "\nYour BMI = " + BMIInStringFormat;
                         var BMItext = FindViewById<TextView>(Resource.Id.BMI_TextView);
                         BMItext.Visibility = ViewStates.Visible;
                         BMItext.Text = BMI_message;
@@ -197,8 +182,7 @@ namespace IoTWeight
             try
             {
                 var weighRecords = await weighTableRef.Where(item => (item.username == ourUserId)).ToListAsync();
-                
-                if (weighRecords.Count == 0) //TODO: cahnge to ==
+                if (weighRecords.Count == 0)
                 {
                     CreateAndShowDialog("Cannot calculate BMI", "No previous weighs were found. Please weigh yourself and try again");
                     //TODO:   return to main screen after user presses back once
@@ -271,10 +255,7 @@ namespace IoTWeight
                 BMI_Category = "Very Severely Obese";
 
             }
-
-            //TODO: hey! we are cheating!
-            BMI_Category = "Normal";
-
+           
             var categoryView = FindViewById<TextView>(Resource.Id.Category_TextView);
             categoryView.Visibility = ViewStates.Visible;
             if (BMI_Category == "Normal")
