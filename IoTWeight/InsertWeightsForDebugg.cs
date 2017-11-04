@@ -22,6 +22,7 @@ namespace IoTWeight
         List<WeighDatePair> weighDateList = new List<WeighDatePair>();
         private IMobileServiceTable<weighTable> weighTableRef;
         private IMobileServiceTable<UsersTable> UsersTableRef;
+        private IMobileServiceTable<RaspberryTable> raspberryTableRef;
         string ourUserId = ToDoActivity.CurrentActivity.Currentuserid;
 
 
@@ -33,19 +34,30 @@ namespace IoTWeight
             MobileServiceClient client = ToDoActivity.CurrentActivity.CurrentClient;
             weighTableRef = client.GetTable<weighTable>();
             UsersTableRef = client.GetTable<UsersTable>();
+            raspberryTableRef = client.GetTable<RaspberryTable>();
 
-            
 
             try
             {
-                int i;
-                for (i = 30; i <= 50; i++)
+                string QR_Code = "testing3";
+                string ipAdd = "10.0.0.6";
+                var record1 = new RaspberryTable
                 {
-                    if(i > 60)
-                    {
-                        Console.WriteLine("Don't insert too much guys. There's a space limit");
-                        break;
-                    }
+                    QRCode = QR_Code,
+                    IPAddress = ipAdd,
+                };
+                //await raspberryTableRef.InsertAsync(record1);
+
+
+
+                int i;
+                for (i = 88; i <= 99; i++)
+                {
+                    //if(i > 60)
+                    //{
+                    //    Console.WriteLine("Don't insert too much guys. There's a space limit");
+                    //    break;
+                    //}
                         
                     var newweightablerecord = new weighTable
                     {
